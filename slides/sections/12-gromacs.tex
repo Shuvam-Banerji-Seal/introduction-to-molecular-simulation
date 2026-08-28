@@ -1,0 +1,60 @@
+% 12 --- GROMACS
+\section{Introduction to GROMACS}
+
+\begin{frame}[fragile]{Installation \& Files}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+# Install (conda / apt)
+conda install -c conda-forge gromacs
+# Inputs
+gmx pdb2gmx -f protein.pdb
+gmx editconf -f conf.gro -o box.gro -c -d 1.0 -bt cubic
+gmx solvate -cp box.gro -o solv.gro
+    \end{minted}
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Structure}: \texttt{.gro/.pdb}
+      \item \textbf{Topology}: \texttt{topol.top} (FF + bonds)
+      \item \textbf{Parameters}: \texttt{.mdp} (dt, $T$, $P$)
+    \end{pitemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{GROMACS Workflow --- Min \ensuremath{\rightarrow} NVT \ensuremath{\rightarrow} NPT \ensuremath{\rightarrow} Prod}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \foreach \idx/\txt in {0/Minimize,1/NVT,2/NPT,3/Production} {
+        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.3cm,minimum height=0.7cm,align=center] (n\idx) at (\idx*2.9,0) {\color{fgwhite}\tiny \txt};
+      }
+      \draw[->,thick,accentcyan] (n0) -- (n1);
+      \draw[->,thick,accentcyan] (n1) -- (n2);
+      \draw[->,thick,accentcyan] (n2) -- (n3);
+      \node[color=softgray] at (1.45,1) {\texttt{em.mdp} \ensuremath{\rightarrow} \texttt{nvt.mdp} \ensuremath{\rightarrow} \texttt{npt.mdp} \ensuremath{\rightarrow} \texttt{md.mdp}};
+    \end{tikzpicture}
+  \end{center}
+  \begin{pitemize}
+    \item \textbf{EM}: $\min U$, $F_{\max}<1000$ kJ/mol/nm
+    \item \textbf{NVT}: V-rescale thermostat, $dt=2$ fs, LINCS
+    \item \textbf{NPT}: Parrinello-Rahman, $P=1$ bar
+    \item \textbf{Prod}: $50$ ns \ensuremath{\rightarrow} \texttt{traj.xtc} + \texttt{ener.edr}
+  \end{pitemize}
+\end{frame}
+
+\begin{frame}[fragile]{Trajectory Analysis}
+  \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+gmx rms -s topol.tpr -f traj.xtc -o rmsd.xvg
+gmx gyrate -s topol.tpr -f traj.xtc -o rg.xvg
+gmx rdf -s topol.tpr -f traj.xtc -o rdf.xvg
+  \end{minted}
+  \begin{pitemize}
+    \item Same as LAMMPS: RMSD, $R_g$, $g(r)$, H-bonds
+    \item Different file names, same physics
+  \end{pitemize}
+\end{frame}
+
+\begin{frame}{Interpretation --- GROMACS}
+  \interpret{
+    \textbf{GROMACS} · bio focus · \textbf{files} · gro/top/mdp · \textbf{workflow} · min\ensuremath{\rightarrow}NVT\ensuremath{\rightarrow}NPT\ensuremath{\rightarrow}prod · \textbf{analysis} · same $g(r)$, RMSD · \textbf{PMEs} = fast Coulomb
+  }
+\end{frame}

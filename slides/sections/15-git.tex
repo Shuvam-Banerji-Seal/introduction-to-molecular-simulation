@@ -1,0 +1,62 @@
+% 15 --- Git, GitHub and Reproducibility
+\section{Git, GitHub and Reproducibility}
+
+\begin{frame}[fragile]{Git --- Time Machine for Science}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+git init
+git add in.lj analyse.py
+git commit -m "run 1: NVT 300K"
+git tag v1.0
+git log --oneline
+    \end{minted}
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Commit} = snapshot
+      \item \textbf{Branch} = parallel try
+      \item \textbf{Tag} = publishable version
+    \end{pitemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{GitHub --- Lab Notebook in the Cloud}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Repository}: code + scripts + \inlinecode{README}
+      \item \textbf{Push/pull}: backup + share
+      \item \textbf{Issues/PRs}: discuss, review
+      \item \textbf{Actions}: CI --- re-run every commit
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (l) at (0,0) {\color{fgwhite}\tiny local};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (r) at (3,0) {\color{neongreen}\tiny GitHub};
+      \draw[<->,thick,neonyellow] (l) -- (r) node[midway,above]{push/pull};
+      \node[color=softgray] at (1.5,-0.7) {reproducibility = remote backup};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Reproducibility --- Checklist}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \texttt{README} \ensuremath{\rightarrow} what + how + \texttt{uv sync}
+      \item \texttt{pyproject.toml}/\texttt{uv.lock} \ensuremath{\rightarrow} exact versions
+      \item Scripts + \texttt{lammps/build/lmp -h} + seed
+      \item Data: \texttt{traj.xtc} + DOI (Zenodo)
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{warningbox}[Not Reproducible = Not Science]
+      \scriptsize If someone can't re-run \ensuremath{\rightarrow} it's a story, not a result.
+    \end{warningbox}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- Git/Repro}
+  \interpret{
+    \textbf{Git} · snapshot · \textbf{branch} · try · \textbf{GitHub} · share · \textbf{README} · how · \textbf{uv.lock} · versions · \textbf{repro} or it didn't happen
+  }
+\end{frame}

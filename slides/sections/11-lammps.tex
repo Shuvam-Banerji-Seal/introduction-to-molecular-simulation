@@ -1,0 +1,70 @@
+% 11 --- Hands-on LAMMPS
+\section{Hands-on LAMMPS Simulation}
+
+\begin{frame}[fragile]{Installation --- One Script, Both OS}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+# Linux ( Xeons 24c + A100 sm_80 )
+./scripts/build-lammps.sh   # most+gpu+kokkos
+# Windows PowerShell
+.\scripts\build-lammps.ps1
+# Check
+./lammps/build/lmp -h | head
+    \end{minted}
+    \column{0.5\textwidth}
+    \begin{successbox}[You Built 65 Packages]
+      \scriptsize \texttt{lmp -h} shows GPU (mixed, sm\_80) + KOKKOS (CUDA, AMPERE80) + 24 cores
+    \end{successbox}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Input Script --- The Recipe}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{text}
+units real
+atom_style full
+read\_data water.data
+pair\_style lj/cut/coul/long 10
+kspace_style pppm 1e-4
+fix 1 all nvt temp 300 300 100
+timestep 2.0
+run 50000
+    \end{minted}
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Box}: \inlinecode{region + create\_box} or \inlinecode{read\_data}
+      \item \textbf{Atoms}: \inlinecode{create\_atoms} or file
+      \item \textbf{FF}: \inlinecode{pair\_style / bond\_style}
+      \item \textbf{BC}: \inlinecode{boundary p p p}
+      \item \textbf{dt}: 1--2 fs
+    \end{pitemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Execution --- Log, Trajectory, Analysis}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.4\textwidth}
+    \begin{pitemize}
+      \item \inlinecode{lmp -in in.lj -log log.lammps}
+      \item \textbf{Log}: thermo (step, $T$, $E$, $P$)
+      \item \textbf{Trajectory}: dump \texttt{custom}/\texttt{xtc} \ensuremath{\rightarrow} VMD/OVITO
+      \item \textbf{Analysis}: \texttt{compute rdf}, Python post
+    \end{pitemize}
+    \column{0.6\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{fgwhite}\tiny in.lj};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.1cm,minimum height=0.6cm] (b) at (2.4,0.6) {\color{neongreen}\tiny log};
+      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=1.4cm,minimum height=0.6cm] (c) at (2.4,-0.6) {\color{neonyellow}\tiny dump.*};
+      \draw[->,thick,accentcyan] (a) -- (1.2,0) |- (b);
+      \draw[->,thick,accentcyan] (a) -- (1.2,0) |- (c);
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- LAMMPS}
+  \interpret{
+    \textbf{install} · \texttt{build-lammps.sh} · \textbf{script} · 5 lines \ensuremath{\rightarrow} run · \textbf{log} · $T,E,P$ · \textbf{dump} · movie · \textbf{analysis} · your science
+  }
+\end{frame}

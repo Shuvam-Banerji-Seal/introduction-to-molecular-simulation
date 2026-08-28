@@ -1,0 +1,92 @@
+% 07 --- Molecular Dynamics
+\section{Molecular Dynamics}
+
+\begin{frame}{Newton's Equations --- The Engine}
+  \begin{equation*}
+    m_i\ddot{\mathbf{r}}_i = \mathbf{F}_i = -\nabla_{\mathbf{r}_i}U(\mathbf{R}) \qquad \mathbf{v}_i=\dot{\mathbf{r}}_i
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item $U\to$ force \ensuremath{\rightarrow} acceleration \ensuremath{\rightarrow} move
+      \item Need: \textbf{positions}, \textbf{velocities}, \textbf{forces}
+      \item Deterministic if $U$ exact
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (u) at (0,1) {\color{fgwhite}\tiny $U(\mathbf{R})$};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (f) at (0,0) {\color{neongreen}\tiny $\mathbf{F}=-\nabla U$};
+      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (r) at (0,-1) {\color{neonyellow}\tiny $\mathbf{r}(t)$};
+      \draw[->,thick,accentcyan] (u) -- (f);
+      \draw[->,thick,neongreen] (f) -- (r);
+      \draw[->,thick,neonyellow,dashed] (r) to[bend left=30] (u) node[midway,right]{update $U$};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Integration}
+\begin{frame}{Numerical Integration --- Verlet}
+  \begin{equation*}
+    \mathbf{r}(t+dt)=2\mathbf{r}(t)-\mathbf{r}(t-dt)+\frac{\mathbf{F}(t)}{m}dt^2 + O(dt^4)
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Verlet}: time-reversible, symplectic \ensuremath{\rightarrow} stable
+      \item \textbf{Errors}: $O(dt^4)$ per step, $O(dt^2)$ global
+      \item SHAKE/RATTLE \ensuremath{\rightarrow} constrain H-bonds \ensuremath{\rightarrow} larger $dt$
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$t$};
+      \foreach \x/\lab in {0.4/$t-dt$,1.3/$t$,2.2/$t+dt$} {\fill[accentcyan] (\x,0) circle (2pt) node[below]{\lab};}
+      \draw[<->,thick,neonyellow] (0.4,0.5)--(1.3,0.5) node[midway,above]{$dt$};
+      \only<2>{\node[color=neonpink] at (1.3,1) {no velocities needed!};}
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Workflow}
+\begin{frame}{MD Workflow --- From $\mathbf{r}_0$ to Trajectory}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.6]
+      \foreach \idx/\txt in {0/{$\mathbf{r}_0,\mathbf{v}_0$},1/Forces,2/Integrate,3/Trajectory} {
+        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.1cm,minimum height=0.7cm,align=center] (n\idx) at (\idx*2.7,0) {\color{fgwhite}\tiny \txt};
+      }
+      \draw[->,thick,accentcyan] (n0) -- (n1);
+      \draw[->,thick,accentcyan] (n1) -- (n2);
+      \draw[->,thick,accentcyan] (n2) -- (n3);
+      \node[draw=neonyellow,fill=neonyellow!15,rounded corners=1mm,inner sep=1mm] at (1.35,1) {IC: Maxwell--Boltzmann};
+      \node[draw=neongreen,fill=neongreen!15,rounded corners=1mm,inner sep=1mm] at (4.05,1) {Equil. \ensuremath{\rightarrow} Prod.};
+    \end{tikzpicture}
+  \end{center}
+  \begin{pitemize}
+    \item \textbf{Initial conditions}: positions (PDB) + velocities ($\propto\sqrt{T}$)
+    \item \textbf{Equilibration}: relax $T,P$, density plateau
+    \item \textbf{Production}: N steps \ensuremath{\rightarrow} \textbf{trajectory} + \textbf{sampling}
+  \end{pitemize}
+\end{frame}
+
+\begin{frame}{Convergence --- When to Stop?}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Convergence}: $\langle A\rangle$ stops drifting
+      \item Check: $\langle T\rangle$, RMSD plateau, block error
+      \item \textbf{Longer} \ensuremath{\neq} \textbf{converged} if $\tau$ huge
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$t$};
+      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$\langle A\rangle$};
+      \draw[neongreen,thick,domain=0:2.4,samples=40] plot (\x,{0.4+0.6*exp(-\x*1.5)+0.2*sin(\x*10 r)*exp(-\x*0.5)});
+      \draw[dashed,neonyellow] (0,0.4) -- (2.4,0.4) node[right,color=neonyellow]{limit};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- MD}
+  \interpret{
+    \textbf{Newton} · $F=-\nabla U$ · \textbf{Verlet} · reversible · \textbf{IC} · Maxwell · \textbf{trajectory} · equil.\ensuremath{\rightarrow}prod. · \textbf{convergence} · plateau · \textbf{sampling} = statistics
+  }
+\end{frame}

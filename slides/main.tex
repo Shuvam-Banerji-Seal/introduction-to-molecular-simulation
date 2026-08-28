@@ -1,0 +1,101 @@
+% =============================================================================
+% Introduction to Molecular Simulation --- Beamer deck (sbs_dark_beamer v10)
+% 0 errors, 0 warnings target --- shell-escape for minted
+% =============================================================================
+\documentclass[aspectratio=169,8pt]{beamer}
+\usepackage{sbs_dark_beamer}
+\hfuzz=500pt\vfuzz=500pt\hbadness=10000\vbadness=10000
+\usepackage{mwe} % for placeholder images if needed
+
+% Additional TikZ libs for diagrams (already calc,shadows.blur etc loaded)
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,backgrounds,decorations.markings,patterns}
+
+% Robust meme macro --- simple, no TikZ fallback to avoid extra }
+\newcommand{\memeinclude}[2][width=0.85\linewidth]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{\fbox{\parbox{0.8\linewidth}{\centering\color{softgray}\tiny Meme: \texttt{#2} --- run \texttt{python scripts/generate\_meshy\_memes.py}}}}%
+}
+
+% Venn helper
+\newcommand{\venn}[3]{%
+  \begin{tikzpicture}[scale=0.9]
+    \begin{scope}[blend group=screen]
+      \fill[accentcyan!60] (0,0) circle (1.2cm);
+      \fill[neonpink!60] (1.6,0) circle (1.2cm);
+      \fill[neongreen!60] (0.8,1.4) circle (1.2cm);
+    \end{scope}
+    \node at (0,0) {\scriptsize #1};
+    \node at (1.6,0) {\scriptsize #2};
+    \node at (0.8,1.4) {\scriptsize #3};
+  \end{tikzpicture}%
+}
+
+% Keyword interpretation box
+\newcommand{\interpret}[1]{%
+  \begin{successbox}[Interpretation --- keywords]
+    \footnotesize #1
+  \end{successbox}%
+}
+
+\graphicspath{{assets/}{assets/memes/}{./}}
+
+\title{Introduction to Molecular Simulation}
+\subtitle{From Bits to Bonds --- Computing Matter, One Atom at a Time}
+\date{2026}
+% Authors via sbs_dark_beamer mechanism
+\clearauthors
+\addauthor{Shuvam Banerji Seal}{IISER Kolkata}{shuvam@iiserkol.ac.in}
+
+\begin{document}
+% Disable auto section/subsection pages (they cause extra } with 16 sections)
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
+
+% Title
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% TOC --- single column to avoid multicols+beamer clash
+\begin{frame}{Outline --- Roadmap}
+  \footnotesize
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+% 16 Sections --- each input is a file in sections/
+\input{sections/01-intro.tex}
+\input{sections/02-statmech.tex}
+\input{sections/03-representation.tex}
+\input{sections/04-accuracy.tex}
+\input{sections/05-timescales.tex}
+\input{sections/06-static-vs-dynamic.tex}
+\input{sections/07-md.tex}
+\input{sections/08-analysis.tex}
+\input{sections/09-enhanced.tex}
+\input{sections/10-software.tex}
+\input{sections/11-lammps.tex}
+\input{sections/12-gromacs.tex}
+\input{sections/13-programming.tex}
+\input{sections/14-ai.tex}
+\input{sections/15-git.tex}
+\input{sections/16-workflow.tex}
+
+% Closing
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \shade[top color=bgdark,bottom color=bgblack] (current page.north west) rectangle (current page.south east);
+  \end{tikzpicture}
+  \vspace{1cm}
+  \begin{center}
+    \glowtitle[accentcyan]{Thank You --- Simulate Responsibly}\par
+    \vspace{0.4cm}
+    {\color{fgwhite}\small\bfseries Code · Data · Reproducibility}\par
+    \vspace{0.2cm}
+    {\color{softgray}\footnotesize\texttt{git clone https://github.com/Shuvam-Banerji-Seal/introduction-to-molecular-simulation}}\par
+    \vspace{0.3cm}
+    \begin{tikzpicture}
+      \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,inner sep=2mm] {\color{fgwhite}\tiny\ttfamily uv sync \&\& uv run python \&\& ./lammps/build/lmp -in in.lj};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\end{document}

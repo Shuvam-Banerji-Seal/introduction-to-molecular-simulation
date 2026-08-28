@@ -1,0 +1,131 @@
+% 04 --- Accuracy and Approximation (incl. IEEE 754)
+\section{Accuracy and Approximation in Simulation}
+
+\begin{frame}{Accuracy --- What Does \textit{Correct} Mean?}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Accuracy} = closeness to \textbf{reality}
+      \item Not vs. code, vs. \textbf{nature}
+      \item Validate: $g(r)$, $D$, $\Delta G$ vs. experiment
+      \item \textbf{Errors} stack: model + numerics + sampling
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \venn{Accuracy}{Precision}{Cost}
+    \vspace{2mm}
+    {\tiny\color{softgray} You can be precise and still wrong.}
+  \end{columns}
+\end{frame}
+
+\subsection{Force-Field Approximations}
+\begin{frame}{Force-Field Approximations}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \begin{pitemize}
+      \item Fixed topology \ensuremath{\rightarrow} no bond breaking (except ReaxFF)
+      \item Pairwise $U_{\text{LJ}}$ \ensuremath{\rightarrow} no many-body
+      \item Point charges \ensuremath{\rightarrow} no polarization (unless Amoeba/Drude)
+      \item Harmonic bonds \ensuremath{\rightarrow} no anharmonicity at large $r$
+    \end{pitemize}
+    \column{0.45\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[accentcyan,thick] (0,0) rectangle (2.4,1.6);
+      \node[color=fgwhite] at (1.2,1.3) {reality (QM)};
+      \draw[neonyellow,thick] (0.3,0.3) rectangle (2.1,1.1);
+      \node[color=neonyellow] at (1.2,0.7) {FF approximation};
+      \node[color=neonpink] at (1.2,-0.3) {overlap = accuracy};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Quantum vs Classical}
+\begin{frame}{Quantum vs Classical --- Trade-off}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{QM} (DFT): $ \hat H\psi=E\psi $, electrons explicit, $N\sim 10^2$, $t\sim$ ps
+      \item \textbf{MM} (FF): $F=ma$, atoms, $N\sim 10^6$, $t\sim \mu$s
+      \item \textbf{Scale}: QM accuracy \ensuremath{\rightarrow} MM speed
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[->,accentcyan,thick] (0,0) -- (2.6,0) node[right]{speed};
+      \draw[->,accentcyan,thick] (0,0) -- (0,2) node[above]{accuracy};
+      \fill[neonpink] (0.4,1.6) circle (3pt) node[above,color=neonpink]{QM};
+      \fill[neongreen] (2.2,0.4) circle (3pt) node[below,color=neongreen]{MM};
+      \draw[dashed,neonyellow,thick] (0.4,1.6) -- (2.2,0.4);
+      \node[color=neonyellow] at (1.3,1.1) {accuracy--cost};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Parameterization}
+\begin{frame}{Parameterization --- Fitting Reality}
+  \begin{equation*}
+    \min_{\{k_b,r_0,\epsilon,\sigma,q\}} \sum \left| U_{\text{FF}} - U_{\text{QM/exp}} \right|^2
+  \end{equation*}
+  \begin{pitemize}
+    \item Fit to QM energies/forces or experimental $ \rho, \Delta H_{\text{vap}}$
+    \item \textbf{Rigorous}: transferability \ensuremath{\neq} guaranteed
+    \item Validate outside training set!
+  \end{pitemize}
+\end{frame}
+
+\subsection{Numerical Errors --- IEEE 754}
+\begin{frame}{Numerical Errors --- Computers Are Discrete}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Real $\in\mathbb{R}$ \ensuremath{\rightarrow} float $\in$ IEEE 754 (e.g., binary64: 1-11-52)
+      \item $0.1+0.2 \neq 0.3$ (binary)
+      \item Error $\epsilon_{\text{mach}}\sim10^{-16}$ (double)
+      \item Accumulates: $10^9$ steps $\times$ dt error
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[scale=0.6]
+        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=3cm,minimum height=0.6cm] at (0,1) {\color{fgwhite}\tiny\texttt{1 bit | 11 exp | 52 mantissa}};
+        \draw[->,thick,neonyellow] (0,0.6) -- (0,0.2) node[midway,right]{round};
+        \node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.6cm,minimum height=0.7cm] at (0,-0.5) {\color{neonpink}\tiny 0.1$_{10}$ = 0.000110011...$_2$};
+      \end{tikzpicture}
+    \end{center}
+    \memeinclude[width=0.9\linewidth]{assets/memes/ieee754_meme.png}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Sampling Errors --- Statistics}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Finite time $T$ \ensuremath{\rightarrow} error $\propto 1/\sqrt{T/\tau}$
+      \item $\tau$ = correlation time (ps to ms)
+      \item \textbf{Block averaging} \ensuremath{\rightarrow} error bars
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$t$};
+      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$A$};
+      \draw[neongreen,thick,domain=0:2.4,samples=80] plot (\x,{0.8+0.3*sin(\x*8 r)*exp(-\x*0.3)});
+      \draw[dashed,neonyellow] (0,0.8) -- (2.4,0.8) node[right,color=neonyellow]{mean};
+      \node[color=softgray] at (1.2,-0.3) {noise \ensuremath{\rightarrow} error $\downarrow$ with $\sqrt{T}$};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Accuracy--Cost Trade-off}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.95]
+      \draw[->,accentcyan,thick] (0,0) -- (4,0) node[right]{cost (CPU·h)};
+      \draw[->,accentcyan,thick] (0,0) -- (0,2.2) node[above]{accuracy};
+      \draw[neonpink,thick,domain=0.2:3.8,samples=40] plot (\x,{2*(1-exp(-\x*0.7))});
+      \foreach \x/\lab in {0.5/FF,1.5/Polarizable,2.5/DFT,3.4/QM/MM} {\fill[accentcyan] (\x,{2*(1-exp(-\x*0.7))}) circle (2pt) node[above,color=fgwhite]{\lab};}
+      \node[color=neonyellow] at (2,0.5) {diminishing returns};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Interpretation --- Accuracy}
+  \interpret{
+    \textbf{accuracy} · vs. Nature · \textbf{FF} = biggest error · \textbf{QM vs MM} · speed · \textbf{IEEE 754} · $0.1+0.2\neq0.3$ · \textbf{sampling} · $1/\sqrt{T}$ · \textbf{trade-off} · pay for truth
+  }
+\end{frame}

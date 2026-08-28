@@ -1,0 +1,123 @@
+% 08 --- Simulation Data Analysis
+\section{Simulation Data Analysis}
+
+\begin{frame}{Trajectory --- The Movie}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Trajectory}: $\{\mathbf{R}(t_0),\mathbf{R}(t_1),\dots\}$ --- DCD/XTC
+      \item Size: $N\times 3\times N_{\text{frames}}\times 4$ bytes
+      \item \textbf{Analysis} = compress movie \ensuremath{\rightarrow} numbers
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \foreach \idx in {0,0.9,1.8} {
+        \draw[accentcyan,rounded corners=1mm,fill=darkgray] (\idx,0) rectangle ++(0.7,0.9);
+        \fill[neonpink] (\idx+0.2,0.6) circle (2pt); \fill[neongreen] (\idx+0.5,0.3) circle (2pt);
+      }
+      \draw[->,thick,neonyellow] (0.7,0.45) -- (0.9,0.45);
+      \draw[->,thick,neonyellow] (1.6,0.45) -- (1.8,0.45);
+      \node[color=softgray] at (1.1,-0.4) {frames \ensuremath{\rightarrow} \ensuremath{\Delta}t};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Geometric Measures}
+\begin{frame}{RMSD, RMSF, $R_g$}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.33\textwidth}
+    \begin{infobox}[RMSD]
+      \scriptsize $\text{RMSD}(t)=\sqrt{\frac1N\sum_i |\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}|^2}$\\\tiny drift = motion
+    \end{infobox}
+    \column{0.33\textwidth}
+    \begin{infobox}[RMSF]
+      \scriptsize $\text{RMSF}_i=\sqrt{\langle (\mathbf{r}_i-\langle\mathbf{r}_i\rangle)^2\rangle}$\\\tiny flexibility per residue
+    \end{infobox}
+    \column{0.33\textwidth}
+    \begin{infobox}[R$_g$]
+      \scriptsize $R_g^2=\frac1N\sum_i |\mathbf{r}_i-\mathbf{r}_{\text{COM}}|^2$\\\tiny compactness
+    \end{infobox}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{H-Bonds, Distances, Angles}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{H-bond}: $d_{\text{O}\cdots\text{H}}<3.5$Å, $\angle>150^\circ$
+      \item Distances/angles \ensuremath{\rightarrow} \textbf{order parameters}
+      \item \textbf{Define} before measuring
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \shade[ball color=neonblue] (0,0) circle (0.32cm) node[color=white]{O};
+      \shade[ball color=neonyellow] (1,0.6) circle (0.22cm) node[color=bgblack]{H};
+      \draw[dashed,neonpink,thick] (0,0) -- (1,0.6) node[midway,above,sloped]{H-bond};
+      \draw[accentcyan,thick] (1,0.6) -- (2,0.2);
+      \draw[neonyellow] (1,0.6) -- (1.5,0.3) arc (30:-10:0.4cm);
+      \node[color=neonyellow] at (1.6,0.2) {$\theta$};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{RDF \& Clustering}
+\begin{frame}{Radial Distribution Function}
+  \begin{equation*}
+    g(r)=\frac{\langle \rho(r)\rangle}{\rho_0} \quad\text{--- shell structure}
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item First peak \ensuremath{\rightarrow} coordination shell
+      \item $g(r)\to1$ at long $r$
+      \item Integrates to $n(r)=4\pi\rho_0\int_0^r g(s)s^2ds$
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$r$};
+      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$g(r)$};
+      \draw[neongreen,thick,domain=0.3:2.4,samples=60] plot (\x,{0.2+1.2*exp(-(\x-0.7)*(\x-0.7)*8)+0.5*exp(-(\x-1.5)*(\x-1.5)*4)});
+      \draw[dashed,softgray] (0,1) -- (2.4,1) node[right,color=softgray]{1};
+      \node[color=neongreen] at (0.7,1.4) {1st shell};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Conformational Clustering}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Group frames by RMSD \ensuremath{\rightarrow} \textbf{clusters}
+      \item Representative = medoid
+      \item \textbf{Why?} \ensuremath{\rightarrow} reduce $10^6$ frames \ensuremath{\rightarrow} 5 states
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \foreach \x/\y/\c in {0.3/0.5/neonpink,0.5/0.7/neonpink,0.4/0.9/neonpink,1.6/0.8/neongreen,1.8/0.6/neongreen,1.7/1.0/neongreen,0.9/0.3/neonyellow,1.1/0.4/neonyellow} {\fill[\c] (\x,\y) circle (2pt);}
+      \draw[accentcyan,dashed] (0.1,0.2) rectangle (0.8,1.2) node[below]{C1};
+      \draw[accentcyan,dashed] (1.4,0.4) rectangle (2.0,1.2) node[below]{C2};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\subsection{Visualization \& Titan}
+\begin{frame}{Visualization --- See Before You Believe}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{VMD/PyMOL/OVITO/ChimeraX} \ensuremath{\rightarrow} see artefacts
+      \item Color by \textbf{velocity}, \textbf{charge}, time
+      \item \textbf{Titan} anecdote: 18,000 GPUs, 1 $\mu$s/day \ensuremath{\rightarrow} still \textbf{need} analysis
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{infobox}[No Visualization = No Trust]
+      \scriptsize Trajectory without watching = blind.
+    \end{infobox}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- Analysis}
+  \interpret{
+    \textbf{trajectory} · movie · \textbf{RMSD} · drift · \textbf{RMSF} · flex · \textbf{$R_g$} · compact · \textbf{H-bond} · geometry · \textbf{$g(r)$} · shells · \textbf{clustering} · 5 states · \textbf{visualize} · trust
+  }
+\end{frame}

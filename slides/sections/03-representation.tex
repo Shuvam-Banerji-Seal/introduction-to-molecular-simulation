@@ -1,0 +1,150 @@
+% 03 --- Molecular Representation on Computers (rigorous)
+\section{Molecular Representation on Computers}
+
+\subsection{Coordinates, Topology}
+\begin{frame}{Atomic Coordinates --- The $3N$ Truth}
+  \begin{equation*}
+    \mathbf{R} = \{\mathbf{r}_1,\dots,\mathbf{r}_N\},\quad \mathbf{r}_i=(x_i,y_i,z_i)\in\mathbb{R}^3
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item $3N$ numbers = \textbf{complete} classical description
+      \item File: \inlinecode{XYZ / PDB / GRO} \ensuremath{\rightarrow} list
+      \item Units: Å (most), nm (GROMACS)
+      \item \textbf{Rigorous}: coordinates \textbf{are} the state
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[scale=0.9]
+        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.6cm,minimum height=0.8cm] at (0,1) {\color{fgwhite}\tiny\ttfamily ATOM 1 C 0.0 0.0 0.0};
+        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.6cm,minimum height=0.8cm] at (0,0) {\color{fgwhite}\tiny\ttfamily ATOM 2 O 1.2 0.0 0.0};
+        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.6cm,minimum height=0.8cm] at (0,-1) {\color{fgwhite}\tiny\ttfamily ATOM 3 H -0.4 0.9 0.0};
+        \draw[->,thick,neongreen] (1.4,1) -- (2.2,0.2) node[right,color=neongreen]{array};
+      \end{tikzpicture}
+    \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Bonds, Angles, Dihedrals --- Topology}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Bond}: $r_{ij}=|\mathbf{r}_j-\mathbf{r}_i|$ · 2 atoms
+      \item \textbf{Angle}: $\theta_{ijk}$ · 3 atoms
+      \item \textbf{Dihedral}: $\phi_{ijkl}$ · 4 atoms, \textbf{periodic}
+      \item Topology = \textbf{graph} (bonds = edges)
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \coordinate (A) at (0,0); \coordinate (B) at (1.2,0.6); \coordinate (C) at (2.4,0.2); \coordinate (D) at (3.2,1.1);
+      \foreach \p in {A,B,C,D} {\shade[ball color=accentcyan] (\p) circle (0.22cm);}
+      \draw[thick,white] (A)--(B)--(C)--(D);
+      \draw[dashed,neonyellow] (A)--(C); \node[color=neonyellow] at (1.2,-0.4) {angle $\theta$};
+      \draw[dashed,neonpink] (B)--(D); \node[color=neonpink] at (2.8,0.7) {dihedral $\phi$};
+      \only<2>{\draw[->,thick,neongreen] (B) -- ++(0.4,0.8) node[above]{4-body!};}
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- Coordinates/Topology}
+  \interpret{
+    \textbf{coordinates} · $3N$ numbers = molecule · \textbf{bond} · distance · \textbf{angle} · 3 atoms · \textbf{dihedral} · 4 atoms = flexibility · \textbf{topology} · graph
+  }
+\end{frame}
+
+\subsection{Masses, Charges, Box, PBC}
+\begin{frame}{Masses \& Partial Charges}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item $m_i$ \ensuremath{\rightarrow} dynamics: $\mathbf{F}=m\mathbf{a}$
+      \item $q_i$ \ensuremath{\rightarrow} electrostatics: $U_{\text{Coul}}=\frac{q_iq_j}{4\pi\epsilon_0 r_{ij}}$
+      \item \textbf{Partial} \ensuremath{\neq} formal: fitted to reproduce $ \Phi(\mathbf{r})$
+      \item Rigorous: charges are \textbf{parameters}, not observables
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \shade[ball color=neonblue] (0,0) circle (0.45cm) node[color=white]{O$^{-0.8}$};
+      \shade[ball color=neonyellow] (-0.9,0.7) circle (0.32cm) node[color=bgblack]{H$^{+0.4}$};
+      \shade[ball color=neonyellow] (0.9,0.7) circle (0.32cm) node[color=bgblack]{H$^{+0.4}$};
+      \draw[->,thick,accentcyan] (0,-0.6) -- (0,-1.3) node[below,color=accentcyan]{$\mathbf{\mu}$};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Simulation Box \& Periodic Boundary Conditions}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Box: $\mathbf{L}=(L_x,L_y,L_z)$, triclinic: $\mathbf{h}$
+      \item \textbf{PBC}: infinite tiles, minimum image
+      \item Rigorous: removes surface, \textbf{finite-size} remains
+      \item Cutoff $r_c < L/2$ 
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[scale=0.6]
+        \draw[accentcyan,thick] (0,0) rectangle (1.8,1.4);
+        % PBC images (simplified, no conditional)
+        \foreach \dx in {-1.8,1.8} \foreach \dy in {-1.4,0,1.4} {
+          \draw[softgray,thin] (\dx,\dy) rectangle ++(1.8,1.4); \fill[neonpink] (\dx+0.9,\dy+0.7) circle (1pt);
+        }
+        \foreach \dx in {0} \foreach \dy in {-1.4,1.4} {
+          \draw[softgray,thin] (\dx,\dy) rectangle ++(1.8,1.4); \fill[neonpink] (\dx+0.9,\dy+0.7) circle (1pt);
+        }
+        \fill[accentcyan] (0.9,0.7) circle (2pt);
+        \node[color=accentcyan] at (0.9,1.7) {central box};
+        \draw[dashed,neonyellow] (0.9,0.7) -- (2.7,0.7) node[midway,above]{image};
+      \end{tikzpicture}
+    \end{center}
+  \end{columns}
+\end{frame}
+
+\subsection{PES \& Force Fields}
+\begin{frame}{Potential Energy Surface --- The Mountain Range}
+  \begin{equation*}
+    U(\mathbf{R}) : \mathbb{R}^{3N}\to\mathbb{R} \qquad \mathbf{F}_i = -\nabla_{\mathbf{r}_i}U
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item $3N$-dim surface \ensuremath{\rightarrow} $2$D cartoon is \textbf{projection}
+      \item Minima = stable structures
+      \item Saddle = transition state
+      \item Rigorous: \textbf{all} physics in $U$
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \draw[accentcyan!50,fill=accentcyan!10] plot[smooth] coordinates {(0,0) (0.6,0.8) (1.2,0.3) (1.8,1.1) (2.4,0.6) (3,1.3)} -- (3,0) -- cycle;
+      \fill[neongreen] (0.6,0.8) circle (2pt) node[above,color=neongreen]{min};
+      \fill[neonpink] (1.8,1.1) circle (2pt) node[above,color=neonpink]{min};
+      \fill[neonyellow] (1.2,0.3) circle (2pt) node[below,color=neonyellow]{saddle};
+      \draw[->,thick,accentcyan] (1.2,0.3) -- (1.8,1.1) node[midway,sloped,above]{barrier};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Force Fields --- $U$ Made Computable}
+  \begin{equation*}
+    U = \underbrace{U_{\text{bond}}+U_{\text{angle}}+U_{\text{dihed}}}_{\text{bonded}} + \underbrace{U_{\text{LJ}}+U_{\text{Coul}}}_{\text{nonbonded}}
+  \end{equation*}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Bond: $k_b(r-r_0)^2$ · spring
+      \item LJ: $4\epsilon[(\sigma/r)^{12}-(\sigma/r)^6]$
+      \item Many: AMBER, CHARMM, OPLS, ReaxFF, \textbf{ML potentials}
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{infobox}[FF = Expensive Physics Compressed]
+      \scriptsize $10^5$ DFT points \ensuremath{\rightarrow} $U_{\text{FF}}$ \ensuremath{\rightarrow} $10^9$ steps
+    \end{infobox}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- PES/FF}
+  \interpret{
+    \textbf{PES} · energy landscape · \textbf{force} = slope · \textbf{force field} · cheap $U$ · \textbf{bonded + nonbonded} · \textbf{parameterized} \ensuremath{\rightarrow} not universal
+  }
+\end{frame}

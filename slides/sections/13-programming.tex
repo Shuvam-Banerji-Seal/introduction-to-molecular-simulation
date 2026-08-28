@@ -1,0 +1,66 @@
+% 13 --- Programming for Molecular Simulation
+\section{Programming for Molecular Simulation}
+
+\begin{frame}[fragile]{Linux \& Bash --- Your Lab Bench}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+for d in */; do
+  mpirun -np 24 lmp -in in.lj
+  python analyse.py traj.xtc
+done
+    \end{minted}
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{Linux}: HPC speaks bash
+      \item \textbf{Automation}: loops, slurm, `snakemake`
+      \item \textbf{Reproducible}: script beats clicking
+    \end{pitemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Python Stack --- NumPy \ensuremath{\rightarrow} MDAnalysis}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item \textbf{NumPy/SciPy}: arrays, FFT, linalg
+      \item \textbf{Matplotlib/Pandas}: plots, tables
+      \item \textbf{MDAnalysis/MDTraj}: read traj \ensuremath{\rightarrow} compute $g(r)$
+      \item \textbf{RDKit}: cheminformatics
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{python}
+import MDAnalysis as mda
+import numpy as np
+u = mda.Universe("topol.tpr","traj.xtc")
+for ts in u.trajectory:
+    pos = u.atoms.positions
+    # compute RDF, RMSD, ...
+    \end{minted}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{C/C++/Fortran/CUDA --- Speed}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item LAMMPS/GROMACS = \textbf{C++}/CUDA/Fortran
+      \item You: Python for glue, \textbf{CUDA} for custom kernels
+      \item \inlinecode{uv} \ensuremath{\rightarrow} C++ \ensuremath{\rightarrow} LAMMPS plugin
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.9]
+      \draw[->,accentcyan,thick] (0,0)--(2.6,0) node[right]{speed};
+      \draw[->,accentcyan,thick] (0,0)--(0,1.8) node[above]{ease};
+      \fill[neonyellow] (0.5,1.5) circle (3pt) node[above]{Python};
+      \fill[neonpink] (2.2,0.3) circle (3pt) node[below]{CUDA};
+      \fill[accentcyan] (1.4,0.9) circle (3pt) node[above]{C++};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretation --- Programming}
+  \interpret{
+    \textbf{Bash} · loop it · \textbf{Python} · NumPy/MDAnalysis · \textbf{C++/CUDA} · speed · \textbf{automation} · snakemake · \textbf{repro} = script
+  }
+\end{frame}

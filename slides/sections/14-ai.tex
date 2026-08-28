@@ -1,0 +1,62 @@
+% 14 --- AI and Molecular Structure Prediction
+\section{AI and Molecular Structure Prediction}
+
+\begin{frame}{AlphaFold / OpenFold --- Sequence \ensuremath{\rightarrow} Structure}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{pitemize}
+      \item Input: \textbf{sequence} \ensuremath{\rightarrow} Output: \textbf{3D coordinates}
+      \item Attention over MSA \ensuremath{\rightarrow} distances \ensuremath{\rightarrow} structure module
+      \item \textbf{Accuracy}: CASP, $ \text{lDDT} > 90$ for many
+      \item \textbf{OpenFold} = open AlphaFold2
+    \end{pitemize}
+    \column{0.5\textwidth}
+    \begin{tikzpicture}[scale=0.6]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (s) at (0,1) {\color{fgwhite}\tiny SEQUENCE};
+      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{neonyellow}\tiny evo attention};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (p) at (0,-1) {\color{neongreen}\tiny STRUCTURE};
+      \draw[->,thick,accentcyan] (s)--(a); \draw[->,thick,neonyellow] (a)--(p);
+      \node[color=softgray] at (2,0) {MSA + pair};
+    \end{tikzpicture}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Prediction vs Simulation}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \begin{infobox}[AlphaFold]
+      \scriptsize One \textbf{static} structure\\ \tiny No dynamics, no $F$, no ensemble
+    \end{infobox}
+    \column{0.5\textwidth}
+    \begin{successbox}[MD]
+      \scriptsize \textbf{Ensemble} of structures\\ \tiny $T$, $F$, pathways, rates
+    \end{successbox}
+  \end{columns}
+  \vspace{3mm}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[font=\footnotesize,color=neonyellow] {AlphaFold = photo \quad vs \quad MD = movie};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{NVIDIA NIM \& AI-Assisted Modeling}
+  \begin{pitemize}
+    \item \textbf{NIM}: containerized inference \ensuremath{\rightarrow} AlphaFold3, OpenFold on GPUs
+    \item \textbf{AI + MD}: AI gives start, MD refines + samples \textbf{free energy}
+    \item Rigorous: AI \textbf{does not} replace physics --- it \textbf{accelerates} it
+  \end{pitemize}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (0,0) {\color{accentcyan}\tiny AI predict};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (3.5,0) {\color{neongreen}\tiny MD sample/fine-tune};
+      \draw[->,thick,neonyellow] (1.2,0) -- (2.3,0) node[midway,above]{seed};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Interpretation --- AI}
+  \interpret{
+    \textbf{AlphaFold} · sequence\ensuremath{\rightarrow}structure · \textbf{photo} not movie · \textbf{MD} = ensemble+$F$ · \textbf{NIM} = GPU AI · \textbf{AI+MD} · predict then sample
+  }
+\end{frame}

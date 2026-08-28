@@ -52,3 +52,15 @@ CONTINUATION_STATE.md
 .playwright-mcp/
 .venv/
 lammps/
+# LaTeX build artifacts
+slides/*.aux
+slides/*.log
+slides/*.nav
+slides/*.out
+slides/*.snm
+slides/*.toc
+slides/*.vrb
+slides/*.fls
+slides/*.fdb_latexmk
+slides/_minted-*/
+slides/main.pdf
