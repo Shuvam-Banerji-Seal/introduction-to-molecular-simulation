@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "Introduction to Molecular Simulation — Talk & Companion Repository"
+message: "If you use this material in teaching or research, please cite it as below."
+type: software
+authors:
+  - family-names: Banerji Seal
+    given-names: Shuvam
+    orcid: https://orcid.org/0000-0000-0000-0000
+license: MIT
+repository-code: https://github.com/Shuvam-Banerji-Seal/introduction-to-molecular-simulation
+keywords:
+  - molecular simulation
+  - molecular dynamics
+  - Monte Carlo
+  - statistical mechanics
+  - force fields
+  - computational chemistry
+abstract: >
+  Beginner-friendly talk and hands-on examples for molecular simulation:
+  what it is, why it works (statistical mechanics → ensembles), and how to
+  run one (potentials, integrators, thermostats, analysis). Pure-Python
+  runnable examples plus optional OpenMM/ASE extensions.
+version: 0.1.0
+date-released: 2026-08-28

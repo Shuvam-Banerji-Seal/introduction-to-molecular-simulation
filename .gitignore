@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+*.whl
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environments
+.env
+.conda/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Outputs (keep repo lean; examples write here but don't commit large files)
+examples/**/trajectory.xyz
+examples/**/trajectory.dcd
+examples/**/*.log
+examples/**/*.png
+examples/**/*.npy
+!assets/**/*.png
+
+# Slides export
+slides/*.pdf
+pdf/
+
+# Temp / rigor
+/tmp/
+.rigor-trash/
+
+# Rigor workspace (do not publish)
+plans/
+CONTINUATION_STATE.md

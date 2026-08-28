@@ -1,0 +1,13 @@
+# Core — required for examples 01-03 and analysis fallback
+numpy>=1.23
+matplotlib>=3.6
+scipy>=1.10
+
+# Optional — water box and richer analysis (gracefully degraded if absent)
+# openmm  # conda: openmm  (pip: openmm)
+# ase
+# MDAnalysis
+# mdtraj
+
+# Slides (optional)
+# marp is an npm package: npm i -g @marp-team/marp-cli
