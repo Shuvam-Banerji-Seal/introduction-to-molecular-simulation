@@ -62,9 +62,10 @@ cmake -C ../cmake/presets/most.cmake \
       -D WITH_JPEG=yes \
       -D WITH_PNG=yes \
       -D WITH_FFMPEG=yes \
-      -D DOWNLOAD_VORO=yes \
-      -D DOWNLOAD_EIGEN3=yes \
-      -D PKG_VORONOI=no  # Kokkos+CUDA: Voro++ fails with nvcc_wrapper; 67/68 pkgs remain
+      -D PKG_COMPRESS=no \
+      -D DOWNLOAD_VORO=no \
+      -D DOWNLOAD_EIGEN3=no \
+      -D PKG_VORONOI=no \
 
 # Build with all 24 cores
 cmake --build . --parallel 24
