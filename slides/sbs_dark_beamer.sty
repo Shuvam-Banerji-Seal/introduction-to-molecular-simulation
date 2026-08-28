@@ -1,0 +1,531 @@
+% =============================================================================
+% sbs_dark_beamer.sty v10.0
+% Major revision: Smaller fonts, better contrast, no glow on math, proper TOC
+% =============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sbs_dark_beamer}[2026/01/17 SBS Dark Beamer Theme v10.0]
+
+% =============================================================================
+% PACKAGES
+% =============================================================================
+\RequirePackage{amsmath,amsfonts,amssymb}
+\RequirePackage{tikz}
+\RequirePackage{hyperref}
+\RequirePackage{algorithm,algpseudocode}
+\RequirePackage{booktabs}
+\RequirePackage{subcaption}
+\RequirePackage{calc,etoolbox,multicol,graphicx}
+\RequirePackage[T1]{fontenc}
+
+% Academic fonts - smaller base
+\RequirePackage{mathpazo}
+\RequirePackage{helvet}
+\RequirePackage{courier}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Contour for colored glow (text only, not math)
+\RequirePackage[outline]{contour}
+\contourlength{1.0pt}
+\contournumber{40}
+
+\usetikzlibrary{calc,shadows.blur,fadings,shapes.symbols,decorations.pathmorphing}
+
+\RequirePackage{minted}
+\RequirePackage[most,minted,skins,breakable]{tcolorbox}
+
+% =============================================================================
+% COLORS - Enhanced contrast for TikZ
+% =============================================================================
+\RequirePackage{xcolor}
+\definecolor{bgblack}{RGB}{0,0,0}
+\definecolor{bgdark}{RGB}{15,15,20}
+\definecolor{fgwhite}{RGB}{240,240,240}
+\definecolor{accentcyan}{RGB}{0,255,255}
+\definecolor{softgray}{RGB}{120,120,120}
+\definecolor{darkgray}{RGB}{30,30,35}
+\definecolor{codebg}{RGB}{20,20,25}
+\definecolor{neonyellow}{RGB}{255,220,0}
+\definecolor{neonpink}{RGB}{255,50,150}
+\definecolor{neonorange}{RGB}{255,140,0}
+\definecolor{neongreen}{RGB}{50,255,100}
+\definecolor{neonblue}{RGB}{0,120,255}
+\definecolor{customblue}{RGB}{0,150,255}
+\definecolor{customgray}{RGB}{50,50,50}
+\definecolor{sectionbg}{RGB}{25,25,35}
+% High contrast colors for TikZ text on light backgrounds
+\definecolor{tikztext}{RGB}{0,0,0}
+\definecolor{tikztextdark}{RGB}{20,20,30}
+
+% =============================================================================
+% BEAMER SETTINGS - Smaller fonts globally
+% =============================================================================
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor{background canvas}{bg=bgblack}
+\setbeamercolor{normal text}{fg=fgwhite}
+\setbeamercolor{frametitle}{fg=accentcyan}
+\setbeamercolor{title}{fg=accentcyan}
+\setbeamercolor{subtitle}{fg=fgwhite}
+\setbeamercolor{author}{fg=fgwhite}
+\setbeamercolor{institute}{fg=softgray}
+\setbeamercolor{date}{fg=softgray}
+\setbeamercolor{structure}{fg=accentcyan}
+\setbeamercolor{item}{fg=accentcyan}
+\setbeamercolor{section in toc}{fg=accentcyan}
+\setbeamercolor{subsection in toc}{fg=fgwhite}
+\setbeamercolor{author in head/foot}{fg=fgwhite,bg=bgblack}
+\setbeamercolor{title in head/foot}{fg=fgwhite,bg=bgblack}
+\setbeamercolor{date in head/foot}{fg=fgwhite,bg=bgblack}
+
+% SMALLER FONT SIZES GLOBALLY
+\setbeamerfont{normal text}{size=\footnotesize}
+\setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{institute}{size=\footnotesize}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{author in head/foot}{size=\tiny}
+\setbeamerfont{title in head/foot}{size=\tiny}
+\setbeamerfont{date in head/foot}{size=\tiny}
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+
+% Apply smaller font as default
+\AtBeginDocument{\footnotesize}
+
+% =============================================================================
+% GLOW EFFECTS - FOR TEXT ONLY, NOT MATH/NUMBERS
+% =============================================================================
+% Simple bold colored text instead of glow (better readability)
+\newcommand{\glow}[2][accentcyan]{%
+    {\bfseries\color{#1}#2}%
+}
+
+% Strong emphasis - just bold colored
+\newcommand{\glowstrong}[2][accentcyan]{%
+    {\bfseries\color{#1}#2}%
+}
+
+% =============================================================================
+% CUSTOM FONT SIZES (Granular Control)
+% =============================================================================
+\makeatletter 
+\newcommand\semiHuge{\@setfontsize\semiHuge{22.72}{27.38}}
+\newcommand\semihuge{\@setfontsize\semihuge{18.93}{23.45}}
+\newcommand\semiLARGE{\@setfontsize\semiLARGE{15.77}{19.90}}
+\newcommand\semiLarge{\@setfontsize\semiLarge{13.15}{15.87}}
+\newcommand\semilarge{\@setfontsize\semilarge{11.46}{13.80}}
+\newcommand\seminormal{\@setfontsize\seminormal{10.46}{12.77}}
+\makeatother
+
+% 3. Title Glow: Dynamic granular font sizing
+% Measures title width and scales font to fit within 0.9\paperwidth
+\newlength{\titletestwidth}
+\newcommand{\glowtitle}[2][accentcyan]{%
+    \begingroup
+    % Helper macro to check and set font
+    % Usage: \trysize{sizecommand}{next_check}
+    % But we need to nest them. We'll use a cascading if-else block for clarity.
+    
+    \def\finaltitlefont{\Huge\bfseries}% Default
+    
+    \settowidth{\titletestwidth}{\Huge\bfseries #2}%
+    \ifdim\titletestwidth>0.9\paperwidth
+        \settowidth{\titletestwidth}{\semiHuge\bfseries #2}%
+        \ifdim\titletestwidth>0.9\paperwidth
+            \settowidth{\titletestwidth}{\huge\bfseries #2}%
+            \ifdim\titletestwidth>0.9\paperwidth
+                \settowidth{\titletestwidth}{\semihuge\bfseries #2}%
+                \ifdim\titletestwidth>0.9\paperwidth
+                    \settowidth{\titletestwidth}{\LARGE\bfseries #2}%
+                    \ifdim\titletestwidth>0.9\paperwidth
+                        \settowidth{\titletestwidth}{\semiLARGE\bfseries #2}%
+                        \ifdim\titletestwidth>0.9\paperwidth
+                            \settowidth{\titletestwidth}{\Large\bfseries #2}%
+                            \ifdim\titletestwidth>0.9\paperwidth
+                                \settowidth{\titletestwidth}{\semiLarge\bfseries #2}%
+                                \ifdim\titletestwidth>0.9\paperwidth
+                                    \settowidth{\titletestwidth}{\large\bfseries #2}%
+                                    \ifdim\titletestwidth>0.9\paperwidth
+                                        \settowidth{\titletestwidth}{\semilarge\bfseries #2}%
+                                        \ifdim\titletestwidth>0.9\paperwidth
+                                            \def\finaltitlefont{\normalsize\bfseries}%
+                                        \else\def\finaltitlefont{\semilarge\bfseries}\fi
+                                    \else\def\finaltitlefont{\large\bfseries}\fi
+                                \else\def\finaltitlefont{\semiLarge\bfseries}\fi
+                            \else\def\finaltitlefont{\Large\bfseries}\fi
+                        \else\def\finaltitlefont{\semiLARGE\bfseries}\fi
+                    \else\def\finaltitlefont{\LARGE\bfseries}\fi
+                \else\def\finaltitlefont{\semihuge\bfseries}\fi
+            \else\def\finaltitlefont{\huge\bfseries}\fi
+        \else\def\finaltitlefont{\semiHuge\bfseries}\fi
+    \fi
+    
+    \tikz[baseline=(X.base)]{%
+        \node[text=#1, inner sep=2pt, outer sep=0pt, font=\finaltitlefont,
+              blur shadow={shadow xshift=0pt, shadow yshift=0pt,
+                          shadow blur steps=20, shadow blur radius=8pt,
+                          shadow opacity=80, shadow scale=1.1}] (X) {#2};%
+    }%
+    \endgroup
+}
+
+% 4. Subtle Glow - simplified to bold
+\newcommand{\glowsubtle}[2][accentcyan]{%
+    {\color{#1}#2}%
+}
+
+% Neon shortcuts - simplified
+\newcommand{\neoncyan}[1]{{\bfseries\color{accentcyan}#1}}
+\newcommand{\neonyellowtext}[1]{{\bfseries\color{neonyellow}#1}}
+\newcommand{\neonpinktext}[1]{{\bfseries\color{neonpink}#1}}
+\newcommand{\neongreentext}[1]{{\bfseries\color{neongreen}#1}}
+\newcommand{\neonbluetext}[1]{{\bfseries\color{neonblue}#1}}
+
+% 5. Dynamic Subtitle
+\newcommand{\dynamicsubtitle}[1]{%
+    \begingroup
+    \def\finalsubtitlefont{\large}% Default
+    \settowidth{\titletestwidth}{\Large #1}%
+    \ifdim\titletestwidth>0.9\paperwidth
+        \settowidth{\titletestwidth}{\semiLarge #1}%
+        \ifdim\titletestwidth>0.9\paperwidth
+            \settowidth{\titletestwidth}{\large #1}%
+            \ifdim\titletestwidth>0.9\paperwidth
+                \settowidth{\titletestwidth}{\semilarge #1}%
+                \ifdim\titletestwidth>0.9\paperwidth
+                    \settowidth{\titletestwidth}{\normalsize #1}%
+                    \ifdim\titletestwidth>0.9\paperwidth
+                        \settowidth{\titletestwidth}{\seminormal #1}%
+                        \ifdim\titletestwidth>0.9\paperwidth
+                            \def\finalsubtitlefont{\small}%
+                        \else\def\finalsubtitlefont{\seminormal}\fi
+                    \else\def\finalsubtitlefont{\normalsize}\fi
+                \else\def\finalsubtitlefont{\semilarge}\fi
+            \else\def\finalsubtitlefont{\large}\fi
+        \else\def\finalsubtitlefont{\semiLarge}\fi
+    \else\def\finalsubtitlefont{\Large}\fi
+    {\finalsubtitlefont\color{fgwhite}#1}\par
+    \endgroup
+}
+
+% =============================================================================
+% AUTHOR MANAGEMENT
+% =============================================================================
+\newcounter{authorcount}
+\newcounter{totalauthors}
+\setcounter{authorcount}{0}
+\setcounter{totalauthors}{0}
+\newcommand{\authorinitials}{}
+\newcommand{\authorblocks}{}
+
+\makeatletter
+\def\sbs@firstchar#1#2\@nil{\uppercase{#1}}
+\newcommand{\getinitials}[1]{%
+    \sbs@parsename#1 \@endname%
+}
+\def\sbs@parsename#1 #2\@endname{%
+    \sbs@firstchar#1\@nil%
+    \ifx\relax#2\relax\else\sbs@parsename#2\@endname\fi%
+}
+
+\def\sbs@rawinitials{}
+\newcommand{\addauthor}[3]{%
+    \stepcounter{authorcount}%
+    \stepcounter{totalauthors}%
+    \ifnum\value{authorcount}>1
+        \g@addto@macro\authorblocks{\hspace{0.02\textwidth}}%
+    \fi
+    \g@addto@macro\authorblocks{%
+        \begin{minipage}[t]{0.23\textwidth}
+            \centering
+            {\color{fgwhite}\small\textbf{#1}}\\[1pt]
+            {\color{softgray}\tiny #2}\\[1pt]
+            {\color{accentcyan}\tiny #3}
+        \end{minipage}%
+    }%
+    \ifnum\value{authorcount}=1
+        \xdef\sbs@rawinitials{\getinitials{#1}}
+    \else
+        \xdef\sbs@rawinitials{\sbs@rawinitials, \getinitials{#1}}
+    \fi
+}
+\newcommand{\getauthorinitials}{\sbs@rawinitials}
+\newcommand{\clearauthors}{%
+    \setcounter{authorcount}{0}%
+    \setcounter{totalauthors}{0}%
+    \renewcommand{\authorblocks}{}%
+    \global\def\sbs@rawinitials{}%
+}
+\makeatother
+\newcommand{\printauthors}{\authorblocks}
+
+% =============================================================================
+% TITLE PAGE
+% =============================================================================
+\setbeamertemplate{title page}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \shade[top color=bgdark,bottom color=bgblack]
+            (current page.north west) rectangle (current page.south east);
+        \shade[left color=accentcyan,right color=neonpink]
+            ([yshift=-0.8cm]current page.north west) rectangle +(\paperwidth,2pt);
+    \end{tikzpicture}
+    \vspace{1.2cm}
+    \begin{center}
+        \glowtitle[accentcyan]{\inserttitle}\par
+        \vspace{0.5cm}
+        \ifx\insertsubtitle\empty\else
+            \dynamicsubtitle{\insertsubtitle}
+            \vspace{0.5cm}
+        \fi
+        \begin{tikzpicture}
+            \shade[left color=bgblack,right color=bgblack,middle color=accentcyan]
+                (-4cm,0) rectangle (4cm,1pt);
+        \end{tikzpicture}\par
+        \vspace{0.5cm}
+        \ifnum\value{authorcount}>0
+            \printauthors\par
+        \else
+            {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}
+        \fi
+        \vspace{0.3cm}
+        \ifnum\value{authorcount}=0
+            \ifx\insertinstitute\empty\else
+                {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute}
+                \vspace{0.2cm}
+            \fi
+        \fi
+        \vspace{0.2cm}
+        {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate}
+    \end{center}
+    \vfill
+    \begin{tikzpicture}[remember picture,overlay]
+        \shade[left color=neonpink,right color=accentcyan]
+            ([yshift=0.8cm]current page.south west) rectangle +(\paperwidth,2pt);
+    \end{tikzpicture}
+}
+
+% =============================================================================
+% HEADER
+% =============================================================================
+\setbeamertemplate{frametitle}{%
+    \vspace{0.1cm}%
+    \begin{beamercolorbox}[wd=\paperwidth,leftskip=1em,rightskip=1em]{frametitle}%
+        \usebeamerfont{frametitle}\insertframetitle%
+        \ifx\insertframesubtitle\empty\else%
+            \hspace{0.5em}{\small\color{fgwhite}| \insertframesubtitle}%
+        \fi%
+    \end{beamercolorbox}%
+    \vspace{-0.1cm}%
+    \noindent\makebox[\textwidth][l]{%
+        \rlap{\begin{tikzpicture}%
+            \shade[left color=accentcyan,right color=bgblack]%
+                (0,0) rectangle (\paperwidth,2pt);%
+        \end{tikzpicture}}}%
+    \vspace{0.1cm}%
+}
+
+% =============================================================================
+% FOOTER
+% =============================================================================
+\setbeamertemplate{footline}{%
+    \noindent
+    \begin{tikzpicture}
+        \pgfmathsetmacro{\ratio}{\insertframenumber/\inserttotalframenumber}
+        \fill[customgray] (0,0) rectangle (\paperwidth,3pt);
+        \shade[left color=accentcyan,right color=neonblue]
+            (0,0) rectangle (\ratio*\paperwidth,3pt);
+    \end{tikzpicture}%
+    \vskip2pt
+    \hbox{%
+        \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm]{author in head/foot}%
+            \usebeamerfont{author in head/foot}%
+            \ifnum\value{authorcount}>0\getauthorinitials\else\insertshortauthor\fi
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.5ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertframenumber/\inserttotalframenumber\hspace{1em}\insertshortdate{}\hspace*{1ex}
+        \end{beamercolorbox}%
+    }%
+    \vskip2pt
+}
+
+% =============================================================================
+% SECTION PAGES
+% =============================================================================
+\setbeamertemplate{section page}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \shade[top color=bgdark,bottom color=bgblack]
+            (current page.north west) rectangle (current page.south east);
+        \fill[sectionbg,opacity=0.7]
+            ([xshift=0.5cm,yshift=-1.5cm]current page.north west) rectangle 
+            ([xshift=-1cm,yshift=1.5cm]current page.south east);
+    \end{tikzpicture}
+    \centering
+    \vfill
+    % Using glowtitle (black shadow) as requested + enumeration
+    \glowtitle[neonyellow]{\thesection.~~\insertsection}
+    \vfill
+}
+\AtBeginSection[]{\begin{frame}[plain]\sectionpage\end{frame}}
+
+% =============================================================================
+% SUBSECTION PAGES
+% =============================================================================
+\setbeamertemplate{subsection page}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \shade[top color=bgdark,bottom color=bgblack]
+            (current page.north west) rectangle (current page.south east);
+        \fill[sectionbg,opacity=0.5]
+            ([xshift=1cm,yshift=-2cm]current page.north west) rectangle 
+            ([xshift=-1cm,yshift=2cm]current page.south east);
+    \end{tikzpicture}
+    \centering
+    \vfill
+    \glowtitle[accentcyan]{\thesection.\thesubsection.~~\insertsubsection}
+    \vfill
+}
+\AtBeginSubsection[]{\begin{frame}[plain]\subsectionpage\end{frame}}
+
+% =============================================================================
+% TOC - Multi-column layout to fit all sections
+% =============================================================================
+\RequirePackage{multicol}
+\newcommand{\tocframe}{%
+    \begin{frame}{Contents}
+        \begin{multicols}{2}
+        \small
+        \tableofcontents[hideallsubsections]
+        \end{multicols}
+    \end{frame}
+}
+\setbeamertemplate{section in toc}{%
+    \leavevmode\leftskip=0.3em{\color{accentcyan}\small$\triangleright$}\ {\small\inserttocsectionnumber.~\inserttocsection}\par\vspace{1pt}
+}
+\setbeamertemplate{subsection in toc}{%
+    \leavevmode\leftskip=1.5em{\color{softgray}\small--}\ {\small\inserttocsubsection}\par
+}
+
+% =============================================================================
+% BULLETS
+% =============================================================================
+\setbeamertemplate{itemize item}{\color{accentcyan}$\diamond$}
+\setbeamertemplate{itemize subitem}{\color{neonyellow}$\rightarrow$}
+\setbeamertemplate{itemize subsubitem}{\color{neonpink}$\star$}
+
+\newenvironment{pitemize}{\begin{itemize}[<+->]}{\end{itemize}}
+\newenvironment{penumerate}{\begin{enumerate}[<+->]}{\end{enumerate}}
+
+% =============================================================================
+% MINTED STYLING - Beautiful code blocks
+% =============================================================================
+\usemintedstyle{monokai}
+\setminted{
+    bgcolor=codebg,
+    fontsize=\tiny,
+    linenos,
+    numbersep=6pt,
+    frame=none,
+    framesep=1mm,
+    baselinestretch=1.0,
+    tabsize=4,
+    breaklines=true,
+    breakanywhere=true
+}
+
+\newcommand{\inlinecode}[1]{{\ttfamily\tiny\colorbox{codebg}{\color{accentcyan}#1}}}
+
+% Breakable code box for long code
+\newtcolorbox{codebox}[2][python]{
+    enhanced,
+    breakable,
+    colback=codebg,
+    colframe=customblue,
+    coltext=fgwhite,
+    coltitle=bgblack,
+    colbacktitle=customblue,
+    fonttitle=\bfseries\ttfamily\tiny,
+    title={\tiny #2},
+    attach boxed title to top left={yshift=-1.5mm,xshift=3mm},
+    boxed title style={arc=1.5mm,boxrule=0pt,colback=customblue},
+    boxrule=0.8pt,
+    arc=2mm,
+    left=1mm,right=1mm,top=3mm,bottom=1mm,
+    listing only,
+    minted language=#1,
+    minted options={fontsize=\tiny,linenos,numbersep=5pt,breaklines=true}
+}
+
+% Simple minted code environment for frames
+\newenvironment{pycode}{%
+    \VerbatimEnvironment
+    \begin{minted}[fontsize=\tiny,breaklines=true,bgcolor=codebg]{python}%
+}{%
+    \end{minted}%
+}
+
+% =============================================================================
+% ALGORITHM STYLING
+% =============================================================================
+\algrenewcommand\algorithmiccomment[1]{{\color{softgray}\(\triangleright\) #1}}
+\algrenewcommand\algorithmicrequire{\textbf{\color{accentcyan}Input:}}
+\algrenewcommand\algorithmicensure{\textbf{\color{neongreen}Output:}}
+\newcommand{\algorithmfontsize}{\footnotesize}
+
+\newtcolorbox{algobox}[1][Algorithm]{
+    enhanced,
+    colback=codebg,
+    colframe=neongreen,
+    coltext=fgwhite,
+    coltitle=bgblack,
+    colbacktitle=neongreen,
+    fonttitle=\bfseries\small,
+    title={#1},
+    attach boxed title to top left={yshift=-1.5mm,xshift=3mm},
+    boxed title style={arc=1.5mm,boxrule=0pt,colback=neongreen},
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,right=2mm,top=2mm,bottom=2mm,
+    drop fuzzy shadow=black
+}
+
+\newenvironment{beautifulalgorithm}[1][Algorithm]{%
+    \begin{algobox}[#1]\algorithmfontsize
+}{\end{algobox}}
+
+% =============================================================================
+% TCOLORBOX STYLES - Smaller, more compact
+% =============================================================================
+\tcbset{
+    darkstyle/.style={
+        enhanced,
+        colback=darkgray,
+        colframe=accentcyan,
+        coltext=fgwhite,
+        coltitle=bgblack,
+        colbacktitle=accentcyan,
+        fonttitle=\bfseries\small,
+        boxrule=0.8pt,
+        arc=2mm,
+        left=2mm,right=2mm,top=2mm,bottom=2mm,
+        attach boxed title to top left={yshift=-1.5mm,xshift=3mm},
+        boxed title style={arc=1.5mm,boxrule=0pt},
+        drop fuzzy shadow=black,
+        fontupper=\small
+    }
+}
+
+\newtcolorbox{infobox}[1][Info]{darkstyle,colframe=accentcyan,colbacktitle=accentcyan,coltitle=bgblack,title=#1}
+\newtcolorbox{warningbox}[1][Warning]{darkstyle,colframe=neonorange,colbacktitle=neonorange,coltitle=bgblack,title=#1}
+\newtcolorbox{successbox}[1][Success]{darkstyle,colframe=neongreen,colbacktitle=neongreen,coltitle=bgblack,title=#1}
+\newtcolorbox{alertbox}[1][Alert]{darkstyle,colframe=neonpink,colbacktitle=neonpink,coltitle=bgblack,title=#1}
+\newtcolorbox{dangerbox}[1][Danger]{darkstyle,colframe=neonpink,colbacktitle=neonpink,coltitle=bgblack,title=#1}
+
+
+\newcommand{\sectionslide}[1]{\section{#1}}
+
+\endinput
