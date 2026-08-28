@@ -3,7 +3,7 @@
 > A beginner-friendly talk + hands-on companion repo: **what molecular simulation is, why it works, and how to run one yourself.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue)](environment.yml)
+[![Python 3.9+](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 [![Slides: Marp](https://img.shields.io/badge/slides-Marp-red)](slides/)
 
 ---
@@ -50,8 +50,9 @@ No prior simulation experience assumed. Bring curiosity; leave with a running si
 │   ├── 04-water-box/             # Solvated water box (OpenMM/ASE, optional deps)
 │   └── 05-analysis/              # RDF, MSD, energy & temperature traces
 ├── assets/                  # Figures & diagrams
-├── environment.yml          # Conda environment
-├── requirements.txt         # pip requirements
+├── pyproject.toml           # uv project (deps + metadata)
+├── uv.lock                  # locked versions (commit this)
+├── .venv/                   # managed env (ignored)
 ├── CITATION.cff             # Citation metadata
 ├── LICENSE                  # MIT
 └── plans/                   # Build log for this repo (rigor-infinity work journal)
@@ -61,19 +62,38 @@ No prior simulation experience assumed. Bring curiosity; leave with a running si
 
 ## Quick Start
 
-### Option A — Conda (recommended)
+### Recommended — `uv` (works on Linux, macOS, and Windows)
+
+> This project is managed with [`uv`](https://docs.astral.sh/uv/) — a fast, drop-in replacement for pip/venv that works identically on Linux and Windows.
 
 ```bash
-conda env create -f environment.yml
-conda activate intro-molsim
+# 1. Install uv (once)
+# Linux / macOS:
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# Windows (PowerShell):
+# powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# 2. Create env + install deps (from pyproject.toml / uv.lock)
+uv sync
+
+# 3. Run (inside the managed env)
+uv run python examples/01-lennard-jones-fluid/run.py   # once scripts land
+
+# Or activate the venv explicitly:
+source .venv/bin/activate        # Linux / macOS
+# .venv\Scripts\activate       # Windows
 ```
 
-### Option B — pip + venv
+<details>
+<summary>Alternative — plain pip / conda (legacy)</summary>
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .                 # core deps from pyproject.toml
+# or: pip install -e ".[analysis,openmm,ase]"
 ```
+Uses `pyproject.toml` / `uv.lock` — `requirements.txt` / `environment.yml` were removed in favour of `uv`.
+</details>
 
 ### Examples
 
@@ -95,11 +115,12 @@ pip install -r requirements.txt
 
 | You need | Why | Minimum |
 |---|---|---|
-| Python 3.9+ | Run examples | `python --version` |
-| NumPy, Matplotlib | Core numerics & plots | in `requirements.txt` |
+| Python 3.10+ | Run examples | `python --version` |
+| NumPy, Matplotlib | Core numerics & plots | `pyproject.toml` via `uv sync` |
 | (Optional) OpenMM / ASE | Realistic water/biomolecular systems | `conda install -c conda-forge openmm ase` |
 | (Optional) MDAnalysis, nglview | Analysis & visualization | `pip install MDAnalysis` |
 | (Optional) Marp CLI | Export slides to PDF | `npm i -g @marp-team/marp-cli` |
+| `uv` | Env + deps (cross-platform) | `curl -LsSf https://astral.sh/uv/install.sh | sh` (Linux) / `powershell ...` (Win) |
 
 No compiled MD engine (LAMMPS/GROMACS) required for the intro examples.
 

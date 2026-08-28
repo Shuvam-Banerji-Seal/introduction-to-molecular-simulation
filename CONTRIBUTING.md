@@ -5,8 +5,11 @@ Thanks for helping improve this teaching repo!
 ## Quick start
 
 1. Fork & clone.
-2. `conda env create -f environment.yml && conda activate intro-molsim`
-3. Run `python examples/01-lennard-jones-fluid/run.py` — should finish in <5 s.
+2. Install `uv` (`curl -LsSf https://astral.sh/uv/install.sh | sh` on Linux/macOS, or PowerShell on Windows), then:
+   ```bash
+   uv sync                  # creates .venv + installs deps
+   ```
+3. Run `uv run python examples/01-lennard-jones-fluid/run.py` — should finish in <5 s.
 4. Make your change on a feature branch, open a PR.
 
 ## What we welcome

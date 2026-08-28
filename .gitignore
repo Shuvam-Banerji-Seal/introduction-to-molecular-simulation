@@ -48,3 +48,7 @@ pdf/
 # Rigor workspace (do not publish)
 plans/
 CONTINUATION_STATE.md
+# Playwright local artifacts
+.playwright-mcp/
+.venv/
+lammps/
