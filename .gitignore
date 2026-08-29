@@ -69,3 +69,12 @@ slides/*.fls
 slides/*.fdb_latexmk
 slides/_minted-*/
 slides/main.pdf
+
+# latexmk backup files
+slides/main.bak*
+slides/main.tex.bak
+slides/main_minimal.tex
+slides/sections/*.bak*
+slides/test_*.tex
+slides/main.snm
+slides/main.vrb

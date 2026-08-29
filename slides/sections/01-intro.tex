@@ -3,6 +3,7 @@
 
 \subsection{What is Simulation?}
 \begin{frame}{What is Simulation? --- Control Over Numbers on a Chip}
+	\hfuzz=15pt
 	\begin{columns}[T,onlytextwidth]
 		\column{0.58\textwidth}
 		\begin{pitemize}
@@ -16,25 +17,23 @@
 		\begin{infobox}[Chip = Lab]
 			\footnotesize Transistors \ensuremath{\rightarrow} arithmetic \ensuremath{\rightarrow} models \ensuremath{\rightarrow} atoms \ensuremath{\rightarrow} materials \ensuremath{\rightarrow} life
 		\end{infobox}
-		\column{0.42\textwidth}
+		\column{0.45\textwidth}
 		\begin{center}
-			\resizebox{\linewidth}{!}{%
-				\begin{tikzpicture}[scale=0.75, every node/.style={font=\small}]
-					% Chip with pins — larger fonts, MORE SPACING between nodes
-					\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=3.2cm,minimum height=1.4cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,2.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
-					% Chip pins — only above and below the box, NOT through it
-					\foreach \x in {-1.0,-0.5,0,0.5,1.0} {\draw[accentcyan,thick] (\x,3.3) -- (\x,3.6); \draw[accentcyan,thick] (\x,1.9) -- (\x,1.6);}
-					% Simulation — more gap below chip
-					\node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.3cm,align=center,drop shadow] (sim) at (0,0.3) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
-					% Observables — more gap below sim
-					\node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.2cm,align=center,drop shadow] (obs) at (0,-2.0) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
-					% Arrows with labels — longer arrows with clear gaps
-					\draw[-{Stealth[length=4mm,width=3mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right=8pt,font=\footnotesize,color=accentcyan]{model};
-					\draw[-{Stealth[length=4mm,width=3mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right=8pt,font=\footnotesize,color=neongreen]{measure};
-					\only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,4.0) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{bgblack}\footnotesize\ttfamily dt, thermostat, barostat};}
-					\only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (4.0,0.3) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
-				\end{tikzpicture}%
-			}%
+			\begin{tikzpicture}[scale=0.92, every node/.style={font=\small}]
+				% Chip with pins
+				\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=3.2cm,minimum height=1.4cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,2.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
+				% Chip pins — short stubs above and below the box only
+				\foreach \x in {-1.0,-0.5,0,0.5,1.0} {\draw[accentcyan,thick] (\x,3.3) -- (\x,3.55); \draw[accentcyan,thick] (\x,1.9) -- (\x,1.65);}
+				% Simulation
+				\node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.3cm,align=center,drop shadow] (sim) at (0,0.3) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
+				% Observables
+				\node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.2cm,align=center,drop shadow] (obs) at (0,-2.0) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
+				% Arrows with labels
+				\draw[-{Stealth[length=4mm,width=3mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right=8pt,font=\footnotesize,color=accentcyan]{model};
+				\draw[-{Stealth[length=4mm,width=3mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right=8pt,font=\footnotesize,color=neongreen]{measure};
+				\only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,4.0) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{bgblack}\footnotesize\ttfamily dt, thermostat, barostat};}
+				\only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (3.2,0.3) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
+			\end{tikzpicture}
 		\end{center}
 	\end{columns}
 \end{frame}
