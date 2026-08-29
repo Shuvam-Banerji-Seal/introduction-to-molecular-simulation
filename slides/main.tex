@@ -2,9 +2,12 @@
 % Introduction to Molecular Simulation --- Beamer deck (sbs_dark_beamer v10)
 % 0 errors, 0 warnings target --- shell-escape for minted
 % =============================================================================
-\documentclass[aspectratio=169,8pt]{beamer}
+\documentclass[aspectratio=169,10pt]{beamer}
+% --- Font size increased per user request (8pt -> 10pt base) ---
 \usepackage{sbs_dark_beamer}
 \hfuzz=500pt\vfuzz=500pt\hbadness=10000\vbadness=10000
+% --- Global font scaling: normal text larger ---
+\AtBeginDocument{\large}
 \usepackage{mwe} % for placeholder images if needed
 
 % Additional TikZ libs for diagrams (already calc,shadows.blur etc loaded)
@@ -53,6 +56,30 @@
 % Title
 \begin{frame}[plain]
   \titlepage
+\end{frame}
+
+% --- Video opener: click to watch (opens in browser/new tab) ---
+\begin{frame}{What is Simulation? --- 60s Primer}
+  \begin{center}
+    {\color{accentcyan}\small\bfseries Click to watch: What is Simulation? (anime speech)}\par
+    \vspace{0.35cm}
+    \href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{%
+      \begin{tikzpicture}
+        % Thumbnail placeholder (dark card + play button)
+        \node[draw=accentcyan,rounded corners=3mm,fill=darkgray,minimum width=9.5cm,minimum height=5.2cm,drop shadow] (card) {};
+        \fill[bgdark] (card.south west) rectangle (card.north east);
+        % Play triangle
+        \fill[accentcyan] (0,0.15) -- (-0.45,-0.35) -- (0.45,-0.35) -- cycle;
+        \draw[accentcyan,thick] (0,0) circle (0.72cm);
+        % Caption
+        \node[below=0.15cm of card.south,align=center] {\color{fgwhite}\scriptsize\bfseries https://m.youtube.com/watch?v=XPE7eaR\_XxM \\ \color{softgray}\tiny (opens in browser / new tab) };
+      \end{tikzpicture}%
+    }\par
+    \vspace{0.35cm}
+    {\color{softgray}\scriptsize\href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{\underline{https://m.youtube.com/watch?v=XPE7eaR\_XxM}} \; \textcolor{neonyellow}{\tiny\bfseries\href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{[\,Play\,\,\triangleright\,]}}}\par
+    \vspace{0.15cm}
+    {\color{softgray}\tiny Tip: In presentation mode, click the card or link above — your browser opens the YouTube video.}
+  \end{center}
 \end{frame}
 
 % TOC --- single column to avoid multicols+beamer clash

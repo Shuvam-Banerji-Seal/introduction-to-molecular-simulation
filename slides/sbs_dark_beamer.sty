@@ -78,22 +78,22 @@
 \setbeamercolor{title in head/foot}{fg=fgwhite,bg=bgblack}
 \setbeamercolor{date in head/foot}{fg=fgwhite,bg=bgblack}
 
-% SMALLER FONT SIZES GLOBALLY
-\setbeamerfont{normal text}{size=\footnotesize}
-\setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
+% LARGER FONT SIZES GLOBALLY — increased per user request
+\setbeamerfont{normal text}{size=\small}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{title}{size=\LARGE,series=\bfseries}
-\setbeamerfont{subtitle}{size=\normalsize}
-\setbeamerfont{author}{size=\small}
-\setbeamerfont{institute}{size=\footnotesize}
-\setbeamerfont{date}{size=\footnotesize}
-\setbeamerfont{author in head/foot}{size=\tiny}
-\setbeamerfont{title in head/foot}{size=\tiny}
-\setbeamerfont{date in head/foot}{size=\tiny}
-\setbeamerfont{itemize/enumerate body}{size=\footnotesize}
-\setbeamerfont{itemize/enumerate subbody}{size=\small}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{author in head/foot}{size=\scriptsize}
+\setbeamerfont{title in head/foot}{size=\scriptsize}
+\setbeamerfont{date in head/foot}{size=\scriptsize}
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
 
-% Apply smaller font as default
-\AtBeginDocument{\footnotesize}
+% Apply larger font as default
+\AtBeginDocument{\small}
 
 % =============================================================================
 % GLOW EFFECTS - FOR TEXT ONLY, NOT MATH/NUMBERS
@@ -426,7 +426,7 @@
 \usemintedstyle{monokai}
 \setminted{
     bgcolor=codebg,
-    fontsize=\tiny,
+    fontsize=\scriptsize,
     linenos,
     numbersep=6pt,
     frame=none,
@@ -437,7 +437,7 @@
     breakanywhere=true
 }
 
-\newcommand{\inlinecode}[1]{{\ttfamily\tiny\colorbox{codebg}{\color{accentcyan}#1}}}
+\newcommand{\inlinecode}[1]{{\ttfamily\scriptsize\colorbox{codebg}{\color{accentcyan}#1}}}
 
 % Breakable code box for long code
 \newtcolorbox{codebox}[2][python]{
@@ -448,8 +448,8 @@
     coltext=fgwhite,
     coltitle=bgblack,
     colbacktitle=customblue,
-    fonttitle=\bfseries\ttfamily\tiny,
-    title={\tiny #2},
+    fonttitle=\bfseries\ttfamily\scriptsize,
+    title={\scriptsize #2},
     attach boxed title to top left={yshift=-1.5mm,xshift=3mm},
     boxed title style={arc=1.5mm,boxrule=0pt,colback=customblue},
     boxrule=0.8pt,
@@ -457,13 +457,13 @@
     left=1mm,right=1mm,top=3mm,bottom=1mm,
     listing only,
     minted language=#1,
-    minted options={fontsize=\tiny,linenos,numbersep=5pt,breaklines=true}
+    minted options={fontsize=\scriptsize,linenos,numbersep=5pt,breaklines=true}
 }
 
 % Simple minted code environment for frames
 \newenvironment{pycode}{%
     \VerbatimEnvironment
-    \begin{minted}[fontsize=\tiny,breaklines=true,bgcolor=codebg]{python}%
+    \begin{minted}[fontsize=\scriptsize,breaklines=true,bgcolor=codebg]{python}%
 }{%
     \end{minted}%
 }
@@ -508,14 +508,14 @@
         coltext=fgwhite,
         coltitle=bgblack,
         colbacktitle=accentcyan,
-        fonttitle=\bfseries\small,
+        fonttitle=\bfseries\normalsize,
         boxrule=0.8pt,
         arc=2mm,
         left=2mm,right=2mm,top=2mm,bottom=2mm,
         attach boxed title to top left={yshift=-1.5mm,xshift=3mm},
         boxed title style={arc=1.5mm,boxrule=0pt},
         drop fuzzy shadow=black,
-        fontupper=\small
+        fontupper=\normalsize
     }
 }
 

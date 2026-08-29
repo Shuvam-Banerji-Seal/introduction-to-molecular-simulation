@@ -18,13 +18,19 @@
     \end{infobox}
     \column{0.42\textwidth}
     \begin{center}
-      \begin{tikzpicture}[scale=0.9]
-        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.5cm,minimum height=1.2cm,align=center] (chip) at (0,1.2) {\color{fgwhite}\tiny\bfseries CPU/GPU\\\color{softgray}\tiny chip};
-        \foreach \x in {-0.8,-0.4,0,0.4,0.8} {\draw[accentcyan] (\x,1.8) -- (\x,0.6);}
-        \node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=2.8cm,minimum height=0.9cm,align=center] (sim) at (0,-0.2) {\color{neongreen}\tiny\bfseries Simulation\\\color{fgwhite}\tiny $F=ma$, $U(r)$};
-        \draw[-{Stealth[length=2mm]},thick,accentcyan] (chip) -- (sim);
-        \node[draw=neonyellow,rounded corners=1.5mm,fill=bgdark,minimum width=2.2cm,inner sep=1mm,align=center] at (0,-1.4) {\color{neonyellow}\tiny observables\\\color{fgwhite}\tiny $P$, $\rho$, $D$, $\Delta G$};
-        \only<2>{\node[draw=neonpink,fill=neonpink!20,rounded corners=1mm,inner sep=1mm] at (0,2.2) {\color{neonpink}\tiny you control $\Delta t$, $T$, $P$!};}
+      \begin{tikzpicture}[scale=0.88, every node/.style={font=\small}]
+        % Chip with pins — larger fonts
+        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.8cm,minimum height=1.2cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,1.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
+        \foreach \x in {-0.9,-0.45,0,0.45,0.9} {\draw[accentcyan,thick] (\x,2.15) -- (\x,1.0);}
+        % Simulation
+        \node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.1cm,minimum height=1.1cm,align=center,drop shadow] (sim) at (0,-0.05) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
+        % Observables
+        \node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.1cm,minimum height=1.0cm,align=center,drop shadow] (obs) at (0,-1.7) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
+        % Arrows with labels and animation — FIXED: two arrows now
+        \draw[-{Stealth[length=3mm,width=2.2mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right,font=\scriptsize,color=accentcyan]{model};
+        \draw[-{Stealth[length=3mm,width=2.2mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right,font=\scriptsize,color=neongreen]{measure};
+        \only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,2.85) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{fgwhite}\footnotesize\ttfamily dt, thermostat, barostat};}
+        \only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (3.5,-0.05) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
       \end{tikzpicture}
     \end{center}
   \end{columns}

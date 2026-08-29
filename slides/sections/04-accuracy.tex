@@ -59,6 +59,13 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Meme --- Drake: Classical vs ML}
+  \begin{center}
+    \memeinclude[width=0.65\linewidth]{assets/memes/drake_meme.png}
+    {\scriptsize\color{softgray} Drake: rejecting fixed charges \ensuremath{\rightarrow} approving ML potentials}
+  \end{center}
+\end{frame}
+
 \subsection{Parameterization}
 \begin{frame}{Parameterization --- Fitting Reality}
   \begin{equation*}
@@ -113,7 +120,8 @@
 \end{frame}
 
 \begin{frame}{Accuracy--Cost Trade-off}
-  \begin{center}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
     \begin{tikzpicture}[scale=0.95]
       \draw[->,accentcyan,thick] (0,0) -- (4,0) node[right]{cost (CPU·h)};
       \draw[->,accentcyan,thick] (0,0) -- (0,2.2) node[above]{accuracy};
@@ -121,7 +129,10 @@
       \foreach \x/\lab in {0.5/FF,1.5/Polarizable,2.5/DFT,3.4/QM/MM} {\fill[accentcyan] (\x,{2*(1-exp(-\x*0.7))}) circle (2pt) node[above,color=fgwhite]{\lab};}
       \node[color=neonyellow] at (2,0.5) {diminishing returns};
     \end{tikzpicture}
-  \end{center}
+    \column{0.45\textwidth}
+    \memeinclude[width=\linewidth]{assets/memes/twobuttons_meme.png}
+    {\tiny\color{softgray} Two Buttons: accuracy vs cost}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Accuracy}
