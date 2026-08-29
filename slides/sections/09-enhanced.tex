@@ -10,7 +10,7 @@
       \item \textbf{Biology lives in rare events}
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[accentcyan,thick] plot[smooth] coordinates {(0,0) (0.7,1.2) (1.4,0.4) (2.1,1.4) (2.8,0.6)};
       \fill[neongreen] (0.2,0.2) circle (2pt) node[below]{now};
       \fill[neonpink] (2.6,0.7) circle (2pt) node[below]{rare};
@@ -33,7 +33,7 @@
       \item \textbf{Free energy} = $-V_{\text{bias}}$ at convergence
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$s$};
       \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$F$};
       \only<1>{\draw[neongreen,thick,domain=0.2:2.4,samples=40] plot (\x,{0.3+0.8*exp(-(\x-0.8)*(\x-0.8)*4)+0.6*exp(-(\x-1.8)*(\x-1.8)*4)});}
@@ -51,7 +51,7 @@
       \item Rigorous $PMF$ via reweighting
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$s$};
       \foreach \x in {0.5,1.2,1.9} {\draw[neongreen,thick,domain=-0.5:0.5,samples=20] plot ({\x+\x*0 + \x}, {0.2+0.8*exp(-\x*6)}); \fill[accentcyan] (\x,0.2) circle (1.5pt);}
       \node[color=softgray] at (1.4,-0.3) {windows + umbrellas};
@@ -67,7 +67,7 @@
       \item \textbf{Accelerated MD}: boost $U \to U+\Delta V$ when $U<$ threshold
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \foreach \y in {0,0.7,1.4} {
         \draw[accentcyan] (0,\y) -- (2.2,\y);
         \foreach \x in {0.3,0.9,1.5,2.0} {\fill[neongreen] (\x,\y) circle (1pt);}

@@ -4,7 +4,7 @@
 \begin{frame}[fragile]{Linux \& Bash --- Your Lab Bench}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{bash}
 for d in */; do
   mpirun -np 24 lmp -in in.lj
   python analyse.py traj.xtc
@@ -29,7 +29,7 @@ done
       \item \textbf{RDKit}: cheminformatics
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{python}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{python}
 import MDAnalysis as mda
 import numpy as np
 u = mda.Universe("topol.tpr","traj.xtc")
@@ -49,7 +49,7 @@ for ts in u.trajectory:
       \item \inlinecode{uv} \ensuremath{\rightarrow} C++ \ensuremath{\rightarrow} LAMMPS plugin
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.9]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan,thick] (0,0)--(2.6,0) node[right]{speed};
       \draw[->,accentcyan,thick] (0,0)--(0,1.8) node[above]{ease};
       \fill[neonyellow] (0.5,1.5) circle (3pt) node[above]{Python};

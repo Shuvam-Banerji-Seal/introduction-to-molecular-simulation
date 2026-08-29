@@ -2,47 +2,47 @@
 \section{Molecular Simulation Software}
 
 \begin{frame}{Ecosystem --- Who Does What}
-  \begin{center}
-    \begin{tikzpicture}[scale=0.9]
-      \foreach \idx/\eng/\col in {0/LAMMPS/accentcyan,1/GROMACS/neongreen,2/OpenMM/neonyellow,3/NAMD/neonpink,4/AMBER/neonblue,5/CHARMM/customblue} {
-        \node[draw=\col,fill=darkgray,rounded corners=1.5mm,minimum width=1.8cm,minimum height=0.6cm,align=center] at (\idx*2.0,0.8) {\color{fgwhite}\tiny \eng};
-      }
-      \foreach \idx/\tool/\col in {0/VMD/accentcyan,1/PyMOL/neongreen,2/OVITO/neonyellow,3/ChimeraX/neonpink} {
-        \node[draw=\col,fill=darkgray,rounded corners=1.5mm,minimum width=1.8cm,minimum height=0.6cm,align=center] at (\idx*2.0+1, -0.4) {\color{fgwhite}\tiny \tool};
-      }
-      \node[color=softgray] at (5,0.8) {engines};
-      \node[color=softgray] at (5,-0.4) {viewers};
-    \end{tikzpicture}
-  \end{center}
-  \begin{pitemize}
-    \item \textbf{LAMMPS}: materials, all-atom, coarse-grained, \textbf{you built it}
-    \item \textbf{GROMACS}: biomolecules, fast, PME
-    \item \textbf{OpenMM}: GPU, Python API, custom forces
-  \end{pitemize}
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0]
+			\foreach \idx/\eng/\col in {0/LAMMPS/accentcyan,1/GROMACS/neongreen,2/OpenMM/neonyellow,3/NAMD/neonpink,4/AMBER/neonblue,5/CHARMM/customblue} {
+					\node[draw=\col,fill=darkgray,rounded corners=1.5mm,minimum width=2.2cm,minimum height=0.8cm,align=center,font=\footnotesize] at (\idx*2.6,1.0) {\color{fgwhite} \eng};
+				}
+			\foreach \idx/\tool/\col in {0/VMD/accentcyan,1/PyMOL/neongreen,2/OVITO/neonyellow,3/ChimeraX/neonpink} {
+					\node[draw=\col,fill=darkgray,rounded corners=1.5mm,minimum width=2.2cm,minimum height=0.8cm,align=center,font=\footnotesize] at (\idx*2.6+1.3, -0.6) {\color{fgwhite} \tool};
+				}
+			\node[color=softgray,font=\footnotesize] at (6.5,1.0) {engines};
+			\node[color=softgray,font=\footnotesize] at (6.5,-0.6) {viewers};
+		\end{tikzpicture}
+	\end{center}
+	\begin{pitemize}
+		\item \textbf{LAMMPS}: materials, all-atom, coarse-grained, \textbf{you built it}
+		\item \textbf{GROMACS}: biomolecules, fast, PME
+		\item \textbf{OpenMM}: GPU, Python API, custom forces
+	\end{pitemize}
 \end{frame}
 
 \begin{frame}{Choosing --- Cheat Sheet}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{infobox}[Pick by System]
-      \scriptsize Metals/polymers \ensuremath{\rightarrow} LAMMPS\\ Biomembrane/protein \ensuremath{\rightarrow} GROMACS/AMBER\\ Custom \ensuremath{\rightarrow} OpenMM\\ Visualize \ensuremath{\rightarrow} VMD/OVITO
-    \end{infobox}
-    \column{0.5\textwidth}
-    \begin{warningbox}[All Need]
-      \scriptsize Force field \textbf+++ \textbf{PBC} + \textbf{thermostat} + \textbf{analysis}
-    \end{warningbox}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{infobox}[Pick by System]
+			\footnotesize Metals/polymers \ensuremath{\rightarrow} LAMMPS\\ Biomembrane/protein \ensuremath{\rightarrow} GROMACS/AMBER\\ Custom \ensuremath{\rightarrow} OpenMM\\ Visualize \ensuremath{\rightarrow} VMD/OVITO
+		\end{infobox}
+		\column{0.5\textwidth}
+		\begin{warningbox}[All Need]
+			\footnotesize Force field \textbf+++ \textbf{PBC} + \textbf{thermostat} + \textbf{analysis}
+		\end{warningbox}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Meme --- Distracted Simulator}
-  \begin{center}
-    \memeinclude[width=0.7\linewidth]{assets/memes/distracted_meme.png}
-    {\scriptsize\color{softgray} Distracted Boyfriend: Simulator \ensuremath{\rightarrow} ML potentials (goodbye Classical FF)}
-  \end{center}
+	\begin{center}
+		\memeinclude[width=0.7\linewidth]{assets/memes/distracted_meme.png}
+		{\footnotesize\color{softgray} Distracted Boyfriend: Simulator \ensuremath{\rightarrow} ML potentials (goodbye Classical FF)}
+	\end{center}
 \end{frame}
 
 \begin{frame}{Interpretation --- Software}
-  \interpret{
-    \textbf{LAMMPS} · materials · \textbf{GROMACS} · bio · \textbf{OpenMM} · GPU Python · \textbf{VMD/OVITO} · eyes · \textbf{all} · $U$+PBC+sampling
-  }
+	\interpret{
+		\textbf{LAMMPS} · materials · \textbf{GROMACS} · bio · \textbf{OpenMM} · GPU Python · \textbf{VMD/OVITO} · eyes · \textbf{all} · $U$+PBC+sampling
+	}
 \end{frame}

@@ -13,7 +13,7 @@
       \item Too large \ensuremath{\rightarrow} \textbf{explosion} (energy drift)
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$t$};
       \foreach \x in {0,0.5,1,1.5,2,2.5} {\fill[accentcyan] (\x,0) circle (2pt);}
       \draw[|<->|,neonyellow,thick] (0,-0.4) -- (0.5,-0.4) node[midway,below,color=neonyellow]{$dt$};
@@ -24,11 +24,11 @@
 
 \begin{frame}{Hierarchy of Time}
   \begin{center}
-    \begin{tikzpicture}[scale=0.9]
+    \begin{tikzpicture}[scale=1.0]
       \draw[accentcyan,thick] (0,0) -- (10,0);
       \foreach \x/\lab/\t in {0.5/Bond vibr./1 fs,2/ Angle/10 fs,3.5/Rotation/1 ps,5.5/Diffusion/10 ps,7.5/Folding/$\mu$s,9.5/Rare/ ms} {
         \draw[accentcyan,thick] (\x,0.1)--(\x,-0.1);
-        \node[align=center] at (\x,0.5) {\lab\\\color{softgray}\tiny \t};
+        \node[align=center] at (\x,0.5) {\lab\\\color{softgray}\footnotesize \t};
         \fill[neongreen] (\x,0) circle (2pt);
       }
       \draw[->,thick,neonyellow] (0,-0.8) -- (3,-0.8) node[midway,below]{MD resolves};
@@ -49,7 +49,7 @@
       \item Cost: $10^9$ force calls = GPU-days
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[accentcyan,thick] (0,0) rectangle (2.6,1.4);
       \foreach \y in {0.2,0.5,0.8,1.1} {\draw[softgray] (0,\y) -- (2.6,\y);}
       \node[color=fgwhite] at (1.3,1.2) {steps};
@@ -63,10 +63,10 @@
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
     \memeinclude[width=\linewidth]{assets/memes/thisisfine_meme.png}
-    {\tiny\color{softgray} This is Fine: dt=5 fs in production}
+    {\footnotesize\color{softgray} This is Fine: dt=5 fs in production}
     \column{0.5\textwidth}
     \memeinclude[width=\linewidth]{assets/memes/timescales_meme.png}
-    {\tiny\color{softgray} Snail (ms) vs Cheetah (fs)}
+    {\footnotesize\color{softgray} Snail (ms) vs Cheetah (fs)}
   \end{columns}
 \end{frame}
 

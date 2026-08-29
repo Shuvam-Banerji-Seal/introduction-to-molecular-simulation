@@ -2,122 +2,122 @@
 \section{Static vs Dynamic Molecular Systems}
 
 \begin{frame}{Static Structures --- Frozen Snapshots}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Static}: single $\mathbf{R}$, no $T$, no motion
-      \item Where you look: \textbf{crystal}, \textbf{PDB}, \textbf{DFT optimum}
-      \item Question: \textit{what is stable?}
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.9]
-      \shade[ball color=accentcyan] (0,0) circle (0.32cm);
-      \shade[ball color=accentcyan] (1.1,0) circle (0.32cm);
-      \draw[thick,white] (0,0)--(1.1,0);
-      \node[color=softgray] at (0.55,-0.6) {fixed distance};
-      \only<2>{\draw[dashed,neonyellow] (0,0) circle (0.5cm) node[above,color=neonyellow]{no vibration};}
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Static}: single $\mathbf{R}$, no $T$, no motion
+			\item Where you look: \textbf{crystal}, \textbf{PDB}, \textbf{DFT optimum}
+			\item Question: \textit{what is stable?}
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\shade[ball color=accentcyan] (0,0) circle (0.32cm);
+			\shade[ball color=accentcyan] (1.1,0) circle (0.32cm);
+			\draw[thick,white] (0,0)--(1.1,0);
+			\node[color=softgray] at (0.55,-0.6) {fixed distance};
+			\only<2>{\draw[dashed,neonyellow] (0,0) circle (0.5cm) node[above,color=neonyellow]{no vibration};}
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \subsection{Energy Minimization \& DFT}
 \begin{frame}{Energy Minimization}
-  \begin{equation*}
-    \min_{\mathbf{R}} U(\mathbf{R}) \quad\Rightarrow\quad \mathbf{F}= -\nabla U =0,\; \text{Hessian}>0
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Steepest descent / CG / L-BFGS
-      \item Finds \textbf{nearest} minimum, not global
-      \item No $T$, no entropy
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$R$};
-      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$U$};
-      \draw[neongreen,thick,domain=0.2:2.4,samples=50] plot (\x,{1.2*exp(-(\x-0.8)*(\x-0.8)*3)+0.5*exp(-(\x-1.8)*(\x-1.8)*5)+0.2});
-      \draw[->,thick,neonyellow] (0.2,1.2) -- (0.8,0.6) node[midway,above,sloped]{minimize};
-      \fill[neonpink] (1.8,0.45) circle (2pt) node[below,color=neonpink]{trapped};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		\min_{\mathbf{R}} U(\mathbf{R}) \quad\Rightarrow\quad \mathbf{F}= -\nabla U =0,\; \text{Hessian}>0
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Steepest descent / CG / L-BFGS
+			\item Finds \textbf{nearest} minimum, not global
+			\item No $T$, no entropy
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$R$};
+			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$U$};
+			\draw[neongreen,thick,domain=0.2:2.4,samples=50] plot (\x,{1.2*exp(-(\x-0.8)*(\x-0.8)*3)+0.5*exp(-(\x-1.8)*(\x-1.8)*5)+0.2});
+			\draw[->,thick,neonyellow] (0.2,1.2) -- (0.8,0.6) node[midway,above,sloped]{minimize};
+			\fill[neonpink] (1.8,0.45) circle (2pt) node[below,color=neonpink]{trapped};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Geometry Optimization \& DFT}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Geom. opt.}: MM minimization (FF)
-      \item \textbf{DFT}: QM minimization, \textit{ab initio} $U$
-      \item Cost: DFT $\sim10^3\times$ MM
-      \item Still 0 K
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{infobox}[DFT $\approx$ Exact for $U$, Still Static]
-      \scriptsize No temperature \ensuremath{\rightarrow} no entropy \ensuremath{\rightarrow} free energy missing
-    \end{infobox}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Geom. opt.}: MM minimization (FF)
+			\item \textbf{DFT}: QM minimization, \textit{ab initio} $U$
+			\item Cost: DFT $\sim10^3\times$ MM
+			\item Still 0 K
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{infobox}[DFT $\approx$ Exact for $U$, Still Static]
+			\footnotesize No temperature \ensuremath{\rightarrow} no entropy \ensuremath{\rightarrow} free energy missing
+		\end{infobox}
+	\end{columns}
 \end{frame}
 
 \subsection{Levinthal Paradox}
 \begin{frame}{The Paradox --- Why Proteins Fold Fast}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.55\textwidth}
-    \begin{pitemize}
-      \item Protein: $10^{2}$ aa, $3^{100}\sim10^{47}$ conformations
-      \item Random search: $10^{27}$ yr
-      \item Reality: ms--s \ensuremath{\rightarrow} \glowstrong{Levinthal paradox}
-      \item Resolution: \textbf{funnel}, not flat --- downhill + guides
-    \end{pitemize}
-    \column{0.45\textwidth}
-    \memeinclude[width=0.95\linewidth]{assets/memes/levinthal_meme.png}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.55\textwidth}
+		\begin{pitemize}
+			\item Protein: $10^{2}$ aa, $3^{100}\sim10^{47}$ conformations
+			\item Random search: $10^{27}$ yr
+			\item Reality: ms--s \ensuremath{\rightarrow} \glowstrong{Levinthal paradox}
+			\item Resolution: \textbf{funnel}, not flat --- downhill + guides
+		\end{pitemize}
+		\column{0.45\textwidth}
+		\memeinclude[width=0.95\linewidth]{assets/memes/levinthal_meme.png}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Funnel TikZ}
-  \begin{center}
-    \begin{tikzpicture}[scale=0.9]
-      \shade[top color=neonyellow!30,bottom color=neonpink!60] (0,2) -- (-1.6,0) -- (1.6,0) -- cycle;
-      \draw[accentcyan,thick] (-1.6,0) -- (0,2) -- (1.6,0);
-      \draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.6mm}] (0,1.7) -- (-0.3,0.8) -- (0.2,0.3) -- (0,0.1);
-      \fill[neonpink] (0,0.1) circle (2.5pt) node[right,color=neonpink]{native};
-      \node[color=softgray] at (0,2.3) {unfolded entropy};
-      \node[color=fgwhite] at (0,1) {funnel \ensuremath{\rightarrow} bias};
-    \end{tikzpicture}
-  \end{center}
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0]
+			\shade[top color=neonyellow!30,bottom color=neonpink!60] (0,2) -- (-1.6,0) -- (1.6,0) -- cycle;
+			\draw[accentcyan,thick] (-1.6,0) -- (0,2) -- (1.6,0);
+			\draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.6mm}] (0,1.7) -- (-0.3,0.8) -- (0.2,0.3) -- (0,0.1);
+			\fill[neonpink] (0,0.1) circle (2.5pt) node[right,color=neonpink]{native};
+			\node[color=softgray] at (0,2.3) {unfolded entropy};
+			\node[color=bgblack] at (0,1) {funnel \ensuremath{\rightarrow} bias};
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \subsection{Free-Energy Landscape}
 \begin{frame}{Thermodynamic Stability --- $F$, Not $U$}
-  \begin{equation*}
-    \Delta G = \Delta H - T\Delta S \qquad p\propto e^{-\beta G}
-  \end{equation*}
-  \begin{pitemize}
-    \item Min $U$ \ensuremath{\neq} min $F$ at $T>0$
-    \item Entropy pushes to \textbf{broad} basins
-    \item Solvent: \textbf{hydrophobic} = entropy of water
-  \end{pitemize}
+	\begin{equation*}
+		\Delta G = \Delta H - T\Delta S \qquad p\propto e^{-\beta G}
+	\end{equation*}
+	\begin{pitemize}
+		\item Min $U$ \ensuremath{\neq} min $F$ at $T>0$
+		\item Entropy pushes to \textbf{broad} basins
+		\item Solvent: \textbf{hydrophobic} = entropy of water
+	\end{pitemize}
 \end{frame}
 
 \begin{frame}{Solvent Effects}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Explicit water: $10^4$ molecules, PBC
-      \item Implicit: GB/SA, continuum
-      \item Rigorous: solvent = \textbf{free energy}, not just screening
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \shade[ball color=accentcyan] (0,0) circle (0.4cm) node[color=white]{solute};
-      \foreach \a in {0,45,90,135,180,225,270,315} {\shade[ball color=neonblue!70] (\a:1) circle (0.18cm);}
-      \node[color=neonblue] at (0,-1.5) {first shell};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Explicit water: $10^4$ molecules, PBC
+			\item Implicit: GB/SA, continuum
+			\item Rigorous: solvent = \textbf{free energy}, not just screening
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\shade[ball color=accentcyan] (0,0) circle (0.4cm) node[color=white]{solute};
+			\foreach \a in {0,45,90,135,180,225,270,315} {\shade[ball color=neonblue!70] (\a:1) circle (0.18cm);}
+			\node[color=neonblue] at (0,-1.5) {first shell};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Static vs Dynamic}
-  \interpret{
-    \textbf{static} · 0 K · min $U$ · \textbf{Levinthal} · $10^{47}$ vs ms · \textbf{funnel} solves · \textbf{stability} = min $F$ · \textbf{solvent} = entropy · \textbf{dynamic} = MD needed
-  }
+	\interpret{
+		\textbf{static} · 0 K · min $U$ · \textbf{Levinthal} · $10^{47}$ vs ms · \textbf{funnel} solves · \textbf{stability} = min $F$ · \textbf{solvent} = entropy · \textbf{dynamic} = MD needed
+	}
 \end{frame}

@@ -3,183 +3,183 @@
 
 \subsection{What is Simulation?}
 \begin{frame}{What is Simulation? --- Control Over Numbers on a Chip}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.58\textwidth}
-    \begin{pitemize}
-      \item \neoncyan{Simulation} = computable mirror of reality
-      \item \textbf{Control} \ensuremath{\rightarrow} numbers you \glow{ingrain} in silicon
-      \item Chip = deterministic universe you design
-      \item Input: \inlinecode{numbers} \ensuremath{\rightarrow} Output: \inlinecode{properties}
-      \item \textbf{Why?} --- experiment impossible / dangerous / expensive
-    \end{pitemize}
-    \vspace{2mm}
-    \begin{infobox}[Chip = Lab]
-      \scriptsize Transistors \ensuremath{\rightarrow} arithmetic \ensuremath{\rightarrow} models \ensuremath{\rightarrow} atoms \ensuremath{\rightarrow} materials \ensuremath{\rightarrow} life
-    \end{infobox}
-    \column{0.42\textwidth}
-    \begin{center}
-      \begin{tikzpicture}[scale=0.88, every node/.style={font=\small}]
-        % Chip with pins — larger fonts
-        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.8cm,minimum height=1.2cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,1.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
-        \foreach \x in {-0.9,-0.45,0,0.45,0.9} {\draw[accentcyan,thick] (\x,2.15) -- (\x,1.0);}
-        % Simulation
-        \node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.1cm,minimum height=1.1cm,align=center,drop shadow] (sim) at (0,-0.05) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
-        % Observables
-        \node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.1cm,minimum height=1.0cm,align=center,drop shadow] (obs) at (0,-1.7) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
-        % Arrows with labels and animation — FIXED: two arrows now
-        \draw[-{Stealth[length=3mm,width=2.2mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right,font=\scriptsize,color=accentcyan]{model};
-        \draw[-{Stealth[length=3mm,width=2.2mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right,font=\scriptsize,color=neongreen]{measure};
-        \only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,2.85) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{fgwhite}\footnotesize\ttfamily dt, thermostat, barostat};}
-        \only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (3.5,-0.05) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
-      \end{tikzpicture}
-    \end{center}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.58\textwidth}
+		\begin{pitemize}
+			\item \neoncyan{Simulation} = computable mirror of reality
+			\item \textbf{Control} \ensuremath{\rightarrow} numbers you \glow{ingrain} in silicon
+			\item Chip = deterministic universe you design
+			\item Input: \inlinecode{numbers} \ensuremath{\rightarrow} Output: \inlinecode{properties}
+			\item \textbf{Why?} --- experiment impossible / dangerous / expensive
+		\end{pitemize}
+		\vspace{2mm}
+		\begin{infobox}[Chip = Lab]
+			\footnotesize Transistors \ensuremath{\rightarrow} arithmetic \ensuremath{\rightarrow} models \ensuremath{\rightarrow} atoms \ensuremath{\rightarrow} materials \ensuremath{\rightarrow} life
+		\end{infobox}
+		\column{0.42\textwidth}
+		\begin{center}
+			\begin{tikzpicture}[scale=1.1, every node/.style={font=\small}]
+				% Chip with pins — larger fonts, MORE SPACING between nodes
+				\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=3.2cm,minimum height=1.4cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,2.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
+				\foreach \x in {-1.0,-0.5,0,0.5,1.0} {\draw[accentcyan,thick] (\x,3.25) -- (\x,1.9);}
+				% Simulation — more gap below chip
+				\node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.3cm,align=center,drop shadow] (sim) at (0,0.3) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
+				% Observables — more gap below sim
+				\node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.2cm,align=center,drop shadow] (obs) at (0,-2.0) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
+				% Arrows with labels — longer arrows with clear gaps
+				\draw[-{Stealth[length=4mm,width=3mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right=8pt,font=\footnotesize,color=accentcyan]{model};
+				\draw[-{Stealth[length=4mm,width=3mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right=8pt,font=\footnotesize,color=neongreen]{measure};
+				\only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,4.0) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{fgwhite}\footnotesize\ttfamily dt, thermostat, barostat};}
+				\only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (4.0,0.3) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
+			\end{tikzpicture}
+		\end{center}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Simulation}
-  \interpret{
-    \textbf{Simulation} · mimic reality in code · \textbf{control} numbers \ensuremath{\rightarrow} control physics · \textbf{chip} = lab · \textbf{reproducible} · \textbf{cheap} \textit{what-if} · \textbf{not} magic --- model quality = result quality
-  }
+	\interpret{
+		\textbf{Simulation} · mimic reality in code · \textbf{control} numbers \ensuremath{\rightarrow} control physics · \textbf{chip} = lab · \textbf{reproducible} · \textbf{cheap} \textit{what-if} · \textbf{not} magic --- model quality = result quality
+	}
 \end{frame}
 
 \subsection{Molecular Modeling \& Orbital Concepts}
 \begin{frame}{Molecular Modeling --- From Orbitals to Atoms}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.55\textwidth}
-    \begin{pitemize}
-      \item \neoncyan{Orbitals} $\psi_{n\ell m}$ \ensuremath{\rightarrow} electron density
-      \item Hydrogenic: $ \hat H\psi = E\psi $, $\psi_{100}\propto e^{-r/a_0}$
-      \item Atoms \ensuremath{\rightarrow} \textbf{bonds}, \textbf{angles}, \textbf{dihedrals}
-      \item Models: \textbf{Quantum} (DFT) vs \textbf{Classical} (balls+springs)
-      \item Precision ladder: \glowstrong{hydrogenic} \ensuremath{\rightarrow} DFT \ensuremath{\rightarrow} force field
-    \end{pitemize}
-    \column{0.45\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \shade[ball color=neonblue!70] (0,0) circle (0.35cm); \node[color=white] at (0,0){H};
-      \shade[ball color=neongreen!70] (1.2,0.6) circle (0.28cm); \node[color=white] at (1.2,0.6){H};
-      \shade[ball color=neonpink!70] (1.2,-0.6) circle (0.32cm); \node[color=white] at (1.2,-0.6){O};
-      \draw[thick,accentcyan] (0,0) -- (1.2,0.6); \draw[thick,accentcyan] (0,0) -- (1.2,-0.6);
-      \draw[dashed,neonyellow] (1.2,0.6) arc (60:-60:0.7cm);
-      \node[color=neonyellow] at (1.8,0) {$\theta$};
-      \only<2>{\draw[accentcyan,decorate,decoration={snake,amplitude=0.4mm,segment length=2mm}] (0.4,0.9) -- (0.4,1.6) node[above,color=accentcyan]{orbital cloud};}
-    \end{tikzpicture}
-    \vspace{2mm}
-    {\tiny\color{softgray} Wireframe $\leftrightarrow$ Ball-and-stick $\leftrightarrow$ Space-filling}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.55\textwidth}
+		\begin{pitemize}
+			\item \neoncyan{Orbitals} $\psi_{n\ell m}$ \ensuremath{\rightarrow} electron density
+			\item Hydrogenic: $ \hat H\psi = E\psi $, $\psi_{100}\propto e^{-r/a_0}$
+			\item Atoms \ensuremath{\rightarrow} \textbf{bonds}, \textbf{angles}, \textbf{dihedrals}
+			\item Models: \textbf{Quantum} (DFT) vs \textbf{Classical} (balls+springs)
+			\item Precision ladder: \glowstrong{hydrogenic} \ensuremath{\rightarrow} DFT \ensuremath{\rightarrow} force field
+		\end{pitemize}
+		\column{0.45\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\shade[ball color=neonblue!70] (0,0) circle (0.35cm); \node[color=white] at (0,0){H};
+			\shade[ball color=neongreen!70] (1.2,0.6) circle (0.28cm); \node[color=white] at (1.2,0.6){H};
+			\shade[ball color=neonpink!70] (1.2,-0.6) circle (0.32cm); \node[color=white] at (1.2,-0.6){O};
+			\draw[thick,accentcyan] (0,0) -- (1.2,0.6); \draw[thick,accentcyan] (0,0) -- (1.2,-0.6);
+			\draw[dashed,neonyellow] (1.2,0.6) arc (60:-60:0.7cm);
+			\node[color=neonyellow] at (1.8,0) {$\theta$};
+			\only<2>{\draw[accentcyan,decorate,decoration={snake,amplitude=0.4mm,segment length=2mm}] (0.4,0.9) -- (0.4,1.6) node[above,color=accentcyan]{orbital cloud};}
+		\end{tikzpicture}
+		\vspace{2mm}
+		{\footnotesize\color{softgray} Wireframe $\leftrightarrow$ Ball-and-stick $\leftrightarrow$ Space-filling}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Modeling}
-  \interpret{
-    \textbf{Modeling} · choose resolution · \textbf{orbitals} = quantum truth · \textbf{atoms} = classical shortcut · \textbf{precision} costs · \textbf{ball-and-stick} = human eye model
-  }
+	\interpret{
+		\textbf{Modeling} · choose resolution · \textbf{orbitals} = quantum truth · \textbf{atoms} = classical shortcut · \textbf{precision} costs · \textbf{ball-and-stick} = human eye model
+	}
 \end{frame}
 
 \subsection{Computational Experiments}
 \begin{frame}{Computational Experiments --- The Third Pillar}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \venn{Theory}{Experiment}{Simulation}
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Theory} \ensuremath{\rightarrow} equations
-      \item \textbf{Experiment} \ensuremath{\rightarrow} nature answers
-      \item \textbf{Simulation} \ensuremath{\rightarrow} \glow{nature under your conditions}
-      \item Controlled $T,P,N$, perfect observation
-      \item Falsifiable, reproducible
-    \end{pitemize}
-  \end{columns}
-  \vspace{3mm}
-  \begin{alertbox}[Not a video game]
-    \scriptsize You don't watch molecules --- you \textbf{measure} them: $g(r)$, MSD, $\Delta G$.
-  \end{alertbox}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\venn{Theory}{Experiment}{Simulation}
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Theory} \ensuremath{\rightarrow} equations
+			\item \textbf{Experiment} \ensuremath{\rightarrow} nature answers
+			\item \textbf{Simulation} \ensuremath{\rightarrow} \glow{nature under your conditions}
+			\item Controlled $T,P,N$, perfect observation
+			\item Falsifiable, reproducible
+		\end{pitemize}
+	\end{columns}
+	\vspace{3mm}
+	\begin{alertbox}[Not a video game]
+		\footnotesize You don't watch molecules --- you \textbf{measure} them: $g(r)$, MSD, $\Delta G$.
+	\end{alertbox}
 \end{frame}
 
 \subsection{Molecular Representation}
 \begin{frame}{Molecular Representation --- How Computers See Molecules}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Ball-and-stick}: atoms=spheres, bonds=sticks
-      \item \textbf{Wireframe}: bonds only --- topology
-      \item \textbf{Space-filling}: vdW radii --- volume
-      \item \textbf{Cartoon}: proteins \ensuremath{\rightarrow} helices/sheets
-      \item All derived from \inlinecode{coordinates + bonds}
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \memeinclude[width=0.9\linewidth]{assets/memes/water_meme.png}
-    {\tiny\color{softgray} Meshy \texttt{nano-banana} --- water waving}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Ball-and-stick}: atoms=spheres, bonds=sticks
+			\item \textbf{Wireframe}: bonds only --- topology
+			\item \textbf{Space-filling}: vdW radii --- volume
+			\item \textbf{Cartoon}: proteins \ensuremath{\rightarrow} helices/sheets
+			\item All derived from \inlinecode{coordinates + bonds}
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\memeinclude[width=0.9\linewidth]{assets/memes/water_meme.png}
+		{\footnotesize\color{softgray} Meshy \texttt{nano-banana} --- water waving}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{TikZ --- Representation Zoo}
-  \begin{center}
-    \begin{tikzpicture}[scale=0.9]
-      % Wireframe
-      \begin{scope}[xshift=0cm]
-        \node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b0) {};
-        \node[font=\bfseries,color=fgwhite] at (b0.north) {\tiny Wireframe};
-        \draw[accentcyan,thick] (-0.6,-0.2)--(0.6,0.2) (0,-0.4)--(0,0.4);
-      \end{scope}
-      % Ball-Stick
-      \begin{scope}[xshift=2.6cm]
-        \node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b1) {};
-        \node[font=\bfseries,color=fgwhite] at (b1.north) {\tiny Ball-Stick};
-        \shade[ball color=neonblue] (-0.4,0) circle (0.22cm); \shade[ball color=neonpink] (0.4,0) circle (0.22cm); \draw[thick,white] (-0.4,0)--(0.4,0);
-      \end{scope}
-      % Space-fill
-      \begin{scope}[xshift=5.2cm]
-        \node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b2) {};
-        \node[font=\bfseries,color=fgwhite] at (b2.north) {\tiny Space-fill};
-        \shade[ball color=neonblue!80] (-0.2,0) circle (0.45cm); \shade[ball color=neonpink!60] (0.5,0) circle (0.38cm);
-      \end{scope}
-      % Cartoon
-      \begin{scope}[xshift=7.8cm]
-        \node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b3) {};
-        \node[font=\bfseries,color=fgwhite] at (b3.north) {\tiny Cartoon};
-        \draw[neonyellow,thick,decorate,decoration={coil,aspect=0.5,amplitude=2mm,segment length=3mm}] (-0.8,0)--(0.8,0);
-      \end{scope}
-    \end{tikzpicture}
-  \end{center}
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0]
+			% Wireframe
+			\begin{scope}[xshift=0cm]
+				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b0) {};
+				\node[font=\bfseries,color=fgwhite] at (b0.north) {\footnotesize Wireframe};
+				\draw[accentcyan,thick] (-0.6,-0.2)--(0.6,0.2) (0,-0.4)--(0,0.4);
+			\end{scope}
+			% Ball-Stick
+			\begin{scope}[xshift=2.6cm]
+				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b1) {};
+				\node[font=\bfseries,color=fgwhite] at (b1.north) {\footnotesize Ball-Stick};
+				\shade[ball color=neonblue] (-0.4,0) circle (0.22cm); \shade[ball color=neonpink] (0.4,0) circle (0.22cm); \draw[thick,white] (-0.4,0)--(0.4,0);
+			\end{scope}
+			% Space-fill
+			\begin{scope}[xshift=5.2cm]
+				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b2) {};
+				\node[font=\bfseries,color=fgwhite] at (b2.north) {\footnotesize Space-fill};
+				\shade[ball color=neonblue!80] (-0.2,0) circle (0.45cm); \shade[ball color=neonpink!60] (0.5,0) circle (0.38cm);
+			\end{scope}
+			% Cartoon
+			\begin{scope}[xshift=7.8cm]
+				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b3) {};
+				\node[font=\bfseries,color=fgwhite] at (b3.north) {\footnotesize Cartoon};
+				\draw[neonyellow,thick,decorate,decoration={coil,aspect=0.5,amplitude=2mm,segment length=3mm}] (-0.8,0)--(0.8,0);
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \subsection{Objectives \& Applications}
 \begin{frame}{Simulation Objectives --- What Are We After?}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Structure}: $g(r)$, SASA, clustering
-      \item \textbf{Dynamics}: $D$, $\tau$, rates
-      \item \textbf{Thermodynamics}: $\Delta G$, $K_d$, phase
-      \item \textbf{Mechanism}: pathway, $ PMF$
-      \item \textbf{Design}: new molecule / material
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{infobox}[Success = Question + Model + Sampling]
-      \scriptsize Bad question + good model = noise\\\small Good question + bad model = \color{neonpink}lie
-    \end{infobox}
-    \vspace{2mm}
-    \begin{tikzpicture}
-      \node[draw=accentcyan,fill=accentcyan!15,rounded corners=1mm,inner sep=2mm] {Drug binding \ensuremath{\rightarrow} Materials \ensuremath{\rightarrow} Energy \ensuremath{\rightarrow} Bio};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Structure}: $g(r)$, SASA, clustering
+			\item \textbf{Dynamics}: $D$, $\tau$, rates
+			\item \textbf{Thermodynamics}: $\Delta G$, $K_d$, phase
+			\item \textbf{Mechanism}: pathway, $ PMF$
+			\item \textbf{Design}: new molecule / material
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{infobox}[Success = Question + Model + Sampling]
+			\footnotesize Bad question + good model = noise\\\small Good question + bad model = \color{neonpink}lie
+		\end{infobox}
+		\vspace{2mm}
+		\begin{tikzpicture}
+			\node[draw=accentcyan,fill=accentcyan!15,rounded corners=1mm,inner sep=2mm] {Drug binding \ensuremath{\rightarrow} Materials \ensuremath{\rightarrow} Energy \ensuremath{\rightarrow} Bio};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Applications --- Where It Matters}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Pharma: binding $\Delta G$, \textbf{AlphaFold+MD}
-      \item Materials: battery, polymer, catalyst
-      \item Energy: CO2 capture, membranes
-      \item Life: folding, crowding, rare events
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \memeinclude[width=0.95\linewidth]{assets/memes/intro_meme.png}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Pharma: binding $\Delta G$, \textbf{AlphaFold+MD}
+			\item Materials: battery, polymer, catalyst
+			\item Energy: CO2 capture, membranes
+			\item Life: folding, crowding, rare events
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\memeinclude[width=0.95\linewidth]{assets/memes/intro_meme.png}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Objectives}
-  \interpret{
-    \textbf{Objectives} · \textbf{structure} / \textbf{dynamics} / \textbf{thermodynamics} · \textbf{mechanism} over movie · \textbf{design} is the test · \textbf{applications} drive approximations
-  }
+	\interpret{
+		\textbf{Objectives} · \textbf{structure} / \textbf{dynamics} / \textbf{thermodynamics} · \textbf{mechanism} over movie · \textbf{design} is the test · \textbf{applications} drive approximations
+	}
 \end{frame}

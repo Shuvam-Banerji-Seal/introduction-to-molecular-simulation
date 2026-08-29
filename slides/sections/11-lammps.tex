@@ -4,7 +4,7 @@
 \begin{frame}[fragile]{Installation --- One Script, Both OS}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{bash}
 # Linux ( Xeons 24c + A100 sm_80 )
 ./scripts/build-lammps.sh   # most+gpu+kokkos
 # Windows PowerShell
@@ -14,7 +14,7 @@
     \end{minted}
     \column{0.5\textwidth}
     \begin{successbox}[You Built 65 Packages]
-      \scriptsize \texttt{lmp -h} shows GPU (mixed, sm\_80) + KOKKOS (CUDA, AMPERE80) + 24 cores
+      \footnotesize \texttt{lmp -h} shows GPU (mixed, sm\_80) + KOKKOS (CUDA, AMPERE80) + 24 cores
     \end{successbox}
   \end{columns}
 \end{frame}
@@ -22,7 +22,7 @@
 \begin{frame}[fragile]{Input Script --- The Recipe}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{text}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{text}
 units real
 atom_style full
 read\_data water.data
@@ -53,10 +53,10 @@ run 50000
       \item \textbf{Analysis}: \texttt{compute rdf}, Python post
     \end{pitemize}
     \column{0.6\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{fgwhite}\tiny in.lj};
-      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.1cm,minimum height=0.6cm] (b) at (2.4,0.6) {\color{neongreen}\tiny log};
-      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=1.4cm,minimum height=0.6cm] (c) at (2.4,-0.6) {\color{neonyellow}\tiny dump.*};
+    \begin{tikzpicture}[scale=1.0]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{fgwhite}\footnotesize in.lj};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.1cm,minimum height=0.6cm] (b) at (2.4,0.6) {\color{neongreen}\footnotesize log};
+      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=1.4cm,minimum height=0.6cm] (c) at (2.4,-0.6) {\color{neonyellow}\footnotesize dump.*};
       \draw[->,thick,accentcyan] (a) -- (1.2,0) |- (b);
       \draw[->,thick,accentcyan] (a) -- (1.2,0) |- (c);
     \end{tikzpicture}

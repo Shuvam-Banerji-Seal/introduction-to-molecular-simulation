@@ -2,72 +2,80 @@
 \section{End-to-End Molecular Simulation Workflow}
 
 \begin{frame}{The Loop --- Question \ensuremath{\rightarrow} Answer \ensuremath{\rightarrow} New Question}
-  \begin{center}
-    \begin{tikzpicture}[scale=0.5]
-      \def\r{1.5cm}
-      \foreach \idx/\lab in {0/Question,1/Prep,2/Model,3/Min,4/Equil,5/Prod,6/Analyse,7/Interpret} {
-        \node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=1.7cm,minimum height=0.5cm,align=center] at (\idx*45:\r) {\lab};
-      }
-      \draw[->,thick,neonyellow] (22.5:\r) arc (22.5:382.5:\r);
-      \node[color=neonyellow] at (0,0) {repro loop};
-    \end{tikzpicture}
-  \end{center}
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0]
+			\def\r{2.8cm}
+			\foreach \idx/\lab in {0/Question,1/Prep,2/Model,3/Min,4/Equil,5/Prod,6/Analyse,7/Interpret} {
+					\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.2cm,minimum height=0.8cm,align=center,font=\footnotesize\bfseries] (n\idx) at (\idx*45:\r) {\color{fgwhite}\lab};
+				}
+			% Connect nodes in sequence instead of arc (avoids Dimension too large)
+			\draw[->,thick,neonyellow] (n0) -- (n1);
+			\draw[->,thick,neonyellow] (n1) -- (n2);
+			\draw[->,thick,neonyellow] (n2) -- (n3);
+			\draw[->,thick,neonyellow] (n3) -- (n4);
+			\draw[->,thick,neonyellow] (n4) -- (n5);
+			\draw[->,thick,neonyellow] (n5) -- (n6);
+			\draw[->,thick,neonyellow] (n6) -- (n7);
+			\draw[->,thick,neonyellow] (n7) -- (n0);
+			\node[color=neonyellow,font=\small\bfseries] at (0,0) {repro loop};
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \begin{frame}{System Preparation \& Model}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Prep}: crystal/PDB \ensuremath{\rightarrow} \texttt{pdb2gmx} \ensuremath{\rightarrow} solvate \ensuremath{\rightarrow} ions
-      \item \textbf{Model}: choose FF (\textbf{parameterization} = fit)
-      \item \textbf{Rigorous}: validate density, $g(r)$ before production
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{infobox}[FF + Box + PBC = Lab]
-      \scriptsize Your choices \textbf{are} the experiment.
-    \end{infobox}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Prep}: crystal/PDB \ensuremath{\rightarrow} \texttt{pdb2gmx} \ensuremath{\rightarrow} solvate \ensuremath{\rightarrow} ions
+			\item \textbf{Model}: choose FF (\textbf{parameterization} = fit)
+			\item \textbf{Rigorous}: validate density, $g(r)$ before production
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{infobox}[FF + Box + PBC = Lab]
+			\footnotesize Your choices \textbf{are} the experiment.
+		\end{infobox}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Minimization \ensuremath{\rightarrow} Equilibration \ensuremath{\rightarrow} Production}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Min}: remove clashes, $F_{\max}\downarrow$
-      \item \textbf{Equil}: NVT \ensuremath{\rightarrow} NPT, $T,P,\rho$ plateau
-      \item \textbf{Prod}: \textbf{keep} trajectory, \textbf{log} $T,E$
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$t$};
-      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$E$};
-      \draw[neongreen,thick,domain=0:0.6,samples=20] plot (\x,{1.4- \x*1.5});
-      \draw[neonyellow,thick,domain=0.6:1.6,samples=30] plot ({\x},{0.5+0.2*sin(\x*15 r)});
-      \draw[accentcyan,thick,domain=1.6:2.6,samples=40] plot (\x,{0.5+0.15*sin(\x*8 r)});
-      \node[color=neongreen] at (0.3,1.5) {min};
-      \node[color=neonyellow] at (1.1,1.3) {equil};
-      \node[color=accentcyan] at (2.1,1.3) {prod};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Min}: remove clashes, $F_{\max}\downarrow$
+			\item \textbf{Equil}: NVT \ensuremath{\rightarrow} NPT, $T,P,\rho$ plateau
+			\item \textbf{Prod}: \textbf{keep} trajectory, \textbf{log} $T,E$
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$t$};
+			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$E$};
+			\draw[neongreen,thick,domain=0:0.6,samples=20] plot (\x,{1.4- \x*1.5});
+			\draw[neonyellow,thick,domain=0.6:1.6,samples=30] plot ({\x},{0.5+0.2*sin(\x*15 r)});
+			\draw[accentcyan,thick,domain=1.6:2.6,samples=40] plot (\x,{0.5+0.15*sin(\x*8 r)});
+			\node[color=neongreen] at (0.3,1.5) {min};
+			\node[color=neonyellow] at (1.1,1.3) {equil};
+			\node[color=accentcyan] at (2.1,1.3) {prod};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Analysis \ensuremath{\rightarrow} Visualization \ensuremath{\rightarrow} Interpretation}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Analysis}: RMSD, $g(r)$, clustering, $PMF$
-      \item \textbf{Visualization}: OVITO/ChimeraX --- \textbf{watch} first
-      \item \textbf{Interpretation}: numbers \ensuremath{\rightarrow} \textbf{mechanism}
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{warningbox}[Reproducibility]
-      \scriptsize \texttt{git tag} + \texttt{uv.lock} + \texttt{seed} + DOI \ensuremath{\rightarrow} someone can repeat 5 years later
-    \end{warningbox}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Analysis}: RMSD, $g(r)$, clustering, $PMF$
+			\item \textbf{Visualization}: OVITO/ChimeraX --- \textbf{watch} first
+			\item \textbf{Interpretation}: numbers \ensuremath{\rightarrow} \textbf{mechanism}
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{warningbox}[Reproducibility]
+			\footnotesize \texttt{git tag} + \texttt{uv.lock} + \texttt{seed} + DOI \ensuremath{\rightarrow} someone can repeat 5 years later
+		\end{warningbox}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- End-to-End}
-  \interpret{
-    \textbf{question} · drives all · \textbf{prep} · solvate · \textbf{model} · FF · \textbf{min\ensuremath{\rightarrow}equil\ensuremath{\rightarrow}prod} · plateau · \textbf{traj} · movie · \textbf{analysis} · $g(r)$ · \textbf{repro} or non-science
-  }
+	\interpret{
+		\textbf{question} · drives all · \textbf{prep} · solvate · \textbf{model} · FF · \textbf{min\ensuremath{\rightarrow}equil\ensuremath{\rightarrow}prod} · plateau · \textbf{traj} · movie · \textbf{analysis} · $g(r)$ · \textbf{repro} or non-science
+	}
 \end{frame}

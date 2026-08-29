@@ -4,7 +4,7 @@
 \begin{frame}[fragile]{Installation \& Files}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{bash}
 # Install (conda / apt)
 conda install -c conda-forge gromacs
 # Inputs
@@ -23,9 +23,9 @@ gmx solvate -cp box.gro -o solv.gro
 
 \begin{frame}[fragile]{GROMACS Workflow --- Min \ensuremath{\rightarrow} NVT \ensuremath{\rightarrow} NPT \ensuremath{\rightarrow} Prod}
   \begin{center}
-    \begin{tikzpicture}[scale=0.9]
+    \begin{tikzpicture}[scale=1.0]
       \foreach \idx/\txt in {0/Minimize,1/NVT,2/NPT,3/Production} {
-        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.3cm,minimum height=0.7cm,align=center] (n\idx) at (\idx*2.9,0) {\color{fgwhite}\tiny \txt};
+        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.3cm,minimum height=0.7cm,align=center] (n\idx) at (\idx*2.9,0) {\color{fgwhite}\footnotesize \txt};
       }
       \draw[->,thick,accentcyan] (n0) -- (n1);
       \draw[->,thick,accentcyan] (n1) -- (n2);
@@ -42,7 +42,7 @@ gmx solvate -cp box.gro -o solv.gro
 \end{frame}
 
 \begin{frame}[fragile]{Trajectory Analysis}
-  \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+  \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{bash}
 gmx rms -s topol.tpr -f traj.xtc -o rmsd.xvg
 gmx gyrate -s topol.tpr -f traj.xtc -o rg.xvg
 gmx rdf -s topol.tpr -f traj.xtc -o rdf.xvg

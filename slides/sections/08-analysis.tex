@@ -10,7 +10,7 @@
       \item \textbf{Analysis} = compress movie \ensuremath{\rightarrow} numbers
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \foreach \idx in {0,0.9,1.8} {
         \draw[accentcyan,rounded corners=1mm,fill=darkgray] (\idx,0) rectangle ++(0.7,0.9);
         \fill[neonpink] (\idx+0.2,0.6) circle (2pt); \fill[neongreen] (\idx+0.5,0.3) circle (2pt);
@@ -27,15 +27,15 @@
   \begin{columns}[T,onlytextwidth]
     \column{0.33\textwidth}
     \begin{infobox}[RMSD]
-      \scriptsize $\text{RMSD}(t)=\sqrt{\frac1N\sum_i |\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}|^2}$\\\tiny drift = motion
+      \footnotesize $\text{RMSD}(t)=\sqrt{\frac1N\sum_i |\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}|^2}$\\\footnotesize drift = motion
     \end{infobox}
     \column{0.33\textwidth}
     \begin{infobox}[RMSF]
-      \scriptsize $\text{RMSF}_i=\sqrt{\langle (\mathbf{r}_i-\langle\mathbf{r}_i\rangle)^2\rangle}$\\\tiny flexibility per residue
+      \footnotesize $\text{RMSF}_i=\sqrt{\langle (\mathbf{r}_i-\langle\mathbf{r}_i\rangle)^2\rangle}$\\\footnotesize flexibility per residue
     \end{infobox}
     \column{0.33\textwidth}
     \begin{infobox}[R$_g$]
-      \scriptsize $R_g^2=\frac1N\sum_i |\mathbf{r}_i-\mathbf{r}_{\text{COM}}|^2$\\\tiny compactness
+      \footnotesize $R_g^2=\frac1N\sum_i |\mathbf{r}_i-\mathbf{r}_{\text{COM}}|^2$\\\footnotesize compactness
     \end{infobox}
   \end{columns}
 \end{frame}
@@ -49,7 +49,7 @@
       \item \textbf{Define} before measuring
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.9]
+    \begin{tikzpicture}[scale=1.0]
       \shade[ball color=neonblue] (0,0) circle (0.32cm) node[color=white]{O};
       \shade[ball color=neonyellow] (1,0.6) circle (0.22cm) node[color=bgblack]{H};
       \draw[dashed,neonpink,thick] (0,0) -- (1,0.6) node[midway,above,sloped]{H-bond};
@@ -73,7 +73,7 @@
       \item Integrates to $n(r)=4\pi\rho_0\int_0^r g(s)s^2ds$
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$r$};
       \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$g(r)$};
       \draw[neongreen,thick,domain=0.3:2.4,samples=60] plot (\x,{0.2+1.2*exp(-(\x-0.7)*(\x-0.7)*8)+0.5*exp(-(\x-1.5)*(\x-1.5)*4)});
@@ -92,7 +92,7 @@
       \item \textbf{Why?} \ensuremath{\rightarrow} reduce $10^6$ frames \ensuremath{\rightarrow} 5 states
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \foreach \x/\y/\c in {0.3/0.5/neonpink,0.5/0.7/neonpink,0.4/0.9/neonpink,1.6/0.8/neongreen,1.8/0.6/neongreen,1.7/1.0/neongreen,0.9/0.3/neonyellow,1.1/0.4/neonyellow} {\fill[\c] (\x,\y) circle (2pt);}
       \draw[accentcyan,dashed] (0.1,0.2) rectangle (0.8,1.2) node[below]{C1};
       \draw[accentcyan,dashed] (1.4,0.4) rectangle (2.0,1.2) node[below]{C2};
@@ -110,10 +110,18 @@
       \item \textbf{Titan} anecdote: 18,000 GPUs, 1 $\mu$s/day \ensuremath{\rightarrow} still \textbf{need} analysis
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{infobox}[No Visualization = No Trust]
-      \scriptsize Trajectory without watching = blind.
-    \end{infobox}
+    \begin{center}
+      \includegraphics[width=0.9\linewidth]{assets/figures/protein_cartoon.png}
+      {\footnotesize\color{softgray} PyMOL-style cartoon: helices + sheets}
+    \end{center}
   \end{columns}
+\end{frame}
+
+\begin{frame}{Realistic Figures --- LJ Fluid Snapshot}
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{assets/figures/lj_fluid_snapshot.png}
+    {\footnotesize\color{softgray} Lennard-Jones fluid: what your trajectory actually looks like (OVITO view)}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Interpretation --- Analysis}

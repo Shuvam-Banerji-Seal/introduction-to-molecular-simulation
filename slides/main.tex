@@ -18,24 +18,24 @@
   \IfFileExists{#2}{\includegraphics[#1]{#2}}{\fbox{\parbox{0.8\linewidth}{\centering\color{softgray}\tiny Meme: \texttt{#2} --- run \texttt{python scripts/generate\_meshy\_memes.py}}}}%
 }
 
-% Venn helper
+% Venn helper — dark text on light circles (FIXED white-on-white)
 \newcommand{\venn}[3]{%
-  \begin{tikzpicture}[scale=0.9]
+  \begin{tikzpicture}[scale=1.3]
     \begin{scope}[blend group=screen]
-      \fill[accentcyan!60] (0,0) circle (1.2cm);
-      \fill[neonpink!60] (1.6,0) circle (1.2cm);
-      \fill[neongreen!60] (0.8,1.4) circle (1.2cm);
+      \fill[accentcyan!70] (0,0) circle (1.3cm);
+      \fill[neonpink!70] (1.8,0) circle (1.3cm);
+      \fill[neongreen!70] (0.9,1.5) circle (1.3cm);
     \end{scope}
-    \node at (0,0) {\scriptsize #1};
-    \node at (1.6,0) {\scriptsize #2};
-    \node at (0.8,1.4) {\scriptsize #3};
+    \node[color=bgblack] at (0,0) {\normalsize\bfseries #1};
+    \node[color=bgblack] at (1.8,0) {\normalsize\bfseries #2};
+    \node[color=bgblack] at (0.9,1.5) {\normalsize\bfseries #3};
   \end{tikzpicture}%
 }
 
 % Keyword interpretation box
 \newcommand{\interpret}[1]{%
   \begin{successbox}[Interpretation --- keywords]
-    \footnotesize #1
+    \small #1
   \end{successbox}%
 }
 
@@ -55,37 +55,39 @@
 
 % Title
 \begin{frame}[plain]
-  \titlepage
+	\titlepage
 \end{frame}
 
-% --- Video opener: click to watch (opens in browser/new tab) ---
+% --- Video opener: YouTube-style thumbnail with play button (click opens new tab) ---
 \begin{frame}{What is Simulation? --- 60s Primer}
-  \begin{center}
-    {\color{accentcyan}\small\bfseries Click to watch: What is Simulation? (anime speech)}\par
-    \vspace{0.35cm}
-    \href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{%
-      \begin{tikzpicture}
-        % Thumbnail placeholder (dark card + play button)
-        \node[draw=accentcyan,rounded corners=3mm,fill=darkgray,minimum width=9.5cm,minimum height=5.2cm,drop shadow] (card) {};
-        \fill[bgdark] (card.south west) rectangle (card.north east);
-        % Play triangle
-        \fill[accentcyan] (0,0.15) -- (-0.45,-0.35) -- (0.45,-0.35) -- cycle;
-        \draw[accentcyan,thick] (0,0) circle (0.72cm);
-        % Caption
-        \node[below=0.15cm of card.south,align=center] {\color{fgwhite}\scriptsize\bfseries https://m.youtube.com/watch?v=XPE7eaR\_XxM \\ \color{softgray}\tiny (opens in browser / new tab) };
-      \end{tikzpicture}%
-    }\par
-    \vspace{0.35cm}
-    {\color{softgray}\scriptsize\href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{\underline{https://m.youtube.com/watch?v=XPE7eaR\_XxM}} \; \textcolor{neonyellow}{\tiny\bfseries\href{https://m.youtube.com/watch?v=XPE7eaR_XxM}{[\,Play\,\,\triangleright\,]}}}\par
-    \vspace{0.15cm}
-    {\color{softgray}\tiny Tip: In presentation mode, click the card or link above — your browser opens the YouTube video.}
-  \end{center}
+	\begin{center}
+		{\color{accentcyan}\Large\bfseries Click to watch: What is Simulation?}\par
+		\vspace{0.5cm}
+		\href{https://www.youtube.com/watch?v=XPE7eaR_XxM}{%
+			\begin{tikzpicture}
+				% 16:9 dark video player rectangle
+				\fill[bgdark,rounded corners=4mm] (0,0) rectangle (12,6.75);
+				\draw[accentcyan,rounded corners=4mm,line width=1.5pt] (0,0) rectangle (12,6.75);
+				% Top red banner
+				\fill[neonpink,rounded corners=4mm] (0,5.5) rectangle (12,6.75);
+				\node[color=bgblack] at (6,6.125) {\Large\bfseries What is Simulation?};
+				% Center play button: red rounded rectangle + white triangle
+				\fill[neonpink,rounded corners=3mm] (4.5,2.0) rectangle (7.5,3.8);
+				\fill[white] (5.55,2.35) -- (5.55,3.45) -- (6.5,2.9) -- cycle;
+				% Bottom URL bar
+				\node[color=fgwhite] at (6,1.0) {\normalsize\ttfamily youtube.com/watch?v=XPE7eaR\_XxM};
+				\node[color=softgray] at (6,0.35) {\footnotesize click anywhere on this card to open in a new tab};
+			\end{tikzpicture}%
+		}\par
+		\vspace{0.4cm}
+		{\color{neonyellow}\large\bfseries\href{https://www.youtube.com/watch?v=XPE7eaR_XxM}{[\,\,\,PLAY VIDEO\,\,\,\ensuremath{\rightarrow}\,\,]}}\par
+	\end{center}
 \end{frame}
 
 % TOC --- single column to avoid multicols+beamer clash
 \begin{frame}{Outline --- Roadmap}
-  \footnotesize
-  \tableofcontents[hideallsubsections]
+	\normalsize
+	\tableofcontents[hideallsubsections]
 \end{frame}
 
 % 16 Sections --- each input is a file in sections/
@@ -108,21 +110,21 @@
 
 % Closing
 \begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \shade[top color=bgdark,bottom color=bgblack] (current page.north west) rectangle (current page.south east);
-  \end{tikzpicture}
-  \vspace{1cm}
-  \begin{center}
-    \glowtitle[accentcyan]{Thank You --- Simulate Responsibly}\par
-    \vspace{0.4cm}
-    {\color{fgwhite}\small\bfseries Code · Data · Reproducibility}\par
-    \vspace{0.2cm}
-    {\color{softgray}\footnotesize\texttt{git clone https://github.com/Shuvam-Banerji-Seal/introduction-to-molecular-simulation}}\par
-    \vspace{0.3cm}
-    \begin{tikzpicture}
-      \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,inner sep=2mm] {\color{fgwhite}\tiny\ttfamily uv sync \&\& uv run python \&\& ./lammps/build/lmp -in in.lj};
-    \end{tikzpicture}
-  \end{center}
+	\begin{tikzpicture}[remember picture,overlay]
+		\shade[top color=bgdark,bottom color=bgblack] (current page.north west) rectangle (current page.south east);
+	\end{tikzpicture}
+	\vspace{1cm}
+	\begin{center}
+		\glowtitle[accentcyan]{Thank You --- Simulate Responsibly}\par
+		\vspace{0.4cm}
+		{\color{fgwhite}\small\bfseries Code · Data · Reproducibility}\par
+		\vspace{0.2cm}
+		{\color{softgray}\footnotesize\texttt{git clone https://github.com/Shuvam-Banerji-Seal/introduction-to-molecular-simulation}}\par
+		\vspace{0.3cm}
+		\begin{tikzpicture}
+			\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,inner sep=2mm] {\color{fgwhite}\tiny\ttfamily uv sync \&\& uv run python \&\& ./lammps/build/lmp -in in.lj};
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \end{document}

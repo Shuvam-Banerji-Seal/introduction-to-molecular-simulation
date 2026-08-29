@@ -4,7 +4,7 @@
 \begin{frame}[fragile]{Git --- Time Machine for Science}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    \begin{minted}[fontsize=\tiny,bgcolor=codebg]{bash}
+    \begin{minted}[fontsize=\footnotesize,bgcolor=codebg]{bash}
 git init
 git add in.lj analyse.py
 git commit -m "run 1: NVT 300K"
@@ -30,9 +30,9 @@ git log --oneline
       \item \textbf{Actions}: CI --- re-run every commit
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (l) at (0,0) {\color{fgwhite}\tiny local};
-      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (r) at (3,0) {\color{neongreen}\tiny GitHub};
+    \begin{tikzpicture}[scale=1.0]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (l) at (0,0) {\color{fgwhite}\footnotesize local};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=1.8cm,minimum height=0.6cm] (r) at (3,0) {\color{neongreen}\footnotesize GitHub};
       \draw[<->,thick,neonyellow] (l) -- (r) node[midway,above]{push/pull};
       \node[color=softgray] at (1.5,-0.7) {reproducibility = remote backup};
     \end{tikzpicture}
@@ -50,7 +50,7 @@ git log --oneline
     \end{pitemize}
     \column{0.5\textwidth}
     \begin{warningbox}[Not Reproducible = Not Science]
-      \scriptsize If someone can't re-run \ensuremath{\rightarrow} it's a story, not a result.
+      \footnotesize If someone can't re-run \ensuremath{\rightarrow} it's a story, not a result.
     \end{warningbox}
   \end{columns}
 \end{frame}

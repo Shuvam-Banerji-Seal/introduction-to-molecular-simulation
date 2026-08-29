@@ -13,7 +13,7 @@
     \column{0.5\textwidth}
     \venn{Accuracy}{Precision}{Cost}
     \vspace{2mm}
-    {\tiny\color{softgray} You can be precise and still wrong.}
+    {\footnotesize\color{softgray} You can be precise and still wrong.}
   \end{columns}
 \end{frame}
 
@@ -28,7 +28,7 @@
       \item Harmonic bonds \ensuremath{\rightarrow} no anharmonicity at large $r$
     \end{pitemize}
     \column{0.45\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[accentcyan,thick] (0,0) rectangle (2.4,1.6);
       \node[color=fgwhite] at (1.2,1.3) {reality (QM)};
       \draw[neonyellow,thick] (0.3,0.3) rectangle (2.1,1.1);
@@ -48,7 +48,7 @@
       \item \textbf{Scale}: QM accuracy \ensuremath{\rightarrow} MM speed
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.9]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan,thick] (0,0) -- (2.6,0) node[right]{speed};
       \draw[->,accentcyan,thick] (0,0) -- (0,2) node[above]{accuracy};
       \fill[neonpink] (0.4,1.6) circle (3pt) node[above,color=neonpink]{QM};
@@ -62,7 +62,7 @@
 \begin{frame}{Meme --- Drake: Classical vs ML}
   \begin{center}
     \memeinclude[width=0.65\linewidth]{assets/memes/drake_meme.png}
-    {\scriptsize\color{softgray} Drake: rejecting fixed charges \ensuremath{\rightarrow} approving ML potentials}
+    {\footnotesize\color{softgray} Drake: rejecting fixed charges \ensuremath{\rightarrow} approving ML potentials}
   \end{center}
 \end{frame}
 
@@ -90,10 +90,10 @@
     \end{pitemize}
     \column{0.5\textwidth}
     \begin{center}
-      \begin{tikzpicture}[scale=0.6]
-        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=3cm,minimum height=0.6cm] at (0,1) {\color{fgwhite}\tiny\texttt{1 bit | 11 exp | 52 mantissa}};
+      \begin{tikzpicture}[scale=1.0]
+        \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=3cm,minimum height=0.6cm] at (0,1) {\color{fgwhite}\footnotesize\texttt{1 bit | 11 exp | 52 mantissa}};
         \draw[->,thick,neonyellow] (0,0.6) -- (0,0.2) node[midway,right]{round};
-        \node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.6cm,minimum height=0.7cm] at (0,-0.5) {\color{neonpink}\tiny 0.1$_{10}$ = 0.000110011...$_2$};
+        \node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.6cm,minimum height=0.7cm] at (0,-0.5) {\color{neonpink}\footnotesize 0.1$_{10}$ = 0.000110011...$_2$};
       \end{tikzpicture}
     \end{center}
     \memeinclude[width=0.9\linewidth]{assets/memes/ieee754_meme.png}
@@ -109,7 +109,7 @@
       \item \textbf{Block averaging} \ensuremath{\rightarrow} error bars
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
+    \begin{tikzpicture}[scale=1.0]
       \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$t$};
       \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$A$};
       \draw[neongreen,thick,domain=0:2.4,samples=80] plot (\x,{0.8+0.3*sin(\x*8 r)*exp(-\x*0.3)});
@@ -122,7 +122,7 @@
 \begin{frame}{Accuracy--Cost Trade-off}
   \begin{columns}[T,onlytextwidth]
     \column{0.55\textwidth}
-    \begin{tikzpicture}[scale=0.95]
+    \begin{tikzpicture}[scale=1.1]
       \draw[->,accentcyan,thick] (0,0) -- (4,0) node[right]{cost (CPU·h)};
       \draw[->,accentcyan,thick] (0,0) -- (0,2.2) node[above]{accuracy};
       \draw[neonpink,thick,domain=0.2:3.8,samples=40] plot (\x,{2*(1-exp(-\x*0.7))});
@@ -131,7 +131,7 @@
     \end{tikzpicture}
     \column{0.45\textwidth}
     \memeinclude[width=\linewidth]{assets/memes/twobuttons_meme.png}
-    {\tiny\color{softgray} Two Buttons: accuracy vs cost}
+    {\footnotesize\color{softgray} Two Buttons: accuracy vs cost}
   \end{columns}
 \end{frame}
 

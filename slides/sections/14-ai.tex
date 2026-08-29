@@ -11,10 +11,10 @@
       \item \textbf{OpenFold} = open AlphaFold2
     \end{pitemize}
     \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (s) at (0,1) {\color{fgwhite}\tiny SEQUENCE};
-      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{neonyellow}\tiny evo attention};
-      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (p) at (0,-1) {\color{neongreen}\tiny STRUCTURE};
+    \begin{tikzpicture}[scale=1.0]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (s) at (0,1) {\color{fgwhite}\footnotesize SEQUENCE};
+      \node[draw=neonyellow,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (a) at (0,0) {\color{neonyellow}\footnotesize evo attention};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1mm,minimum width=2.2cm,minimum height=0.6cm] (p) at (0,-1) {\color{neongreen}\footnotesize STRUCTURE};
       \draw[->,thick,accentcyan] (s)--(a); \draw[->,thick,neonyellow] (a)--(p);
       \node[color=softgray] at (2,0) {MSA + pair};
     \end{tikzpicture}
@@ -25,11 +25,11 @@
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
     \begin{infobox}[AlphaFold]
-      \scriptsize One \textbf{static} structure\\ \tiny No dynamics, no $F$, no ensemble
+      \footnotesize One \textbf{static} structure\\ \footnotesize No dynamics, no $F$, no ensemble
     \end{infobox}
     \column{0.5\textwidth}
     \begin{successbox}[MD]
-      \scriptsize \textbf{Ensemble} of structures\\ \tiny $T$, $F$, pathways, rates
+      \footnotesize \textbf{Ensemble} of structures\\ \footnotesize $T$, $F$, pathways, rates
     \end{successbox}
   \end{columns}
   \vspace{3mm}
@@ -47,9 +47,9 @@
     \item Rigorous: AI \textbf{does not} replace physics --- it \textbf{accelerates} it
   \end{pitemize}
   \begin{center}
-    \begin{tikzpicture}[scale=0.9]
-      \node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (0,0) {\color{accentcyan}\tiny AI predict};
-      \node[draw=neongreen,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (3.5,0) {\color{neongreen}\tiny MD sample/fine-tune};
+    \begin{tikzpicture}[scale=1.0]
+      \node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (0,0) {\color{accentcyan}\footnotesize AI predict};
+      \node[draw=neongreen,fill=darkgray,rounded corners=1.5mm,minimum width=2.4cm,minimum height=0.7cm] at (3.5,0) {\color{neongreen}\footnotesize MD sample/fine-tune};
       \draw[->,thick,neonyellow] (1.2,0) -- (2.3,0) node[midway,above]{seed};
     \end{tikzpicture}
   \end{center}

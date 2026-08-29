@@ -3,205 +3,205 @@
 
 \subsection{Microstates, Macrostates, Phase Space}
 \begin{frame}{Microstate vs Macrostate}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \neoncyan{Microstate}: $\Gamma = \{ \mathbf{r}^N,\mathbf{p}^N\}$ --- everything
-      \item \textcolor{neonpink}{Macrostate}: $(N,V,E)$ or $(N,P,T)$ --- few numbers
-      \item One macro $\leftarrow$ many micro: $\Omega$ microstates
-      \item Phase space: $6N$-dim, point = microstate
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{center}
-      \begin{tikzpicture}[scale=0.9]
-        \draw[accentcyan,thick,->] (0,0) -- (2.2,0) node[right]{$q$};
-        \draw[accentcyan,thick,->] (0,0) -- (0,2) node[above]{$p$};
-        \foreach \x/\y in {0.3/0.4,0.6/1.1,0.9/0.7,1.3/1.4,1.6/0.5,0.4/1.6,1.1/0.9} {\fill[fgwhite] (\x,\y) circle (1pt);}
-        \draw[neonyellow,dashed] (0.1,0.1) rectangle (1.9,1.8) node[above left,color=neonyellow]{macro: $E\pm dE$};
-        \only<2>{\node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,inner sep=1mm] at (1,2.3) {ensemble = cloud of points};}
-      \end{tikzpicture}
-    \end{center}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \neoncyan{Microstate}: $\Gamma = \{ \mathbf{r}^N,\mathbf{p}^N\}$ --- everything
+			\item \textcolor{neonpink}{Macrostate}: $(N,V,E)$ or $(N,P,T)$ --- few numbers
+			\item One macro $\leftarrow$ many micro: $\Omega$ microstates
+			\item Phase space: $6N$-dim, point = microstate
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{center}
+			\begin{tikzpicture}[scale=1.0]
+				\draw[accentcyan,thick,->] (0,0) -- (2.2,0) node[right]{$q$};
+				\draw[accentcyan,thick,->] (0,0) -- (0,2) node[above]{$p$};
+				\foreach \x/\y in {0.3/0.4,0.6/1.1,0.9/0.7,1.3/1.4,1.6/0.5,0.4/1.6,1.1/0.9} {\fill[fgwhite] (\x,\y) circle (1pt);}
+				\draw[neonyellow,dashed] (0.1,0.1) rectangle (1.9,1.8) node[above left,color=neonyellow]{macro: $E\pm dE$};
+				\only<2>{\node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,inner sep=1mm] at (1,2.3) {ensemble = cloud of points};}
+			\end{tikzpicture}
+		\end{center}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Micro/Macro}
-  \interpret{
-    \textbf{Micro} · exact positions·momenta · \textbf{macro} · thermometer numbers · \textbf{phase space} · map of all micros · \textbf{one macro} = \textbf{many micros}
-  }
+	\interpret{
+		\textbf{Micro} · exact positions·momenta · \textbf{macro} · thermometer numbers · \textbf{phase space} · map of all micros · \textbf{one macro} = \textbf{many micros}
+	}
 \end{frame}
 
 \subsection{Energy, Entropy, Temperature}
 \begin{frame}{Energy --- The Currency}
-  \begin{equation*}
-    E = K + U = \sum_i \frac{\mathbf{p}_i^2}{2m_i} + U(\mathbf{r}^N) \qquad \text{\color{softgray}\tiny micro definition}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item $U(\mathbf{r}^N)$ = PES --- see §3
-      \item Conserved in NVE: $dE/dt=0$
-      \item Fluctuates in NVT: $\langle (\Delta E)^2\rangle = k_BT^2 C_V$
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}
-      \draw[->,accentcyan,thick] (0,0) -- (2.5,0) node[right]{$r$};
-      \draw[->,accentcyan,thick] (0,0) -- (0,1.8) node[above]{$U$};
-      \draw[neonyellow,thick,domain=0.3:2.2,samples=60] plot (\x,{1.2*exp(-(\x-1)*( \x-1)*3) -0.6});
-      \fill[neonpink] (1, -0.1) circle (1.5pt) node[below,color=neonpink]{min};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		E = K + U = \sum_i \frac{\mathbf{p}_i^2}{2m_i} + U(\mathbf{r}^N) \qquad \text{\color{softgray}\footnotesize micro definition}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item $U(\mathbf{r}^N)$ = PES --- see §3
+			\item Conserved in NVE: $dE/dt=0$
+			\item Fluctuates in NVT: $\langle (\Delta E)^2\rangle = k_BT^2 C_V$
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}
+			\draw[->,accentcyan,thick] (0,0) -- (2.5,0) node[right]{$r$};
+			\draw[->,accentcyan,thick] (0,0) -- (0,1.8) node[above]{$U$};
+			\draw[neonyellow,thick,domain=0.3:2.2,samples=60] plot (\x,{1.2*exp(-(\x-1)*( \x-1)*3) -0.6});
+			\fill[neonpink] (1, -0.1) circle (1.5pt) node[below,color=neonpink]{min};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Entropy --- Counting}
-  \begin{equation*}
-    S = k_B \ln \Omega \qquad\text{and}\qquad S = -k_B\sum_i p_i\ln p_i
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item $\Omega$ = \# microstates for macro
-      \item More ways \ensuremath{\rightarrow} more entropy \ensuremath{\rightarrow} more likely
-      \item Disorder = \textbf{counting}, not mess
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.9]
-      \node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.6cm,minimum height=0.7cm] (a) at (0,0) {\tiny $\Omega=1$};
-      \node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (b) at (0,-1.1) {\tiny $\Omega=10^{23}$};
-      \draw[->,thick,neonyellow] (a) -- (b) node[midway,right,color=neonyellow]{$S\uparrow$};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		S = k_B \ln \Omega \qquad\text{and}\qquad S = -k_B\sum_i p_i\ln p_i
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item $\Omega$ = \# microstates for macro
+			\item More ways \ensuremath{\rightarrow} more entropy \ensuremath{\rightarrow} more likely
+			\item Disorder = \textbf{counting}, not mess
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.6cm,minimum height=0.7cm] (a) at (0,0) {\footnotesize $\Omega=1$};
+			\node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (b) at (0,-1.1) {\footnotesize $\Omega=10^{23}$};
+			\draw[->,thick,neonyellow] (a) -- (b) node[midway,right,color=neonyellow]{$S\uparrow$};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Temperature --- Slope of Entropy}
-  \begin{equation*}
-    \frac{1}{T} = \left(\frac{\partial S}{\partial E}\right)_{N,V} \qquad
-    \text{\color{softgray}hot = small slope}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Cold: $S$ steep vs $E$
-      \item Hot: $S$ flat vs $E$
-      \item $T$ = \textbf{exchange rate} of $E$\leftrightarrow$ S$
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$E$};
-      \draw[->,accentcyan] (0,0)--(0,2) node[above]{$S$};
-      \draw[neongreen,thick,domain=0.2:2.6,samples=50] plot (\x,{1.8*(1-exp(-\x*0.9))});
-      \draw[dashed,neonyellow] (0.6,0) -- (0.6,1.0) -- (0,1.0);
-      \node[color=neonyellow] at (0.6,-0.3) {cold $T$ low};
-      \draw[dashed,neonpink] (2.0,0) -- (2.0,1.5) -- (0,1.5);
-      \node[color=neonpink] at (2.0,-0.3) {hot $T$ high};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		\frac{1}{T} = \left(\frac{\partial S}{\partial E}\right)_{N,V} \qquad
+		\text{\color{softgray}hot = small slope}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Cold: $S$ steep vs $E$
+			\item Hot: $S$ flat vs $E$
+			\item $T$ = \textbf{exchange rate} of $E$\leftrightarrow$ S$
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$E$};
+			\draw[->,accentcyan] (0,0)--(0,2) node[above]{$S$};
+			\draw[neongreen,thick,domain=0.2:2.6,samples=50] plot (\x,{1.8*(1-exp(-\x*0.9))});
+			\draw[dashed,neonyellow] (0.6,0) -- (0.6,1.0) -- (0,1.0);
+			\node[color=neonyellow] at (0.6,-0.3) {cold $T$ low};
+			\draw[dashed,neonpink] (2.0,0) -- (2.0,1.5) -- (0,1.5);
+			\node[color=neonpink] at (2.0,-0.3) {hot $T$ high};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Energy/Entropy/Temperature}
-  \interpret{
-    \textbf{Energy} · conserved currency · \textbf{entropy} · count of ways · \textbf{temperature} · $dS/dE$ · \textbf{hot} = flat $S(E)$
-  }
+	\interpret{
+		\textbf{Energy} · conserved currency · \textbf{entropy} · count of ways · \textbf{temperature} · $dS/dE$ · \textbf{hot} = flat $S(E)$
+	}
 \end{frame}
 
 \subsection{Free Energy \& Boltzmann}
 \begin{frame}{Free Energy --- What Actually Matters}
-  \begin{equation*}
-    F = U - TS \qquad G = H - TS \qquad \min F,G \Leftrightarrow \text{stable}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item $U$ wants order, $S$ wants disorder
-      \item $F$ = compromise at $T$
-      \item Spontaneous $\Delta F<0$
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \memeinclude[width=0.95\linewidth]{assets/memes/boltzmann_meme.png}
-  \end{columns}
+	\begin{equation*}
+		F = U - TS \qquad G = H - TS \qquad \min F,G \Leftrightarrow \text{stable}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item $U$ wants order, $S$ wants disorder
+			\item $F$ = compromise at $T$
+			\item Spontaneous $\Delta F<0$
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\memeinclude[width=0.95\linewidth]{assets/memes/boltzmann_meme.png}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Boltzmann Distribution}
-  \begin{equation*}
-    p_i = \frac{e^{-\beta E_i}}{Z},\quad \beta=\frac1{k_BT},\quad Z=\sum_i e^{-\beta E_i}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Low $E$ \ensuremath{\rightarrow} high $p$
-      \item High $T$ \ensuremath{\rightarrow} flatter $p$
-      \item $Z$ = partition function = normalization + \textbf{generator}
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$E$};
-      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$p$};
-      \draw[neongreen,thick,domain=0:2.4,samples=40] plot (\x,{1.4*exp(-\x*1.2)});
-      \node[color=neongreen] at (1.2,1.2) {cold};
-      \draw[neonyellow,thick,domain=0:2.4,samples=40] plot (\x,{0.9*exp(-\x*0.6)});
-      \node[color=neonyellow] at (1.2,0.7) {hot};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		p_i = \frac{e^{-\beta E_i}}{Z},\quad \beta=\frac1{k_BT},\quad Z=\sum_i e^{-\beta E_i}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Low $E$ \ensuremath{\rightarrow} high $p$
+			\item High $T$ \ensuremath{\rightarrow} flatter $p$
+			\item $Z$ = partition function = normalization + \textbf{generator}
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$E$};
+			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$p$};
+			\draw[neongreen,thick,domain=0:2.4,samples=40] plot (\x,{1.4*exp(-\x*1.2)});
+			\node[color=neongreen] at (1.2,1.2) {cold};
+			\draw[neonyellow,thick,domain=0:2.4,samples=40] plot (\x,{0.9*exp(-\x*0.6)});
+			\node[color=neonyellow] at (1.2,0.7) {hot};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Partition Function}
-  \begin{equation*}
-    Z = \sum e^{-\beta E} \;( \text{or } \int e^{-\beta H} d\Gamma ) \qquad
-    F = -k_BT\ln Z
-  \end{equation*}
-  \begin{pitemize}
-    \item $Z$ \ensuremath{\rightarrow} $F$ \ensuremath{\rightarrow} $P$, $S$, $C_V$ by derivatives
-    \item Never need absolute $Z$, need \textbf{ratios} \ensuremath{\rightarrow} \textbf{sampling}
-  \end{pitemize}
+	\begin{equation*}
+		Z = \sum e^{-\beta E} \;( \text{or } \int e^{-\beta H} d\Gamma ) \qquad
+		F = -k_BT\ln Z
+	\end{equation*}
+	\begin{pitemize}
+		\item $Z$ \ensuremath{\rightarrow} $F$ \ensuremath{\rightarrow} $P$, $S$, $C_V$ by derivatives
+		\item Never need absolute $Z$, need \textbf{ratios} \ensuremath{\rightarrow} \textbf{sampling}
+	\end{pitemize}
 \end{frame}
 
 \begin{frame}{Interpretation --- Free Energy/Boltzmann}
-  \interpret{
-    \textbf{free energy} · balance $U$ vs $TS$ · \textbf{Boltzmann} · low $E$ wins · \textbf{$Z$} · sum that rules them all · \textbf{cold} = picky, \textbf{hot} = tolerant
-  }
+	\interpret{
+		\textbf{free energy} · balance $U$ vs $TS$ · \textbf{Boltzmann} · low $E$ wins · \textbf{$Z$} · sum that rules them all · \textbf{cold} = picky, \textbf{hot} = tolerant
+	}
 \end{frame}
 
 \subsection{Ensembles \& Ergodicity}
 \begin{frame}{NVE, NVT, NPT --- Choose Your Lab}
-  \begin{center}
-    \begin{tikzpicture}[scale=0.9]
-      \foreach \idx/\lab/\fix in {0/NVE/$E$,1/NVT/$T$,2/NPT/{$T,P$}} {
-        \node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.4cm,minimum height=1.2cm,align=center] (b\idx) at (\idx*3.2,0) {\color{neonyellow}\tiny\bfseries \lab\\\color{fgwhite}\tiny fix \fix\\\color{softgray}\tiny micro/canonical/isobaric};
-      }
-      \draw[<->,thick,neongreen] (b0) -- (b1) node[midway,above]{thermostat} ;
-      \draw[<->,thick,neonpink] (b1) -- (b2) node[midway,above]{barostat} ;
-    \end{tikzpicture}
-  \end{center}
-  \begin{pitemize}
-    \item \textbf{NVE}: isolated, $E$ conserved \ensuremath{\rightarrow} MD default
-    \item \textbf{NVT}: heat bath, $T$ fixed \ensuremath{\rightarrow} biology lab
-    \item \textbf{NPT}: $P$+ $T$ fixed \ensuremath{\rightarrow} real world
-  \end{pitemize}
+	\begin{center}
+		\begin{tikzpicture}[scale=1.0]
+			\foreach \idx/\lab/\fix in {0/NVE/$E$,1/NVT/$T$,2/NPT/{$T,P$}} {
+			\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=2.8cm,minimum height=1.4cm,align=center,font=\footnotesize] (b\idx) at (\idx*3.6,0) {\color{neonyellow}\bfseries \lab\\\color{fgwhite} fix \fix\\\color{softgray} micro/canonical/isobaric};
+			}
+			\draw[<->,thick,neongreen] (b0) -- (b1) node[midway,above,font=\footnotesize]{thermostat} ;
+			\draw[<->,thick,neonpink] (b1) -- (b2) node[midway,above,font=\footnotesize]{barostat} ;
+		\end{tikzpicture}
+	\end{center}
+	\begin{pitemize}
+		\item \textbf{NVE}: isolated, $E$ conserved \ensuremath{\rightarrow} MD default
+		\item \textbf{NVT}: heat bath, $T$ fixed \ensuremath{\rightarrow} biology lab
+		\item \textbf{NPT}: $P$+ $T$ fixed \ensuremath{\rightarrow} real world
+	\end{pitemize}
 \end{frame}
 
 \begin{frame}{Ergodicity \& Ensemble Average}
-  \begin{equation*}
-    \langle A\rangle = \sum_i A_i p_i \approx \frac1{T}\int_0^T A(t)\,dt \quad\text{if ergodic}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Ergodic}: trajectory visits all with correct weight
-      \item Broken \ensuremath{\rightarrow} trapped, \textbf{rare events} matter
-      \item Solution: \textbf{enhanced sampling} (§9)
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=0.6]
-      \draw[accentcyan] (0,0) rectangle (2.2,1.6);
-      \fill[neonyellow!30] (0.2,0.2) rectangle (2.0,1.4);
-      \draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.5mm}] (0.3,0.3) -- (1.9,1.3);
-      \node[color=fgwhite] at (1.1,0.8) {trajectory};
-      \node[color=neonyellow] at (1.1,-0.3) {ensemble (shaded)};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		\langle A\rangle = \sum_i A_i p_i \approx \frac1{T}\int_0^T A(t)\,dt \quad\text{if ergodic}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Ergodic}: trajectory visits all with correct weight
+			\item Broken \ensuremath{\rightarrow} trapped, \textbf{rare events} matter
+			\item Solution: \textbf{enhanced sampling} (§9)
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[accentcyan] (0,0) rectangle (2.2,1.6);
+			\fill[neonyellow!30] (0.2,0.2) rectangle (2.0,1.4);
+			\draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.5mm}] (0.3,0.3) -- (1.9,1.3);
+			\node[color=bgblack] at (1.1,0.8) {trajectory};
+			\node[color=neonyellow] at (1.1,-0.3) {ensemble (shaded)};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Interpretation --- Ensembles}
-  \interpret{
-    \textbf{ensembles} · what you fix · \textbf{NVE/NVT/NPT} · lab choice · \textbf{ergodic} · time = ensemble · \textbf{broken} \ensuremath{\rightarrow} sample smarter
-  }
+	\interpret{
+		\textbf{ensembles} · what you fix · \textbf{NVE/NVT/NPT} · lab choice · \textbf{ergodic} · time = ensemble · \textbf{broken} \ensuremath{\rightarrow} sample smarter
+	}
 \end{frame}
