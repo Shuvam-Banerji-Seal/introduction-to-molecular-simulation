@@ -13,13 +13,8 @@
 		\end{pitemize}
 		\column{0.5\textwidth}
 		\begin{center}
-			\begin{tikzpicture}[scale=1.0]
-				\draw[accentcyan,thick,->] (0,0) -- (2.2,0) node[right]{$q$};
-				\draw[accentcyan,thick,->] (0,0) -- (0,2) node[above]{$p$};
-				\foreach \x/\y in {0.3/0.4,0.6/1.1,0.9/0.7,1.3/1.4,1.6/0.5,0.4/1.6,1.1/0.9} {\fill[fgwhite] (\x,\y) circle (1pt);}
-				\draw[neonyellow,dashed] (0.1,0.1) rectangle (1.9,1.8) node[above left,color=neonyellow]{macro: $E\pm dE$};
-				\only<2>{\node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,inner sep=1mm] at (1,2.3) {ensemble = cloud of points};}
-			\end{tikzpicture}
+			\includegraphics[width=0.9\linewidth]{assets/figures/phase_space.png}
+			{\footnotesize\color{softgray} Phase space: each point = microstate}
 		\end{center}
 	\end{columns}
 \end{frame}
@@ -43,12 +38,10 @@
 			\item Fluctuates in NVT: $\langle (\Delta E)^2\rangle = k_BT^2 C_V$
 		\end{pitemize}
 		\column{0.5\textwidth}
-		\begin{tikzpicture}
-			\draw[->,accentcyan,thick] (0,0) -- (2.5,0) node[right]{$r$};
-			\draw[->,accentcyan,thick] (0,0) -- (0,1.8) node[above]{$U$};
-			\draw[neonyellow,thick,domain=0.3:2.2,samples=60] plot (\x,{1.2*exp(-(\x-1)*( \x-1)*3) -0.6});
-			\fill[neonpink] (1, -0.1) circle (1.5pt) node[below,color=neonpink]{min};
-		\end{tikzpicture}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/energy_well.png}
+			{\footnotesize\color{softgray} Potential energy $U(r)$: well + barrier}
+		\end{center}
 	\end{columns}
 \end{frame}
 
@@ -64,11 +57,10 @@
 			\item Disorder = \textbf{counting}, not mess
 		\end{pitemize}
 		\column{0.5\textwidth}
-		\begin{tikzpicture}[scale=1.0]
-			\node[draw=accentcyan,fill=darkgray,rounded corners=1mm,minimum width=1.6cm,minimum height=0.7cm] (a) at (0,0) {\footnotesize $\Omega=1$};
-			\node[draw=neonpink,fill=neonpink!15,rounded corners=1mm,minimum width=2.2cm,minimum height=0.7cm] (b) at (0,-1.1) {\footnotesize $\Omega=10^{23}$};
-			\draw[->,thick,neonyellow] (a) -- (b) node[midway,right,color=neonyellow]{$S\uparrow$};
-		\end{tikzpicture}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/entropy_counting.png}
+			{\footnotesize\color{softgray} $\Omega=1$ (ordered) $\to$ $\Omega=10^{23}$ (disordered)}
+		\end{center}
 	\end{columns}
 \end{frame}
 
@@ -82,16 +74,17 @@
 		\begin{pitemize}
 			\item Cold: $S$ steep vs $E$
 			\item Hot: $S$ flat vs $E$
-			\item $T$ = \textbf{exchange rate} of $E$\leftrightarrow$ S$
+			\item $T$ = \textbf{exchange rate} of $E \leftrightarrow S$
 		\end{pitemize}
 		\column{0.5\textwidth}
 		\begin{tikzpicture}[scale=1.0]
 			\draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$E$};
 			\draw[->,accentcyan] (0,0)--(0,2) node[above]{$S$};
-			\draw[neongreen,thick,domain=0.2:2.6,samples=50] plot (\x,{1.8*(1-exp(-\x*0.9))});
-			\draw[dashed,neonyellow] (0.6,0) -- (0.6,1.0) -- (0,1.0);
+			% Simple curve using coordinates instead of exp
+			\draw[neongreen,thick] plot[smooth] coordinates {(0.2,0.2) (0.6,0.8) (1.0,1.2) (1.5,1.5) (2.0,1.7) (2.6,1.85)};
+			\draw[dashed,neonyellow] (0.6,0) -- (0.6,0.8) -- (0,0.8);
 			\node[color=neonyellow] at (0.6,-0.3) {cold $T$ low};
-			\draw[dashed,neonpink] (2.0,0) -- (2.0,1.5) -- (0,1.5);
+			\draw[dashed,neonpink] (2.0,0) -- (2.0,1.7) -- (0,1.7);
 			\node[color=neonpink] at (2.0,-0.3) {hot $T$ high};
 		\end{tikzpicture}
 	\end{columns}
@@ -132,14 +125,10 @@
 			\item $Z$ = partition function = normalization + \textbf{generator}
 		\end{pitemize}
 		\column{0.5\textwidth}
-		\begin{tikzpicture}[scale=1.0]
-			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$E$};
-			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$p$};
-			\draw[neongreen,thick,domain=0:2.4,samples=40] plot (\x,{1.4*exp(-\x*1.2)});
-			\node[color=neongreen] at (1.2,1.2) {cold};
-			\draw[neonyellow,thick,domain=0:2.4,samples=40] plot (\x,{0.9*exp(-\x*0.6)});
-			\node[color=neonyellow] at (1.2,0.7) {hot};
-		\end{tikzpicture}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/boltzmann_dist.png}
+			{\footnotesize\color{softgray} Boltzmann: cold (steep) vs hot (flat)}
+		\end{center}
 	\end{columns}
 \end{frame}
 
@@ -190,13 +179,10 @@
 			\item Solution: \textbf{enhanced sampling} (§9)
 		\end{pitemize}
 		\column{0.5\textwidth}
-		\begin{tikzpicture}[scale=1.0]
-			\draw[accentcyan] (0,0) rectangle (2.2,1.6);
-			\fill[neonyellow!30] (0.2,0.2) rectangle (2.0,1.4);
-			\draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.5mm}] (0.3,0.3) -- (1.9,1.3);
-			\node[color=bgblack] at (1.1,0.8) {trajectory};
-			\node[color=neonyellow] at (1.1,-0.3) {ensemble (shaded)};
-		\end{tikzpicture}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/phase_space.png}
+			{\footnotesize\color{softgray} Trajectory (line) vs ensemble (shaded)}
+		\end{center}
 	\end{columns}
 \end{frame}
 

@@ -6,8 +6,6 @@
 % --- Font size increased per user request (8pt -> 10pt base) ---
 \usepackage{sbs_dark_beamer}
 \hfuzz=500pt\vfuzz=500pt\hbadness=10000\vbadness=10000
-% --- Global font scaling: normal text larger ---
-\AtBeginDocument{\large}
 \usepackage{mwe} % for placeholder images if needed
 
 % Additional TikZ libs for diagrams (already calc,shadows.blur etc loaded)
@@ -18,14 +16,12 @@
   \IfFileExists{#2}{\includegraphics[#1]{#2}}{\fbox{\parbox{0.8\linewidth}{\centering\color{softgray}\tiny Meme: \texttt{#2} --- run \texttt{python scripts/generate\_meshy\_memes.py}}}}%
 }
 
-% Venn helper — dark text on light circles (FIXED white-on-white)
+% Venn helper — dark text on light circles (FIXED white-on-white, removed blend group)
 \newcommand{\venn}[3]{%
   \begin{tikzpicture}[scale=1.3]
-    \begin{scope}[blend group=screen]
-      \fill[accentcyan!70] (0,0) circle (1.3cm);
-      \fill[neonpink!70] (1.8,0) circle (1.3cm);
-      \fill[neongreen!70] (0.9,1.5) circle (1.3cm);
-    \end{scope}
+      \fill[accentcyan!50,opacity=0.7] (0,0) circle (1.3cm);
+      \fill[neonpink!50,opacity=0.7] (1.8,0) circle (1.3cm);
+      \fill[neongreen!50,opacity=0.7] (0.9,1.5) circle (1.3cm);
     \node[color=bgblack] at (0,0) {\normalsize\bfseries #1};
     \node[color=bgblack] at (1.8,0) {\normalsize\bfseries #2};
     \node[color=bgblack] at (0.9,1.5) {\normalsize\bfseries #3};
@@ -56,38 +52,45 @@
 % Title
 \begin{frame}[plain]
 	\titlepage
+	\begin{center}
+		\includegraphics[height=1.2cm]{assets/figures/slashdot_logo.png}
+	\end{center}
 \end{frame}
 
 % --- Video opener: YouTube-style thumbnail with play button (click opens new tab) ---
 \begin{frame}{What is Simulation? --- 60s Primer}
 	\begin{center}
-		{\color{accentcyan}\Large\bfseries Click to watch: What is Simulation?}\par
-		\vspace{0.5cm}
+		{\color{accentcyan}\normalsize\bfseries Click to watch: What is Simulation?}\par
+		\vspace{0.3cm}
 		\href{https://www.youtube.com/watch?v=XPE7eaR_XxM}{%
-			\begin{tikzpicture}
-				% 16:9 dark video player rectangle
-				\fill[bgdark,rounded corners=4mm] (0,0) rectangle (12,6.75);
-				\draw[accentcyan,rounded corners=4mm,line width=1.5pt] (0,0) rectangle (12,6.75);
-				% Top red banner
-				\fill[neonpink,rounded corners=4mm] (0,5.5) rectangle (12,6.75);
-				\node[color=bgblack] at (6,6.125) {\Large\bfseries What is Simulation?};
-				% Center play button: red rounded rectangle + white triangle
-				\fill[neonpink,rounded corners=3mm] (4.5,2.0) rectangle (7.5,3.8);
-				\fill[white] (5.55,2.35) -- (5.55,3.45) -- (6.5,2.9) -- cycle;
-				% Bottom URL bar
-				\node[color=fgwhite] at (6,1.0) {\normalsize\ttfamily youtube.com/watch?v=XPE7eaR\_XxM};
-				\node[color=softgray] at (6,0.35) {\footnotesize click anywhere on this card to open in a new tab};
-			\end{tikzpicture}%
+			\resizebox{0.88\linewidth}{!}{%
+				\begin{tikzpicture}
+					% 16:9 dark video player rectangle
+					\fill[bgdark,rounded corners=4mm] (0,0) rectangle (11,6.19);
+					\draw[accentcyan,rounded corners=4mm,line width=1.5pt] (0,0) rectangle (11,6.19);
+					% Top red banner
+					\fill[neonpink,rounded corners=4mm] (0,5.05) rectangle (11,6.19);
+					\node[color=bgblack] at (5.5,5.62) {\large\bfseries What is Simulation?};
+					% Center play button: red rounded rectangle + white triangle
+					\fill[neonpink,rounded corners=3mm] (4.1,2.0) rectangle (6.9,3.6);
+					\fill[white] (5.15,2.35) -- (5.15,3.25) -- (6.0,2.8) -- cycle;
+					% Bottom URL bar
+					\node[color=fgwhite] at (5.5,1.0) {\footnotesize\ttfamily youtube.com/watch?v=XPE7eaR\_XxM};
+					\node[color=softgray] at (5.5,0.35) {\footnotesize click anywhere on this card to open in a new tab};
+				\end{tikzpicture}%
+			}%
 		}\par
-		\vspace{0.4cm}
-		{\color{neonyellow}\large\bfseries\href{https://www.youtube.com/watch?v=XPE7eaR_XxM}{[\,\,\,PLAY VIDEO\,\,\,\ensuremath{\rightarrow}\,\,]}}\par
+		\vspace{0.3cm}
+		{\color{neonyellow}\normalsize\bfseries\href{https://www.youtube.com/watch?v=XPE7eaR_XxM}{[\,\,PLAY VIDEO\,\,\ensuremath{\rightarrow}\,]}}\par
 	\end{center}
 \end{frame}
 
-% TOC --- single column to avoid multicols+beamer clash
+% TOC --- two columns to hold all 16 sections
 \begin{frame}{Outline --- Roadmap}
-	\normalsize
-	\tableofcontents[hideallsubsections]
+	\begin{multicols}{2}
+		\footnotesize
+		\tableofcontents[hideallsubsections]
+	\end{multicols}
 \end{frame}
 
 % 16 Sections --- each input is a file in sections/
@@ -124,6 +127,10 @@
 		\begin{tikzpicture}
 			\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,inner sep=2mm] {\color{fgwhite}\tiny\ttfamily uv sync \&\& uv run python \&\& ./lammps/build/lmp -in in.lj};
 		\end{tikzpicture}
+		\vspace{0.3cm}
+		\includegraphics[height=1.0cm]{assets/figures/slashdot_logo.png}
+		\vspace{0.3cm}
+		\IfFileExists{assets/figures/ending_concept.png}{\includegraphics[width=0.5\linewidth]{assets/figures/ending_concept.png}}{}
 	\end{center}
 \end{frame}
 

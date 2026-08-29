@@ -333,10 +333,10 @@
 \setbeamertemplate{footline}{%
     \noindent
     \begin{tikzpicture}
-        \pgfmathsetmacro{\ratio}{\insertframenumber/\inserttotalframenumber}
+        \pgfmathsetmacro{\ratio}{\insertframenumber/(\inserttotalframenumber+0.001)}
         \fill[customgray] (0,0) rectangle (\paperwidth,3pt);
         \shade[left color=accentcyan,right color=neonblue]
-            (0,0) rectangle (\ratio*\paperwidth,3pt);
+            (0,0) rectangle ({min(\ratio,1.0)*\paperwidth},3pt);
     \end{tikzpicture}%
     \vskip2pt
     \hbox{%

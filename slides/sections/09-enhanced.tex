@@ -2,94 +2,91 @@
 \section{Enhanced Sampling and Free-Energy Methods}
 
 \begin{frame}{The Sampling Problem}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item MD samples $\propto e^{-\beta U}$ \ensuremath{\rightarrow} rare events \textbf{never} seen
-      \item Barrier $10\,k_BT$ \ensuremath{\rightarrow} wait $e^{10}\sim 20$k× longer
-      \item \textbf{Biology lives in rare events}
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=1.0]
-      \draw[accentcyan,thick] plot[smooth] coordinates {(0,0) (0.7,1.2) (1.4,0.4) (2.1,1.4) (2.8,0.6)};
-      \fill[neongreen] (0.2,0.2) circle (2pt) node[below]{now};
-      \fill[neonpink] (2.6,0.7) circle (2pt) node[below]{rare};
-      \draw[<->,thick,neonyellow] (0.7,0) -- (1.4,0) node[midway,below]{barrier};
-      \node[color=neonpink] at (1.35,1.6) {MD stuck};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item MD samples $\propto e^{-\beta U}$ \ensuremath{\rightarrow} rare events \textbf{never} seen
+			\item Barrier $10\,k_BT$ \ensuremath{\rightarrow} wait $e^{10}\sim 20$k× longer
+			\item \textbf{Biology lives in rare events}
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/sampling_barrier.png}
+			{\footnotesize\color{softgray} MD stuck in left well, rare event in right}
+		\end{center}
+	\end{columns}
 \end{frame}
 
 \subsection{Methods}
 \begin{frame}{Metadynamics --- Fill the Well}
-  \begin{equation*}
-    V_{\text{bias}}(s,t)=\sum_{t'} w\, e^{-(s-s(t'))^2/2\sigma^2}
-  \end{equation*}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Deposit Gaussians along CV $s$
-      \item Flood minima \ensuremath{\rightarrow} escape
-      \item \textbf{Free energy} = $-V_{\text{bias}}$ at convergence
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=1.0]
-      \draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$s$};
-      \draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$F$};
-      \only<1>{\draw[neongreen,thick,domain=0.2:2.4,samples=40] plot (\x,{0.3+0.8*exp(-(\x-0.8)*(\x-0.8)*4)+0.6*exp(-(\x-1.8)*(\x-1.8)*4)});}
-      \only<2>{\draw[neonyellow,thick,domain=0.2:2.4,samples=40] plot (\x,{0.3+0.2*exp(-(\x-0.8)*(\x-0.8)*4)+0.2*exp(-(\x-1.8)*(\x-1.8)*4)}); \node[color=neonyellow] at (1.3,1.3) {filled};}
-    \end{tikzpicture}
-  \end{columns}
+	\begin{equation*}
+		V_{\text{bias}}(s,t)=\sum_{t'} w\, e^{-(s-s(t'))^2/2\sigma^2}
+	\end{equation*}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Deposit Gaussians along CV $s$
+			\item Flood minima \ensuremath{\rightarrow} escape
+			\item \textbf{Free energy} = $-V_{\text{bias}}$ at convergence
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$s$};
+			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$F$};
+			\only<1>{\draw[neongreen,thick] plot[smooth] coordinates {(0.2,0.3) (0.5,1.0) (0.8,1.1) (1.0,0.5) (1.3,0.4) (1.6,0.9) (1.8,1.1) (2.1,0.5) (2.4,0.3)};}
+			\only<2>{\draw[neonyellow,thick] plot[smooth] coordinates {(0.2,0.3) (0.5,0.4) (0.8,0.45) (1.0,0.4) (1.3,0.38) (1.6,0.42) (1.8,0.45) (2.1,0.4) (2.4,0.3)}; \node[color=neonyellow] at (1.3,1.3) {filled};}
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Umbrella Sampling --- Windows}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item Harmonic umbrella per window: $w_i(s)=\tfrac12k(s-s_i)^2$
-      \item Overlap windows \ensuremath{\rightarrow} WHAM/MBAR
-      \item Rigorous $PMF$ via reweighting
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=1.0]
-      \draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$s$};
-      \foreach \x in {0.5,1.2,1.9} {\draw[neongreen,thick,domain=-0.5:0.5,samples=20] plot ({\x+\x*0 + \x}, {0.2+0.8*exp(-\x*6)}); \fill[accentcyan] (\x,0.2) circle (1.5pt);}
-      \node[color=softgray] at (1.4,-0.3) {windows + umbrellas};
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item Harmonic umbrella per window: $w_i(s)=\tfrac12k(s-s_i)^2$
+			\item Overlap windows \ensuremath{\rightarrow} WHAM/MBAR
+			\item Rigorous $PMF$ via reweighting
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$s$};
+			\foreach \x in {0.5,1.2,1.9} {\draw[neongreen,thick] plot[smooth] coordinates {(\x-0.3,0.2) (\x-0.15,0.5) (\x,1.0) (\x+0.15,0.5) (\x+0.3,0.2)}; \fill[accentcyan] (\x,0.2) circle (1.5pt);}
+			\node[color=softgray] at (1.4,-0.3) {windows + umbrellas};
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Replica Exchange \& Accelerated MD}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \begin{pitemize}
-      \item \textbf{Replica exchange}: hot replicas \ensuremath{\rightarrow} cold via swap $P\propto e^{\Delta\beta\Delta U}$
-      \item \textbf{Accelerated MD}: boost $U \to U+\Delta V$ when $U<$ threshold
-    \end{pitemize}
-    \column{0.5\textwidth}
-    \begin{tikzpicture}[scale=1.0]
-      \foreach \y in {0,0.7,1.4} {
-        \draw[accentcyan] (0,\y) -- (2.2,\y);
-        \foreach \x in {0.3,0.9,1.5,2.0} {\fill[neongreen] (\x,\y) circle (1pt);}
-      }
-      \draw[<->,thick,neonyellow] (2.4,0) -- (2.4,1.4) node[midway,right]{$T$};
-      \draw[dashed,neonpink] (0.9,0) -- (0.9,1.4);
-    \end{tikzpicture}
-  \end{columns}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.5\textwidth}
+		\begin{pitemize}
+			\item \textbf{Replica exchange}: hot replicas \ensuremath{\rightarrow} cold via swap $P\propto e^{\Delta\beta\Delta U}$
+			\item \textbf{Accelerated MD}: boost $U \to U+\Delta V$ when $U<$ threshold
+		\end{pitemize}
+		\column{0.5\textwidth}
+		\begin{tikzpicture}[scale=1.0]
+			\foreach \y in {0,0.7,1.4} {
+					\draw[accentcyan] (0,\y) -- (2.2,\y);
+					\foreach \x in {0.3,0.9,1.5,2.0} {\fill[neongreen] (\x,\y) circle (1pt);}
+				}
+			\draw[<->,thick,neonyellow] (2.4,0) -- (2.4,1.4) node[midway,right]{$T$};
+			\draw[dashed,neonpink] (0.9,0) -- (0.9,1.4);
+		\end{tikzpicture}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Potential of Mean Force}
-  \begin{equation*}
-    W(s) = -k_BT\ln P(s) \qquad P(s)=\langle\delta(s-s(\mathbf{R}))\rangle
-  \end{equation*}
-  \begin{pitemize}
-    \item PMF = free energy \textbf{along} CV
-    \item Minimum = stable, barrier = rate via Kramers
-  \end{pitemize}
+	\begin{equation*}
+		W(s) = -k_BT\ln P(s) \qquad P(s)=\langle\delta(s-s(\mathbf{R}))\rangle
+	\end{equation*}
+	\begin{pitemize}
+		\item PMF = free energy \textbf{along} CV
+		\item Minimum = stable, barrier = rate via Kramers
+	\end{pitemize}
 \end{frame}
 
 \begin{frame}{Interpretation --- Enhanced Sampling}
-  \interpret{
-    \textbf{rare} · barrier wins · \textbf{metadynamics} · fill wells · \textbf{umbrella} · windows \ensuremath{\rightarrow} WHAM · \textbf{replica} · heat helps · \textbf{PMF} · $ -kT\ln P$ · \textbf{free energy} = truth
-  }
+	\interpret{
+		\textbf{rare} · barrier wins · \textbf{metadynamics} · fill wells · \textbf{umbrella} · windows \ensuremath{\rightarrow} WHAM · \textbf{replica} · heat helps · \textbf{PMF} · $ -kT\ln P$ · \textbf{free energy} = truth
+	}
 \end{frame}

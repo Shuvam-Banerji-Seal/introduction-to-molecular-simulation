@@ -56,8 +56,8 @@
 			\draw[->,thick,accentcyan] (n0) -- (n1);
 			\draw[->,thick,accentcyan] (n1) -- (n2);
 			\draw[->,thick,accentcyan] (n2) -- (n3);
-			\node[draw=neonyellow,fill=neonyellow!15,rounded corners=1mm,inner sep=1.5mm,font=\footnotesize] at (1.6,1.2) {IC: Maxwell--Boltzmann};
-			\node[draw=neongreen,fill=neongreen!15,rounded corners=1mm,inner sep=1.5mm,font=\footnotesize] at (4.8,1.2) {Equil. \ensuremath{\rightarrow} Prod.};
+			\node[draw=neonyellow,fill=neonyellow!15,rounded corners=1mm,inner sep=1.5mm,font=\footnotesize,text=bgblack] at (1.6,1.2) {IC: Maxwell--Boltzmann};
+			\node[draw=neongreen,fill=neongreen!15,rounded corners=1mm,inner sep=1.5mm,font=\footnotesize,text=bgblack] at (4.8,1.2) {Equil. \ensuremath{\rightarrow} Prod.};
 		\end{tikzpicture}
 	\end{center}
 	\begin{pitemize}
@@ -79,7 +79,7 @@
 		\begin{tikzpicture}[scale=1.0]
 			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$t$};
 			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$\langle A\rangle$};
-			\draw[neongreen,thick,domain=0:2.4,samples=40] plot (\x,{0.4+0.6*exp(-\x*1.5)+0.2*sin(\x*10 r)*exp(-\x*0.5)});
+			\draw[neongreen,thick] plot[smooth] coordinates {(0,1.0) (0.3,0.8) (0.6,0.6) (0.9,0.5) (1.2,0.45) (1.5,0.42) (1.8,0.41) (2.1,0.405) (2.4,0.4)};
 			\draw[dashed,neonyellow] (0,0.4) -- (2.4,0.4) node[right,color=neonyellow]{limit};
 		\end{tikzpicture}
 	\end{columns}

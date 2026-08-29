@@ -18,20 +18,23 @@
 		\end{infobox}
 		\column{0.42\textwidth}
 		\begin{center}
-			\begin{tikzpicture}[scale=1.1, every node/.style={font=\small}]
-				% Chip with pins — larger fonts, MORE SPACING between nodes
-				\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=3.2cm,minimum height=1.4cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,2.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
-				\foreach \x in {-1.0,-0.5,0,0.5,1.0} {\draw[accentcyan,thick] (\x,3.25) -- (\x,1.9);}
-				% Simulation — more gap below chip
-				\node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.3cm,align=center,drop shadow] (sim) at (0,0.3) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
-				% Observables — more gap below sim
-				\node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.2cm,align=center,drop shadow] (obs) at (0,-2.0) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
-				% Arrows with labels — longer arrows with clear gaps
-				\draw[-{Stealth[length=4mm,width=3mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right=8pt,font=\footnotesize,color=accentcyan]{model};
-				\draw[-{Stealth[length=4mm,width=3mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right=8pt,font=\footnotesize,color=neongreen]{measure};
-				\only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,4.0) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{fgwhite}\footnotesize\ttfamily dt, thermostat, barostat};}
-				\only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (4.0,0.3) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
-			\end{tikzpicture}
+			\resizebox{\linewidth}{!}{%
+				\begin{tikzpicture}[scale=0.75, every node/.style={font=\small}]
+					% Chip with pins — larger fonts, MORE SPACING between nodes
+					\node[draw=accentcyan,rounded corners=2mm,fill=darkgray,minimum width=3.2cm,minimum height=1.4cm,align=center,drop shadow={shadow xshift=0.5mm,shadow yshift=-0.5mm,opacity=0.5}] (chip) at (0,2.6) {\color{fgwhite}\bfseries\normalsize CPU/GPU\\\color{softgray}\footnotesize\ttfamily chip};
+					% Chip pins — only above and below the box, NOT through it
+					\foreach \x in {-1.0,-0.5,0,0.5,1.0} {\draw[accentcyan,thick] (\x,3.3) -- (\x,3.6); \draw[accentcyan,thick] (\x,1.9) -- (\x,1.6);}
+					% Simulation — more gap below chip
+					\node[draw=neongreen,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.3cm,align=center,drop shadow] (sim) at (0,0.3) {\color{neongreen}\bfseries\normalsize Simulation\\\color{fgwhite}\footnotesize $F=ma$\,,\,$U(\mathbf{r})$};
+					% Observables — more gap below sim
+					\node[draw=neonyellow,rounded corners=2mm,fill=bgdark,minimum width=3.5cm,minimum height=1.2cm,align=center,drop shadow] (obs) at (0,-2.0) {\color{neonyellow}\bfseries\normalsize Observables\\\color{fgwhite}\footnotesize $P,\ \rho,\ D,\ \Delta G$};
+					% Arrows with labels — longer arrows with clear gaps
+					\draw[-{Stealth[length=4mm,width=3mm]},thick,accentcyan] (chip.south) -- (sim.north) node[midway,right=8pt,font=\footnotesize,color=accentcyan]{model};
+					\draw[-{Stealth[length=4mm,width=3mm]},thick,neongreen] (sim.south) -- (obs.north) node[midway,right=8pt,font=\footnotesize,color=neongreen]{measure};
+					\only<2>{\node[draw=neonpink,fill=neonpink!12,rounded corners=2mm,inner sep=2.5mm,align=center] at (0,4.0) {\color{neonpink}\bfseries\small you control $\Delta t,\,T,\,P$!\\\color{bgblack}\footnotesize\ttfamily dt, thermostat, barostat};}
+					\only<3>{\node[draw=accentcyan,fill=accentcyan!10,rounded corners=1mm,inner sep=2mm,align=center] at (4.0,0.3) {\color{accentcyan}\footnotesize\bfseries $10^9$ steps $\to$ $1\,\mu$s};}
+				\end{tikzpicture}%
+			}%
 		\end{center}
 	\end{columns}
 \end{frame}
@@ -61,7 +64,7 @@
 			\draw[thick,accentcyan] (0,0) -- (1.2,0.6); \draw[thick,accentcyan] (0,0) -- (1.2,-0.6);
 			\draw[dashed,neonyellow] (1.2,0.6) arc (60:-60:0.7cm);
 			\node[color=neonyellow] at (1.8,0) {$\theta$};
-			\only<2>{\draw[accentcyan,decorate,decoration={snake,amplitude=0.4mm,segment length=2mm}] (0.4,0.9) -- (0.4,1.6) node[above,color=accentcyan]{orbital cloud};}
+			\only<2>{\draw[accentcyan,thick,dashed] (0.4,0.9) -- (0.4,1.6) node[above,color=accentcyan]{orbital cloud};}
 		\end{tikzpicture}
 		\vspace{2mm}
 		{\footnotesize\color{softgray} Wireframe $\leftrightarrow$ Ball-and-stick $\leftrightarrow$ Space-filling}
@@ -111,35 +114,29 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{TikZ --- Representation Zoo}
-	\begin{center}
-		\begin{tikzpicture}[scale=1.0]
-			% Wireframe
-			\begin{scope}[xshift=0cm]
-				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b0) {};
-				\node[font=\bfseries,color=fgwhite] at (b0.north) {\footnotesize Wireframe};
-				\draw[accentcyan,thick] (-0.6,-0.2)--(0.6,0.2) (0,-0.4)--(0,0.4);
-			\end{scope}
-			% Ball-Stick
-			\begin{scope}[xshift=2.6cm]
-				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b1) {};
-				\node[font=\bfseries,color=fgwhite] at (b1.north) {\footnotesize Ball-Stick};
-				\shade[ball color=neonblue] (-0.4,0) circle (0.22cm); \shade[ball color=neonpink] (0.4,0) circle (0.22cm); \draw[thick,white] (-0.4,0)--(0.4,0);
-			\end{scope}
-			% Space-fill
-			\begin{scope}[xshift=5.2cm]
-				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b2) {};
-				\node[font=\bfseries,color=fgwhite] at (b2.north) {\footnotesize Space-fill};
-				\shade[ball color=neonblue!80] (-0.2,0) circle (0.45cm); \shade[ball color=neonpink!60] (0.5,0) circle (0.38cm);
-			\end{scope}
-			% Cartoon
-			\begin{scope}[xshift=7.8cm]
-				\node[draw=accentcyan,rounded corners=1mm,fill=darkgray,minimum width=2.2cm,minimum height=1.4cm] (b3) {};
-				\node[font=\bfseries,color=fgwhite] at (b3.north) {\footnotesize Cartoon};
-				\draw[neonyellow,thick,decorate,decoration={coil,aspect=0.5,amplitude=2mm,segment length=3mm}] (-0.8,0)--(0.8,0);
-			\end{scope}
-		\end{tikzpicture}
-	\end{center}
+\begin{frame}{Representation Zoo}
+	\begin{columns}[T,onlytextwidth]
+		\column{0.24\textwidth}
+		\begin{center}
+			\includegraphics[width=\linewidth]{assets/figures/wireframe.png}
+			{\footnotesize\color{softgray} Wireframe}
+		\end{center}
+		\column{0.24\textwidth}
+		\begin{center}
+			\includegraphics[width=\linewidth]{assets/figures/ball_stick_water.png}
+			{\footnotesize\color{softgray} Ball-and-stick}
+		\end{center}
+		\column{0.24\textwidth}
+		\begin{center}
+			\includegraphics[width=\linewidth]{assets/figures/space_filling.png}
+			{\footnotesize\color{softgray} Space-filling}
+		\end{center}
+		\column{0.24\textwidth}
+		\begin{center}
+			\includegraphics[width=\linewidth]{assets/figures/protein_cartoon.png}
+			{\footnotesize\color{softgray} Cartoon}
+		\end{center}
+	\end{columns}
 \end{frame}
 
 \subsection{Objectives \& Applications}
@@ -159,7 +156,7 @@
 		\end{infobox}
 		\vspace{2mm}
 		\begin{tikzpicture}
-			\node[draw=accentcyan,fill=accentcyan!15,rounded corners=1mm,inner sep=2mm] {Drug binding \ensuremath{\rightarrow} Materials \ensuremath{\rightarrow} Energy \ensuremath{\rightarrow} Bio};
+			\node[draw=accentcyan,fill=accentcyan!15,rounded corners=1mm,inner sep=2mm,text=bgblack] {Drug binding \ensuremath{\rightarrow} Materials \ensuremath{\rightarrow} Energy \ensuremath{\rightarrow} Bio};
 		\end{tikzpicture}
 	\end{columns}
 \end{frame}

@@ -33,13 +33,10 @@
 			\item No $T$, no entropy
 		\end{pitemize}
 		\column{0.5\textwidth}
-		\begin{tikzpicture}[scale=1.0]
-			\draw[->,accentcyan] (0,0)--(2.6,0) node[right]{$R$};
-			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$U$};
-			\draw[neongreen,thick,domain=0.2:2.4,samples=50] plot (\x,{1.2*exp(-(\x-0.8)*(\x-0.8)*3)+0.5*exp(-(\x-1.8)*(\x-1.8)*5)+0.2});
-			\draw[->,thick,neonyellow] (0.2,1.2) -- (0.8,0.6) node[midway,above,sloped]{minimize};
-			\fill[neonpink] (1.8,0.45) circle (2pt) node[below,color=neonpink]{trapped};
-		\end{tikzpicture}
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{assets/figures/energy_well.png}
+			{\footnotesize\color{softgray} Minimization: downhill to nearest minimum}
+		\end{center}
 	\end{columns}
 \end{frame}
 
@@ -74,16 +71,10 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Funnel TikZ}
+\begin{frame}{Folding Funnel}
 	\begin{center}
-		\begin{tikzpicture}[scale=1.0]
-			\shade[top color=neonyellow!30,bottom color=neonpink!60] (0,2) -- (-1.6,0) -- (1.6,0) -- cycle;
-			\draw[accentcyan,thick] (-1.6,0) -- (0,2) -- (1.6,0);
-			\draw[neongreen,thick,decorate,decoration={random steps,segment length=2mm,amplitude=0.6mm}] (0,1.7) -- (-0.3,0.8) -- (0.2,0.3) -- (0,0.1);
-			\fill[neonpink] (0,0.1) circle (2.5pt) node[right,color=neonpink]{native};
-			\node[color=softgray] at (0,2.3) {unfolded entropy};
-			\node[color=bgblack] at (0,1) {funnel \ensuremath{\rightarrow} bias};
-		\end{tikzpicture}
+		\includegraphics[width=0.7\linewidth]{assets/figures/funnel_landscape.png}
+		{\footnotesize\color{softgray} Folding funnel: entropy $\to$ native state}
 	\end{center}
 \end{frame}
 

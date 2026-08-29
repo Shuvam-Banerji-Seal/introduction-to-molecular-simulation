@@ -3,21 +3,23 @@
 
 \begin{frame}{The Loop --- Question \ensuremath{\rightarrow} Answer \ensuremath{\rightarrow} New Question}
 	\begin{center}
-		\begin{tikzpicture}[scale=1.0]
-			\def\r{2.8cm}
-			\foreach \idx/\lab in {0/Question,1/Prep,2/Model,3/Min,4/Equil,5/Prod,6/Analyse,7/Interpret} {
-					\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.2cm,minimum height=0.8cm,align=center,font=\footnotesize\bfseries] (n\idx) at (\idx*45:\r) {\color{fgwhite}\lab};
-				}
-			% Connect nodes in sequence instead of arc (avoids Dimension too large)
+		\begin{tikzpicture}[node distance=0.6cm, every node/.style={font=\footnotesize\bfseries}]
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm] (n0) {\color{fgwhite}Question};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n0] (n1) {\color{fgwhite}Prep};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n1] (n2) {\color{fgwhite}Model};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n2] (n3) {\color{fgwhite}Min};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,below=of n0] (n4) {\color{fgwhite}Equil};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n4] (n5) {\color{fgwhite}Prod};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n5] (n6) {\color{fgwhite}Analyse};
+			\node[draw=accentcyan,fill=darkgray,rounded corners=1.5mm,minimum width=2.0cm,minimum height=0.7cm,right=of n6] (n7) {\color{fgwhite}Interpret};
 			\draw[->,thick,neonyellow] (n0) -- (n1);
 			\draw[->,thick,neonyellow] (n1) -- (n2);
 			\draw[->,thick,neonyellow] (n2) -- (n3);
-			\draw[->,thick,neonyellow] (n3) -- (n4);
-			\draw[->,thick,neonyellow] (n4) -- (n5);
-			\draw[->,thick,neonyellow] (n5) -- (n6);
-			\draw[->,thick,neonyellow] (n6) -- (n7);
-			\draw[->,thick,neonyellow] (n7) -- (n0);
-			\node[color=neonyellow,font=\small\bfseries] at (0,0) {repro loop};
+			\draw[->,thick,neonyellow] (n3) -- (n7);
+			\draw[->,thick,neonyellow] (n7) -- (n6);
+			\draw[->,thick,neonyellow] (n6) -- (n5);
+			\draw[->,thick,neonyellow] (n5) -- (n4);
+			\draw[->,thick,neonyellow] (n4) -- (n0);
 		\end{tikzpicture}
 	\end{center}
 \end{frame}
@@ -50,8 +52,8 @@
 			\draw[->,accentcyan] (0,0)--(2.8,0) node[right]{$t$};
 			\draw[->,accentcyan] (0,0)--(0,1.6) node[above]{$E$};
 			\draw[neongreen,thick,domain=0:0.6,samples=20] plot (\x,{1.4- \x*1.5});
-			\draw[neonyellow,thick,domain=0.6:1.6,samples=30] plot ({\x},{0.5+0.2*sin(\x*15 r)});
-			\draw[accentcyan,thick,domain=1.6:2.6,samples=40] plot (\x,{0.5+0.15*sin(\x*8 r)});
+			\draw[neonyellow,thick] plot[smooth] coordinates {(0.6,1.4) (0.7,1.2) (0.8,1.0) (0.9,0.8) (1.0,0.6) (1.1,0.55) (1.2,0.52) (1.3,0.51) (1.4,0.5) (1.6,0.5)};
+			\draw[accentcyan,thick] plot[smooth] coordinates {(1.6,0.5) (1.7,0.52) (1.8,0.48) (1.9,0.51) (2.0,0.49) (2.1,0.5) (2.2,0.5) (2.3,0.5) (2.4,0.5) (2.6,0.5)};
 			\node[color=neongreen] at (0.3,1.5) {min};
 			\node[color=neonyellow] at (1.1,1.3) {equil};
 			\node[color=accentcyan] at (2.1,1.3) {prod};
