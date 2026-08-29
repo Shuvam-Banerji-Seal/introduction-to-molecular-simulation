@@ -1,0 +1,42 @@
+# =============================================================================
+# 01 — Ideal Gas (2D) — 200 atoms, L=30, rho~0.22, T*=3.0, NVE
+# Purpose: Show chaotic ballistic motion of a dilute gas. No structure, no order.
+# 2D so the motion is clearly visible (not buried in 3D depth).
+# Units: lj, pair lj/cut 2.5 (eps=0.1 for near-ideal), dt=0.01
+# Steps: 3000, dump every 15 => 200 frames for ~13s video at 15fps
+# =============================================================================
+units           lj
+atom_style      atomic
+dimension       2
+boundary        p p p
+
+region          box block 0 30 0 30 -0.5 0.5
+create_box      1 box
+create_atoms    1 random 250 12345 box
+mass            1 1.0
+
+# Near-ideal: small epsilon, atoms mostly fly past each other
+pair_style      lj/cut 2.5
+pair_coeff      1 1 0.1 1.0 2.5
+
+# Remove overlaps
+delete_atoms    overlap 0.8 all all compress yes
+minimize        1.0e-4 1.0e-6 1000 10000
+
+# High temperature for fast ballistic motion
+velocity        all create 3.0 87287 loop geom mom yes rot yes dist gaussian
+velocity        all zero linear
+
+neighbor        0.3 bin
+neigh_modify    every 10 delay 0 check yes
+
+fix             1 all nve
+
+timestep        0.01
+thermo          200
+thermo_style    custom step temp pe ke etotal press
+
+dump            1 all custom 15 trajectory.lammpstrj id type x y z
+dump_modify     1 sort id
+
+run             3000

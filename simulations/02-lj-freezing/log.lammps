@@ -1,0 +1,319 @@
+LAMMPS (4 Jul 2026 - Development - 970d4ba)
+  using 24 OpenMP thread(s) per MPI task
+package gpu 1 neigh no
+# =============================================================================
+# 02 — LJ Freezing (2D) — 900 atoms, rho~0.86, quench 1.5 -> 0.05
+# Purpose: Show liquid -> crystal transition in 2D.  Start DISORDERED (random
+# positions), equilibrate as hot liquid, then SLOWLY quench to crystallize
+# into triangular lattice.  Video colored by local hexagonal order psi6.
+#
+# Key design choices:
+#   - Random init (NOT lattice) so "before" state is clearly chaotic
+#   - 2000 steps at T=1.5 to fully melt into liquid
+#   - 4000 steps linear quench 1.5 -> 0.05 (slow enough to crystallize)
+#   - Dump every 30 steps => 200 frames for 13s video at 15fps
+#   - 2D so hexagonal order is visually obvious
+# ===================================================================Done.
+
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 2.8
+  ghost atom cutoff = 2.8
+  binsize = 1.4, bins = 23 23 1
+  2 neighbor lists, perpetual/occasional/extra = 1 1 0
+  (1) command delete_atoms, occasional, copy from (2)
+      attributes: full, newton on
+      pair build: copy
+      stencil: none
+      bin: none
+  (2) pair lj/cut/gpu, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/2d
+      bin: standard
+Deleted 569 atoms, new total = 431
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+- GPU package (short-range, long-range and three-body potentials): https://doi.org/10.1016/j.cpc.2010.12.021, https://doi.org/10.1016/j.cpc.2011.10.012, https://doi.org/10.1016/j.cpc.2013.08.002, https://doi.org/10.1016/j.commatsci.2014.10.068, https://doi.org/10.1016/j.cpc.2016.10.020, https://doi.org/10.3233/APC200086
+The log file lists these citations in BibTeX format.
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+
+--------------------------------------------------------------------------
+- Using acceleration for lj/cut:
+-  with 1 proc(s) per device.
+-  with 24 thread(s) per proc.
+-  Horizontal vector operations: ENABLED
+-  Shared memory system: No
+--------------------------------------------------------------------------
+Device 0: NVIDIA A100 80GB PCIe, 108 CUs, 37/79 GB, 1.4 GHZ (Mixed Precision)
+--------------------------------------------------------------------------
+
+Initializing Device and compiling on process 0...Done.
+Initializing Device 0 on core 0...Done.
+
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 2.8
+  ghost atom cutoff = 2.8
+  binsize = 1.4, bins = 23 23 1
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut/gpu, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/2d
+      bin: standard
+Setting up cg style minimization ...
+  Unit style    : lj
+  Current step  : 0
+Per MPI rank memory allocation (min/avg/max) = 25.49 | 25.49 | 25.49 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0              1.9548491      0              1.9548491      9.2928476    
+       286   0             -2.3422105      0             -2.3422105     -0.082554865  
+Loop time of 40.5577 on 24 procs for 286 steps with 431 atoms
+
+325.4% CPU use with 1 MPI tasks x 24 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+      1.95484912033536   -2.3419796781044  -2.34221054764201
+  Force two-norm initial, final = 4061.4635 4.4245688
+  Force max component initial, final = 805.50141 1.013771
+  Final line search alpha, max atom move = 0.055824027 0.056592782
+  Iterations, force evaluations = 286 554
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 35.369     | 35.369     | 35.369     |   0.0 | 87.21
+Neigh   | 0.039403   | 0.039403   | 0.039403   |   0.0 |  0.10
+Comm    | 0.0066905  | 0.0066905  | 0.0066905  |   0.0 |  0.02
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0.00023234 | 0.00023234 | 0.00023234 |   0.0 |  0.00
+Other   |            | 5.142      |            |       | 12.68
+
+Nlocal:            431 ave         431 max         431 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            164 ave         164 max         164 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:         4894 ave        4894 max        4894 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 4894
+Ave neighs/atom = 11.354988
+Neighbor list builds = 90
+Dangerous builds = 0
+
+
+---------------------------------------------------------------------
+      Device Time Info (average): 
+---------------------------------------------------------------------
+Data Transfer:   0.1829 s.
+Neighbor copy:   0.1560 s.
+Neighbor unpack: 0.0000 s.
+Force calc:      0.0777 s.
+Device Overhead: 0.0137 s.
+CPU Cast/Pack:   35.0510 s.
+CPU Driver_Time: 0.0067 s.
+CPU Idle_Time:   0.2704 s.
+Average split:   1.0000.
+Max Mem / Proc:  1.09 MB.
+Prefetch mode:   None.
+Vector width:    32.
+Lanes / atom:    4.
+Pair block:      256.
+Neigh block:     128.
+Neigh mode:      Host.
+---------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+- Using acceleration for lj/cut:
+-  with 1 proc(s) per device.
+-  with 24 thread(s) per proc.
+-  Horizontal vector operations: ENABLED
+-  Shared memory system: No
+--------------------------------------------------------------------------
+Device 0: NVIDIA A100 80GB PCIe, 108 CUs, 37/79 GB, 1.4 GHZ (Mixed Precision)
+--------------------------------------------------------------------------
+
+Initializing Device and compiling on process 0...Done.
+Initializing Device 0 on core 0...Done.
+
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Setting up Verlet run ...
+  Unit style    : lj
+  Current step  : 286
+  Time step     : 0.005
+Per MPI rank memory allocation (min/avg/max) = 24.38 | 24.38 | 24.38 Mbytes
+   Step          Temp          PotEng         KinEng         TotEng         Press     
+       286   1.5           -2.3422105      1.4965197     -0.84569083     0.54732795   
+       400   0.93637939    -1.5610107      0.93420682    -0.62680384    -0.013445699  
+       600   1.3133238     -1.3061547      1.3102766      0.0041219254   0.5711579    
+       800   1.6151516     -1.1189596      1.6114042      0.49244464     1.0007269    
+      1000   1.4162979     -1.0848897      1.4130118      0.32812214     0.84402732   
+      1200   1.5514616     -1.0665415      1.5478619      0.48132048     0.8677693    
+      1400   1.4704412     -0.96505203     1.4670295      0.50197746     1.0375675    
+      1600   1.4739143     -1.0761262      1.4704945      0.39436836     0.6656243    
+      1800   1.6007411     -1.008149       1.597027       0.588878       0.84132138   
+      2000   1.3816151     -0.99439954     1.3784095      0.38400992     0.85505297   
+      2200   1.5361194     -1.0186875      1.5325553      0.51386778     0.93900703   
+      2286   1.5089272     -0.99920379     1.5054262      0.50622245     0.95225447   
+Loop time of 305.43 on 24 procs for 2000 steps with 431 atoms
+
+Performance: 2828.796 tau/day, 6.548 timesteps/s, 2.822 katom-step/s
+337.2% CPU use with 1 MPI tasks x 24 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 86.662     | 86.662     | 86.662     |   0.0 | 28.37
+Neigh   | 0.043852   | 0.043852   | 0.043852   |   0.0 |  0.01
+Comm    | 0.012704   | 0.012704   | 0.012704   |   0.0 |  0.00
+Output  | 0.11184    | 0.11184    | 0.11184    |   0.0 |  0.04
+Modify  | 215.38     | 215.38     | 215.38     |   0.0 | 70.52
+Other   |            | 3.224      |            |       |  1.06
+
+Nlocal:            431 ave         431 max         431 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            163 ave         163 max         163 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:         4242 ave        4242 max        4242 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 4242
+Ave neighs/atom = 9.8422274
+Neighbor list builds = 100
+Dangerous builds = 100
+
+
+---------------------------------------------------------------------
+      Device Time Info (average): 
+---------------------------------------------------------------------
+Data Transfer:   0.6030 s.
+Neighbor copy:   0.1840 s.
+Neighbor unpack: 0.0000 s.
+Force calc:      0.3653 s.
+Device Overhead: 0.0511 s.
+CPU Cast/Pack:   85.2111 s.
+CPU Driver_Time: 0.0239 s.
+CPU Idle_Time:   1.2345 s.
+Average split:   1.0000.
+Max Mem / Proc:  1.09 MB.
+Prefetch mode:   None.
+Vector width:    32.
+Lanes / atom:    4.
+Pair block:      256.
+Neigh block:     128.
+Neigh mode:      Host.
+---------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+- Using acceleration for lj/cut:
+-  with 1 proc(s) per device.
+-  with 24 thread(s) per proc.
+-  Horizontal vector operations: ENABLED
+-  Shared memory system: No
+--------------------------------------------------------------------------
+Device 0: NVIDIA A100 80GB PCIe, 108 CUs, 35/79 GB, 1.4 GHZ (Mixed Precision)
+--------------------------------------------------------------------------
+
+Initializingunfix           1
+
+# --- Stage 2: slow linear quench 1.5 -> 0.05 over 4000 stDone.
+
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Setting up Verlet run ...
+  Unit style    : lj
+  Current step  : 2286
+  Time step     : 0.005
+Per MPI rank memory allocation (min/avg/max) = 25.66 | 25.66 | 25.66 Mbytes
+   Step          Temp          PotEng         KinEng         TotEng         Press     
+      2286   1.5089272     -0.99920379     1.5054262      0.50622245     0.95225447   
+      2400   1.5289781     -1.0305474      1.5254306      0.49488319     0.75744773   
+      2600   1.3922227     -1.0217448      1.3889925      0.36724766     0.7047924    
+      2800   1.2829048     -1.0287353      1.2799282      0.25119288     0.80319853   
+      3000   1.3074005     -1.0856235      1.3043671      0.21874355     0.71023692   
+      3200   1.2213233     -1.0864747      1.2184896      0.1320149      0.60133528   
+      3400   1.1190286     -1.0728001      1.1164323      0.043632143    0.66285416   
+      3600   1.0736401     -1.0812656      1.0711491     -0.010116466    0.46334682   
+      3800   1.0106343     -1.0985033      1.0082895     -0.090213815    0.31540109   
+      4000   0.91119816    -1.07151        0.90908401    -0.16242594     0.52254395   
+      4200   0.87561775    -1.1244476      0.87358615    -0.25086148     0.3367003    
+      4400   0.81015597    -1.1622134      0.80827626    -0.35393711     0.31655619   
+      4600   0.71491074    -1.1693274      0.71325202    -0.45607534     0.19337218   
+      4800   0.65044366    -1.1988141      0.64893451    -0.54987955     0.17486074   
+      5000   0.59269461    -1.2430157      0.59131945    -0.65169629     0.14418878   
+      5200   0.55488       -1.3283641      0.55359258    -0.77477148     0.053562675  
+      5400   0.46348231    -1.3695435      0.46240695    -0.90713655     0.1266508    
+      5600   0.43314592    -1.4771287      0.43214094    -1.0449878      0.027817123  
+      5800   0.367062      -1.5707043      0.36621034    -1.2044939     -0.10000667   
+      6000   0.32691269    -1.7152736      0.3261542     -1.3891194      0.0264629    
+      6200   0.26481092    -1.8612741      0.26419651    -1.5970776     -0.12168973   
+      6286   0.22773513    -1.9312825      0.22720674    -1.7040757     -0.16288292   
+Loop time of 393.076 on 24 procs for 4000 steps with 431 atoms
+
+Performance: 4396.092 tau/day, 10.176 timesteps/s, 4.386 katom-step/s
+366.7% CPU use with 1 MPI tasks x 24 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 105.03     | 105.03     | 105.03     |   0.0 | 26.72
+Neigh   | 0.045111   | 0.045111   | 0.045111   |   0.0 |  0.01
+Comm    | 0.014179   | 0.014179   | 0.014179   |   0.0 |  0.00
+Output  | 0.2122     | 0.2122     | 0.2122     |   0.0 |  0.05
+Modify  | 282.66     | 282.66     | 282.66     |   0.0 | 71.91
+Other   |            | 5.115      |            |       |  1.30
+
+Nlocal:            431 ave         431 max         431 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            156 ave         156 max         156 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:         5102 ave        5102 max        5102 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 5102
+Ave neighs/atom = 11.837587
+Neighbor list builds = 199
+Dangerous builds = 199
+
+
+-------------------------------unfix           2
+Total wall time: 0:12:20
+  Device Time Info (average): 
+---------------------------------------------------------------------
+Data Transfer:   1.0065 s.
+Neighbor copy:   0.2290 s.
+Neighbor unpack: 0.0000 s.
+Force calc:      0.8280 s.
+Device Overhead: 9.5918 s.
+CPU Cast/Pack:   102.3093 s.
+CPU Driver_Time: 0.0864 s.
+CPU Idle_Time:   2.2882 s.
+Average split:   1.0000.
+Max Mem / Proc:  1.09 MB.
+Prefetch mode:   None.
+Vector width:    32.
+Lanes / atom:    4.
+Pair block:      256.
+Neigh block:     128.
+Neigh mode:      Host.
+---------------------------------------------------------------------
+
+Total wall time: 0:12:20

@@ -1,0 +1,51 @@
+# =============================================================================
+# 03 — Water-Ice Freezing (2D) — 900 atoms, rho~0.86, deep quench 2.0 -> 0.01
+# Purpose: Same as 02 but with a DEEPER and SLOWER quench to show a more
+# dramatic crystallization — analogous to water freezing into ice.
+# The deeper final temperature (T*=0.01 vs 0.05) produces a more perfect crystal.
+#
+# Key differences from 02:
+#   - Start hotter: T=2.0 (more chaotic initial liquid)
+#   - Longer equilibration: 2500 steps at T=2.0
+#   - Slower + deeper quench: 5000 steps ramp 2.0 -> 0.01
+#   - More frames: 250 total for ~17s video
+# =============================================================================
+units           lj
+atom_style      atomic
+dimension       2
+boundary        p p p
+
+region          box block 0 32 0 32 -0.5 0.5
+create_box      1 box
+create_atoms    1 random 1000 12345 box
+mass            1 1.0
+
+pair_style      lj/cut 2.5
+pair_coeff      1 1 1.0 1.0 2.5
+
+# Remove overlaps from random placement
+delete_atoms    overlap 0.8 all all compress yes
+minimize        1.0e-4 1.0e-6 2000 20000
+
+# Start VERY HOT: T=2.0 => highly disordered liquid
+velocity        all create 2.0 87287 loop geom mom yes rot yes dist gaussian
+
+neighbor        0.3 bin
+neigh_modify    every 20 delay 0 check yes
+
+timestep        0.005
+thermo          200
+thermo_style    custom step temp pe ke etotal press
+
+# --- Stage 1: equilibrate as very hot liquid at T=2.0 (2500 steps) ---
+fix             1 all nvt temp 2.0 2.0 0.5
+dump            1 all custom 30 trajectory.lammpstrj id type x y z
+dump_modify     1 sort id
+run             2500
+unfix           1
+
+# --- Stage 2: slow deep quench 2.0 -> 0.01 over 5000 steps ---
+# Very slow ramp gives atoms time to anneal into perfect triangular lattice
+fix             2 all nvt temp 2.0 0.01 1.0
+run             5000
+unfix           2

@@ -41,6 +41,11 @@ examples/**/*.npy
 slides/*.pdf
 pdf/
 
+# Simulation render temp frames
+videos/_frames*/
+simulations/**/_frames*/
+simulations/**/render.log
+
 # Temp / rigor
 /tmp/
 .rigor-trash/

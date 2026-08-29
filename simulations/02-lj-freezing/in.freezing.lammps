@@ -1,0 +1,53 @@
+# =============================================================================
+# 02 — LJ Freezing (2D) — 900 atoms, rho~0.86, quench 1.5 -> 0.05
+# Purpose: Show liquid -> crystal transition in 2D.  Start DISORDERED (random
+# positions), equilibrate as hot liquid, then SLOWLY quench to crystallize
+# into triangular lattice.  Video colored by local hexagonal order psi6.
+#
+# Key design choices:
+#   - Random init (NOT lattice) so "before" state is clearly chaotic
+#   - 2000 steps at T=1.5 to fully melt into liquid
+#   - 4000 steps linear quench 1.5 -> 0.05 (slow enough to crystallize)
+#   - Dump every 30 steps => 200 frames for 13s video at 15fps
+#   - 2D so hexagonal order is visually obvious
+# =============================================================================
+units           lj
+atom_style      atomic
+dimension       2
+boundary        p p p
+
+# Box: 32x32, N=900 => rho=0.879 (near freezing density for 2D LJ)
+region          box block 0 32 0 32 -0.5 0.5
+create_box      1 box
+create_atoms    1 random 1000 12345 box
+mass            1 1.0
+
+pair_style      lj/cut 2.5
+pair_coeff      1 1 1.0 1.0 2.5
+
+# Remove overlaps from random placement
+delete_atoms    overlap 0.8 all all compress yes
+minimize        1.0e-4 1.0e-6 2000 20000
+
+# Start HOT: T=1.5 (well above 2D LJ melting T~0.7) => liquid
+velocity        all create 1.5 87287 loop geom mom yes rot yes dist gaussian
+
+neighbor        0.3 bin
+neigh_modify    every 20 delay 0 check yes
+
+timestep        0.005
+thermo          200
+thermo_style    custom step temp pe ke etotal press
+
+# --- Stage 1: equilibrate as hot liquid at T=1.5 (2000 steps) ---
+fix             1 all nvt temp 1.5 1.5 0.5
+dump            1 all custom 30 trajectory.lammpstrj id type x y z
+dump_modify     1 sort id
+run             2000
+unfix           1
+
+# --- Stage 2: slow linear quench 1.5 -> 0.05 over 4000 steps ---
+# Slow enough that atoms have time to find lattice positions
+fix             2 all nvt temp 1.5 0.05 1.0
+run             4000
+unfix           2
